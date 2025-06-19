@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart SI Unit Calculator | Whatmore Industries</title>
+  <style>
+    body { background: #111; color: #eee; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 2rem; }
+    h2 { text-align: center; }
+    #pretty-input-output { display: none; }
+    .eq-steps-container { width: 100%; max-width: 600px; margin: 0 auto 1.2em auto; position: relative; min-height: 8em; /* fits 2-3 lines, adjust as needed */}
+    .steps-eq-row { min-height: 2.4em; height: 2.4em; display: flex; align-items: center; justify-content: center; width: 100%; margin-bottom: 0.8em; }
+    .steps-side { flex: 1 1 0; min-width: 140px; max-width: 320px; display: flex; align-items: center; justify-content: flex-end; font-size: 1.4em; word-break: break-all; white-space: normal; padding-right: 0.4em; box-sizing: border-box; }
+    .steps-side.right { justify-content: flex-start; padding-right: 0; padding-left: 0.4em; }
+    .eq-label { font-size: 1.6em; color: #fff; flex: none; margin: 0 0.18em; z-index: 1; background: #111; padding: 0 0.1em; position: relative; min-width: 1.4em; text-align: center; }
+    .steps-eq-latex { font-size: 1em; color: #fff;}
+    #input-box { width: 100%; font-size: 1.25rem; padding: 0.5rem 1rem; background: #181818; color: #0f0; border: 1px solid #444; border-radius: 0.5rem; margin-bottom: 1rem; box-sizing: border-box;   direction: ltr;
+  text-align: left;}
+.steps-side mjx-container {
+  display: flex !important;
+  align-items: center !important;
+  height: 100%;
+}
+
+    #result-panel { background: #222; padding: 1rem; border-radius: 0.9rem; font-size: 1rem; margin-top: 1rem; min-height: 60px; }
+    .section-label { font-weight: bold; color: #0ff; margin-top: 0.5em; }
+    .calculator { display: grid; grid-template-columns: repeat(3, 60px); gap: 5px; }
+    button { width: 60px; height: 60px; font-size: 1.2em; }
+    .wide { grid-column: span 2; }
+    .output-row { margin-bottom: 0.3em; }
+    .unit-breakdown { color: #6cf; font-family: 'Consolas', monospace; }
+    .sigfig-active { background: #0ff; color: #111; }
+  </style>
+  <!--<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjs@12.4.2/lib/browser/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+</head>
+<body>
+  <h2>Smart SI Unit Calculator</h2>
+  <div class="eq-steps-container">
+    <div id="steps-math-output"></div>
+  </div>
+  <div style="display:flex;align-items:center;margin-bottom:0.7em;">
+    <button id="copy-latex-btn" style="margin-left:8px;padding:4px 8px;font-size:1em;cursor:pointer;">📋</button>
+    <button id="copy-output1-btn" style="margin-left:8px;padding:4px 8px;font-size:1em;cursor:pointer;">Copy Output 1</button>
+
+  </div>
+<input id="input-box"
+  placeholder="Enter calculation (e.g. 5 / 9xxx)"
+  autocomplete="off"
+  oninput="calculate();"
+  onkeydown="if(event.key==='Enter'){calculate(); return false;}">
+
+
+  <div style="margin-bottom:0.5em;">
+    Significant figures: 
+    <button class="sigfig-btn" onclick="setSigFigs(3)">3</button>
+    <button class="sigfig-btn" onclick="setSigFigs(6)">6</button>
+    <button class="sigfig-btn" onclick="setSigFigs(10)">10</button>
+  </div>
+  <div style="margin-bottom: 1em;">
+    <label for="unit-system">Unit System:</label>
+    <select id="unit-system" onchange="updateUnitOptions()">
+      <option value="metric">Metric (SI)</option>
+      <option value="imperial">Imperial (US)</option>
+    </select>
+    <label for="discipline" style="margin-left: 1em;">Discipline:</label>
+    <select id="discipline" onchange="updateUnitOptions()">
+    <option value="common">Common</option>
+    <option value="mechanical">Mechanical</option>
+    <option value="electrical">Electrical</option>
+    <option value="aerospace">Aerospace</option>
+    <option value="medical">Medical</option>
+    <option value="chemistry">Chemistry</option>
+    <option value="astrophysics">Astrophysics</option>
+    <option value="trigonometry">Trigonometry</option>
+    <option value="algebra">Algebra</option>
+    <option value="calculus1">Calculus 1</option>
+    <option value="calculus2">Calculus 2</option>
+    <option value="calculus3">Calculus 3</option>
+    <option value="diff_eq">Differential Equations</option>
+    <option value="statics">Statics</option>
+    <option value="solids">Solids</option>
+     <!-- <option value="mechanical"></option>-->
+    </select>
+  </div>
+  <div id="unit-buttons-area" style="margin-bottom: 1.2em;"></div>
+  <div class="calculator">
+    <button onclick="appendCalc('1')">1</button>
+    <button onclick="appendCalc('2')">2</button>
+    <button onclick="appendCalc('3')">3</button>
+    <button onclick="appendCalc('4')">4</button>
+    <button onclick="appendCalc('5')">5</button>
+    <button onclick="appendCalc('6')">6</button>
+    <button onclick="appendCalc('7')">7</button>
+    <button onclick="appendCalc('8')">8</button>
+    <button onclick="appendCalc('9')">9</button>
+    <button onclick="appendCalc('.')">.</button>
+    <button onclick="appendCalc('0')">0</button>
+    <button onclick="calculate()">=</button>
+    <button class="wide" onclick="backspace()">Backspace</button>
+    <button class="wide" onclick="clearCalc()">Clear</button>
+  </div>
+  <div class="calculator" style="margin-bottom: 8px;">
+    <button onclick="appendCalc('x')">x</button>
+    <button onclick="appendCalc('y')">y</button>
+    <button onclick="appendCalc('z')">z</button>
+    <button onclick="appendCalc('a')">a</button>
+    <button onclick="appendCalc('b')">b</button>
+    <button onclick="appendCalc('c')">c</button>
+    <button onclick="appendCalc('^')">^</button>
+  </div>
+  <div style="margin:1rem 0;">
+    <button onclick="appendCalc(' + ')">+</button>
+    <button onclick="appendCalc(' - ')">-</button>
+    <button onclick="appendCalc(' * ')">*</button>
+    <button onclick="appendCalc(' / ')">/</button>
+  </div>
+  <!-- Example unit buttons, add your own as needed -->
+  <!--<div>
+    <strong>Length</strong><br>
+    <button onclick="appendCalc(' nm ')">nm</button>
+    <button onclick="appendCalc(' μm ')">μm</button>
+    <button onclick="appendCalc(' mm ')">mm</button>
+    <button onclick="appendCalc(' cm ')">cm</button>
+    <button onclick="appendCalc(' m ')">m</button>
+    <button onclick="appendCalc(' km ')">km</button>
+    <button onclick="appendCalc(' in ')">in</button>
+    <button onclick="appendCalc(' ft ')">ft</button>
+    <button onclick="appendCalc(' yd ')">yd</button>
+    <button onclick="appendCalc(' mi ')">mi</button>
+  </div>
+  <div>
+    <strong>Mass</strong><br>
+    <button onclick="appendCalc(' mg ')">mg</button>
+    <button onclick="appendCalc(' g ')">g</button>
+    <button onclick="appendCalc(' kg ')">kg</button>
+    <button onclick="appendCalc(' t ')">t</button>
+    <button onclick="appendCalc(' oz ')">oz</button>
+    <button onclick="appendCalc(' lb ')">lb</button>
+    <button onclick="appendCalc(' st ')">st</button>
+  </div>
+  <div>
+    <strong>Time</strong><br>
+    <button onclick="appendCalc(' ns ')">ns</button>
+    <button onclick="appendCalc(' μs ')">μs</button>
+    <button onclick="appendCalc(' ms ')">ms</button>
+    <button onclick="appendCalc(' s ')">s</button>
+    <button onclick="appendCalc(' min ')">min</button>
+    <button onclick="appendCalc(' hr ')">hr</button>
+    <button onclick="appendCalc(' day ')">day</button>
+  </div>
+  <div>
+    <strong>Electricity</strong><br>
+    <button onclick="appendCalc(' A ')">A</button>
+    <button onclick="appendCalc(' V ')">V</button>
+    <button onclick="appendCalc(' W ')">W</button>
+    <button onclick="appendCalc(' F ')">F</button>
+    <button onclick="appendCalc(' Ω ')">Ω</button>
+    <button onclick="appendCalc(' C ')">C</button>
+  </div>-->
+  <div id="result-panel"></div>
+<script>
+let currentSigFigs = null; // null = OFF
+function setSigFigs(n) {
+  // If clicking same already-active button, turn OFF
+  if (currentSigFigs === n) {
+    currentSigFigs = null;
+  } else {
+    currentSigFigs = n;
+  }
+
+  document.querySelectorAll('.sigfig-btn').forEach(btn => {
+    btn.classList.toggle('sigfig-active', btn.textContent == n && currentSigFigs === n);
+  });
+  calculate();
+}
+
+  // Splits something like '2vf' into ['2', 'v', 'f']
+function splitNumberAndVars(factor) {
+  let match = factor.match(/^(\d+)([a-zA-ZμΩ].*)$/);
+  if (match) {
+    // Split number and vars
+    return [match[1], ...match[2].split('')];
+  }
+  return [factor];
+}
+
+window.onload = function() {
+  const box = document.getElementById('input-box');
+  box.addEventListener('focus', function() {
+    box.removeAttribute('readonly');
+  });
+  calculate();
+  updateUnitOptions && updateUnitOptions();
+};
+function parenthesizeDenominator(expr) {
+  let out = '';
+  let i = 0;
+  while (i < expr.length) {
+    if (expr[i] === '/') {
+      if (expr[i+1] === '(') {
+        out += '/';
+        i++;
+      } else {
+        out += '/(';
+        i++;
+        let depth = 0;
+        while (i < expr.length) {
+          if (expr[i] === '(') depth++;
+          if (expr[i] === ')') depth--;
+          if ((expr[i] === '+' || expr[i] === '-' || expr[i] === '*' || expr[i] === '/') && depth === 0) break;
+          out += expr[i];
+          i++;
+        }
+        out += ')';
+        continue;
+      }
+    }
+    out += expr[i];
+    i++;
+  }
+  return out;
+}
+
+
+  
+function appendCalc(val) {
+  const box = document.getElementById('input-box');
+  // Do NOT set readonly here!
+  const start = box.selectionStart;
+  const end = box.selectionEnd;
+  const text = box.value;
+  box.value = text.slice(0, start) + val + text.slice(end);
+  const caretPos = start + val.length;
+  box.setSelectionRange(caretPos, caretPos);
+  box.focus(); // optional, keeps focus after button press
+  calculate();
+}
+
+function clearCalc() {
+  document.getElementById('input-box').value = '';
+  document.getElementById('result-panel').innerHTML = '';
+  document.getElementById('steps-math-output').innerHTML = '';
+  calculate();
+}
+function backspace() {
+  const box = document.getElementById('input-box');
+  const start = box.selectionStart;
+  const end = box.selectionEnd;
+  if (start === end && start > 0) {
+    box.value = box.value.slice(0, start-1) + box.value.slice(end);
+    box.setSelectionRange(start-1, start-1);
+  } else {
+    box.value = box.value.slice(0, start) + box.value.slice(end);
+    box.setSelectionRange(start, start);
+  }
+  box.focus();
+  calculate();
+}
+function updateUnitOptions() {
+  // Your custom unit button code can go here
+}
+// Insert * for things like 5y or y5 or )x or x(
+function insertImplicitMultiplication(str) {
+  // Number followed by (
+  str = str.replace(/([0-9])\(/g, '$1*(');
+  // ) followed by number, letter, or (
+  str = str.replace(/\)([0-9a-zA-Z(])/g, ')*$1');
+  // Letter or variable followed by (, but NOT if function name!
+  // We'll skip adding * for things like f(x), g(x), sin(x), etc.
+  str = str.replace(/([a-zA-Z])\(/g, (match, p1, offset, s) => {
+    // Check if previous char is not a letter (to allow multi-letter function names)
+    // If previous char is not a letter, don't insert *, treat as function
+    if (offset === 0 || !/[a-zA-Z]/.test(s[offset - 1])) return match; // leave as is (function)
+    // If previous char is also a letter or number, insert *
+    return `${p1}*(`;
+  });
+  return str;
+}
+function insertExplicitMultiplication(expr) {
+  return expr
+    .replace(/([0-9])([a-zA-Z])/g, '$1*$2')
+    .replace(/([a-zA-Z])([a-zA-Z])/g, '$1*$2');
+}
+
+
+// Only collapse repeated letters into exponents. Never interpret variable+number as an exponent.
+function expandAdjacentVariables(str) {
+  // yyy → y^3, but skip already exponentiated things and mixed xyz
+  // We'll avoid touching any letter that is followed by a ^ or a digit
+  return str.replace(/([a-zA-Z])\1{1,}/g, (match, p1, offset, string) => {
+    // Don't touch if already followed by ^ or digit
+    const nextChar = string[offset + match.length];
+    if (nextChar === '^' || /\d/.test(nextChar)) return match;
+    return `${p1}^${match.length}`;
+  });
+}
+function findTopLevelFraction(expr) {
+  // Returns index of top-level '/' or -1 if none
+  let depth = 0;
+  for (let i = 0; i < expr.length; ++i) {
+    if (expr[i] === '(') depth++;
+    if (expr[i] === ')') depth--;
+    if (expr[i] === '/' && depth === 0) return i;
+  }
+  return -1;
+}
+ function splitTopLevel(expr) {
+    let parts = [];
+    let current = '';
+    let depth = 0;
+    for (let i = 0; i < expr.length; ++i) {
+      let c = expr[i];
+      if (c === '(') depth++;
+      if (c === ')') depth--;
+      if ((c === '+' || c === '-' || c === '*' || c === '/') && depth === 0) {
+        if (current !== '') parts.push(current);
+        parts.push(c); // keep operator as separate part
+        current = '';
+        } else {
+        current += c;
+      }
+    }
+    if (current !== '') parts.push(current);
+    return parts;
+  }
+  // Helper to check if a string has balanced outer parentheses
+function isBalancedParens(s) {
+  let depth = 0;
+  for (let i = 0; i < s.length; ++i) {
+    if (s[i] === '(') depth++;
+    if (s[i] === ')') depth--;
+    // If we close all parens before the end, they're not balanced
+    if (depth === 0 && i < s.length - 1) return false;
+  }
+  return depth === 0;
+}
+
+// LaTeX grouping for pretty input
+function needsBrackets(expr) {
+  // Returns true if the expr contains any top-level +, -, or more than one operator
+  let depth = 0, hasOp = false;
+  for (let i = 0; i < expr.length; ++i) {
+    if (expr[i] === '(') depth++;
+    if (expr[i] === ')') depth--;
+    if ((expr[i] === '+' || expr[i] === '-') && depth === 0) return true;
+    if ((expr[i] === '*' || expr[i] === '/') && depth === 0) hasOp = true;
+  }
+  return hasOp;
+}
+
+function splitTopLevelParens(str) {
+  let result = [];
+  let i = 0, n = str.length;
+  while (i < n) {
+    if (str[i] === '(') {
+      let depth = 1;
+      let j = i + 1;
+      while (j < n && depth > 0) {
+        if (str[j] === '(') depth++;
+        if (str[j] === ')') depth--;
+        j++;
+      }
+      if (depth === 0) {
+        result.push(str.slice(i, j));
+        i = j;
+      } else {
+        result.push(str.slice(i));
+        break;
+      }
+    } else {
+      let j = i;
+      while (j < n && str[j] !== '(') j++;
+      if (j > i) result.push(str.slice(i, j));
+      i = j;
+    }
+  }
+  return result.filter(s => s.length > 0);
+}
+
+function formatInputForPrettyLatex(input, inOuterParens = false) {
+  let clean = input.replace(/\s+/g, '');
+
+  // PATCH: Adjacent top-level parens as before...
+  let topParens = splitTopLevelParens(clean);
+  if (
+    topParens.length > 1 &&
+    topParens.every(s => s.startsWith('(') && s.endsWith(')') && isBalancedParens(s))
+  ) {
+    return topParens
+      .map(s => `\\left(${formatInputForPrettyLatex(s.slice(1, -1))}\\right)`)
+      .join(' \\cdot ');
+  }
+
+  // PATCH: Sequence of top-level multiplications (including * inserted by insertImplicitMultiplication)
+  let parts = [];
+  let depth = 0, last = 0;
+  for (let i = 0; i < clean.length; ++i) {
+    if (clean[i] === '(') depth++;
+    if (clean[i] === ')') depth--;
+    if (clean[i] === '*' && depth === 0) {
+      parts.push(clean.slice(last, i));
+      last = i + 1;
+    }
+  }
+  if (last === 0) {
+  // not split, continue
+} else {
+  parts.push(clean.slice(last));
+  return parts.map((p, i, arr) => {
+    let formatted = needsBrackets(p) ? `\\left(${formatInputForPrettyLatex(p)}\\right)` : formatInputForPrettyLatex(p);
+    // Don't add dot before ( on the right
+    if (i < arr.length - 1) {
+      const next = arr[i+1];
+      // If next part starts with '('
+      if (next.trim().startsWith('(')) return formatted;
+      // If both current and next are variables or numbers (e.g., 5x or xy), no dot
+      if (/^[a-zA-Z0-9]+$/.test(p.slice(-1)) && /^[a-zA-Z]/.test(next)) return formatted;
+      return formatted + ' \\cdot ';
+    }
+    return formatted;
+  }).join('');
+}
+
+  // Handle single outermost parenthesis
+  if (clean.startsWith('(') && clean.endsWith(')') && isBalancedParens(clean)) {
+    // Pass inOuterParens=true to the inner call
+    return `\\left(${formatInputForPrettyLatex(clean.slice(1, -1), true)}\\right)`;
+  }
+
+  // Top-level +/-
+  depth = 0;
+  for (let i = 0; i < clean.length; ++i) {
+    if (clean[i] === '(') depth++;
+    if (clean[i] === ')') depth--;
+    if ((clean[i] === '+' || clean[i] === '-') && depth === 0) {
+      // Split at each top-level +/-, and recursively process parts
+      let parts = [], current = '';
+      depth = 0;
+      for (let j = 0; j < clean.length; ++j) {
+        if (clean[j] === '(') depth++;
+        if (clean[j] === ')') depth--;
+        if ((clean[j] === '+' || clean[j] === '-') && depth === 0) {
+          parts.push(current);
+          parts.push(clean[j]);
+          current = '';
+        } else {
+          current += clean[j];
+        }
+      }
+      if (current) parts.push(current);
+
+      // Only wrap each term if we're NOT inside outer parens
+      if (inOuterParens) {
+        return parts.map((p, idx) =>
+          (p === '+' || p === '-') ? ` ${p} ` : formatInputForPrettyLatex(p)
+        ).join('');
+      } else {
+        return parts.map((p, idx) =>
+          (p === '+' || p === '-') ? ` ${p} ` :
+          needsBrackets(p) ? `\\left(${formatInputForPrettyLatex(p)}\\right)` : formatInputForPrettyLatex(p)
+        ).join('');
+      }
+    }
+  }
+  // Now look for * or / at top level, and handle (leave as is)
+  depth = 0;
+  for (let i = 0; i < clean.length; ++i) {
+    if (clean[i] === '(') depth++;
+    if (clean[i] === ')') depth--;
+    if ((clean[i] === '*' || clean[i] === '/') && depth === 0) {
+      let op = clean[i];
+      let left = clean.slice(0, i);
+      let right = clean.slice(i + 1);
+      if (op === '*') {
+        return [
+          needsBrackets(left) ? `\\left(${formatInputForPrettyLatex(left)}\\right)` : formatInputForPrettyLatex(left),
+          ' \\cdot ',
+          needsBrackets(right) ? `\\left(${formatInputForPrettyLatex(right)}\\right)` : formatInputForPrettyLatex(right)
+        ].join('');
+      } else { // '/'
+        return `\\displaystyle\\frac{${needsBrackets(left) ? `\\left(${formatInputForPrettyLatex(left)}\\right)` : formatInputForPrettyLatex(left)}}{${needsBrackets(right) ? `\\left(${formatInputForPrettyLatex(right)}\\right)` : formatInputForPrettyLatex(right)}}`;
+      }
+    }
+  }
+  // Otherwise, just print inline (replace * with \cdot for LaTeX)
+  return clean.replace(/\*/g, ' \\cdot ');
+}
+
+
+
+
+
+
+
+
+function calculate() {
+  let inputRaw = document.getElementById('input-box').value.trim();
+
+  // 1. Expand variables if needed (y y y → y^3)
+  let expandedVars = expandAdjacentVariables(inputRaw);
+
+  // 2. Insert implicit * (5x → 5*x, xy → x*y, etc)
+  let input = insertImplicitMultiplication(expandedVars);
+
+  // 3. Insert explicit * between letters and numbers
+  let mathInput = insertExplicitMultiplication(input);
+
+  // 4. Parenthesize denominator, so (5x/2z) → (5*x/(2*z))
+  mathInput = parenthesizeDenominator(mathInput);
+
+  // 5. Send this to math.js
+  let stepsDiv = document.getElementById('steps-math-output');
+  let prettyOutput1 = '';
+
+  try {
+    let node = math.parse(mathInput);
+
+    // DO NOT SIMPLIFY!
+    // let simplified = math.simplify(node); // ← REMOVE THIS LINE
+    // Just display as written:
+    let tex = node.toTex().replace(/\\cdot\s*/g, '');
+    prettyOutput1 = `\\(${tex}\\)`;
+
+  } catch (e) {
+    prettyOutput1 = `\\(\\text{Error}\\)`;
+    console.error("Calculation Error:", e);
+  }
+
+  window.lastOutput1 = prettyOutput1;
+  let prettyInput = `\\(${formatInputForPrettyLatex(input)}\\)`;
+  let outputs = [
+    prettyOutput1,
+    '\\(\\text{Output 2}\\)',
+    '\\(\\text{Output 3}\\)'
+  ];
+
+  let steps = [];
+  steps.push(`<div class="steps-eq-row">
+      <span class="steps-side">${prettyInput}</span>
+      <span class="eq-label">=</span>
+      <span class="steps-side right"><span class="steps-eq-latex">${outputs[0]}</span></span>
+    </div>`);
+  for (let i = 1; i < outputs.length; i++) {
+    steps.push(`<div class="steps-eq-row">
+        <span class="steps-side">&nbsp;</span>
+        <span class="eq-label">=</span>
+        <span class="steps-side right"><span class="steps-eq-latex">${outputs[i]}</span></span>
+      </div>`);
+  }
+  stepsDiv.innerHTML = steps.join('');
+  MathJax.typesetPromise([stepsDiv]);
+}
+
+
+
+
+
+
+
+document.getElementById('copy-output1-btn').onclick = function() {
+  // Use the last calculated value
+  navigator.clipboard.writeText(window.lastOutput1 || "No Output 1 yet");
+};
+document.getElementById('copy-latex-btn').onclick = function() {
+  let stepsDiv = document.getElementById('steps-math-output');
+  if (!stepsDiv.textContent) return;
+  navigator.clipboard.writeText(stepsDiv.textContent)
+    .then(() => {
+      let btn = document.getElementById('copy-latex-btn');
+      btn.textContent = '✅';
+      setTimeout(() => btn.textContent = '📋', 800);
+    });
+};
+window.onload = function() {
+  calculate();
+  updateUnitOptions && updateUnitOptions();
+};
+  const inputBox = document.getElementById('input-box');
+
+// Show keyboard when user taps input box
+inputBox.addEventListener('focus', function () {
+  inputBox.removeAttribute('readonly');
+});
+
+// Hide keyboard after leaving input box (small delay for button clicks)
+inputBox.addEventListener('blur', function () {
+  setTimeout(() => inputBox.setAttribute('readonly', true), 100);
+});
+</script>
+</body>
+</html>
