@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Force desktop layout, disables mobile scaling -->
+  <meta name="viewport" content="width=1024">
   <title>Fire Fighting Drone Swarm System (FFDSS)</title>
   <style>
     body {
@@ -46,6 +47,64 @@
     }
     p {
       margin-top: 1rem;
+    }
+    /* Font and spacing tweaks for better mobile look even in desktop mode */
+    @media (max-width: 900px) {
+      .container {
+        padding: 1.1rem !important;
+      }
+      body {
+        padding: 0.5rem !important;
+      }
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.15rem; }
+      .accent { font-size: 0.99rem; }
+      ul, p { font-size: 0.98rem; }
+    }
+    @media (max-width: 600px) {
+      .container {
+        padding: 0.5rem !important;
+      }
+      body {
+        padding: 0.3rem !important;
+      }
+      h1 { font-size: 1.13rem; }
+      h2 { font-size: 0.99rem; }
+      .accent { font-size: 0.93rem; }
+      ul, p { font-size: 0.93rem; }
+    }
+    /* Email link color fix for footer */
+    .footer-email {
+      color: #ff4500 !important;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .footer-email:hover {
+      color: #fff !important;
+      text-shadow: 0 0 4px #ff450077;
+    }
+    .footer-contact {
+      margin-top: 2.2rem;
+      text-align: center;
+      font-size: 1.01rem;
+      color: #bbb;
+    }
+    .footer-qrs {
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+    .footer-qrs img {
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 4px #ff450088;
+      vertical-align: middle;
+    }
+    .footer-qrs span {
+      font-size: 0.98rem;
+      color: #ff4500;
+      display: block;
+      margin-top: 0.2em;
+      margin-bottom: 0.4em;
     }
   </style>
 </head>
@@ -94,6 +153,27 @@
       <h2>Future Development</h2>
       <p>Future enhancements include the integration of mid-air drone-to-drone battery and water payload transfers, advanced swarm intelligence algorithms for fully decentralized operation, and further miniaturization for rapid response in complex environments.</p>
     </section>
+
+    <!-- QR code for easy sharing -->
+    <div style="text-align:center; margin-top:2.4rem;">
+      <span style="font-size:1rem; color:#ff4500;">Scan for this project</span><br>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io%2FProjects%2FFire_Fighting_Drone_Swarm_System.html&size=110x110"
+           alt="QR: Fire Fighting Drone Swarm System"
+           style="margin-top:0.7em; box-shadow:0 0 8px #ff450055; border-radius:8px; background:#fff;">
+    </div>
+
+    <!-- Email contact and QR code at the bottom -->
+    <div class="footer-contact">
+      <div style="margin-top:1.3em;">
+        <span>To collaborate, ask questions, or propose a mission, reach out:</span>
+        <div class="footer-qrs" style="margin-top:0.6em;">
+          <a href="mailto:awhatmore@whatmoreindustries.io" class="footer-email">awhatmore@whatmoreindustries.io</a>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=80x80"
+               alt="QR Email" style="margin-left:0.8em; vertical-align:middle;">
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
