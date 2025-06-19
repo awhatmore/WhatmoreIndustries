@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Oxford 3000 - AI Scalable Reference Archive</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px; /* space between columns */
+    }
+
+    .column {
+      width: 200px;
+    }
+
+    /* ONLY CENTER THE 'a' and 'ab' HEADINGS */
+    .letter-label {
+      text-align: left;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* KEEP WORDS LEFT ALIGNED */
+    .word-item {
+      text-align: left;
+      margin: 4px 0;
+    }
+
+    .word-code {
+      font-weight: bold;
+      margin-right: 5px;
+      display: inline-block;
+      width: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Oxford 3000 - AI Scalable Reference Archive</h1>
+
+  <div class="container">
+    <!-- Column 1: Words starting with 'a' only -->
+    <div class="column" id="a-words">
+      <div class="letter-label">A</div> <!-- CENTERED -->
+      <div class="word-item"><span class="word-code">a1</span>a</div>
+      <!-- Add more single 'a' letter words if any -->
+    </div>
+
+  <!-- Column 2: Words starting with 'ab' -->
+  <div class="column" id="ab-words">
+    <div class="letter-label">AB</div>
+    <div class="word-item"><span class="word-code">ab1</span>abandon</div>
+    <div class="word-item"><span class="word-code">ab2</span>ability</div>
+    <div class="word-item"><span class="word-code">ab3</span>able</div>
+    <div class="word-item"><span class="word-code">ab4</span>about</div>
+    <div class="word-item"><span class="word-code">ab5</span>above</div>
+    <div class="word-item"><span class="word-code">ab6</span>abroad</div>
+    <div class="word-item"><span class="word-code">ab7</span>absence</div>
+    <div class="word-item"><span class="word-code">ab8</span>absent</div>
+    <div class="word-item"><span class="word-code">ab9</span>absolute</div>
+    <div class="word-item"><span class="word-code">ab10</span>absolutely</div>
+    <div class="word-item"><span class="word-code">ab11</span>absorb</div>
+    <div class="word-item"><span class="word-code">ab12</span>abuse</div>
+    <!-- Add more 'ab' words here -->
+  </div>
+
+  <!-- Column 3: Words starting with 'ac' -->
+  <div class="column" id="ac-words">
+    <div class="letter-label">AC</div>
+    <div class="word-item"><span class="word-code">ac1</span>academic</div>
+    <div class="word-item"><span class="word-code">ac2</span>accent</div>
+    <div class="word-item"><span class="word-code">ac3</span>accept</div>
+    <div class="word-item"><span class="word-code">ac4</span>acceptable</div>
+    <div class="word-item"><span class="word-code">ac5</span>access</div>
+    <div class="word-item"><span class="word-code">ac6</span>accident</div>
+    <div class="word-item"><span class="word-code">ac7</span>accidental</div>
+    <div class="word-item"><span class="word-code">ac8</span>accommodate</div>
+    <div class="word-item"><span class="word-code">ac9</span>accompany</div>
+    <div class="word-item"><span class="word-code">ac10</span>account</div>
+    <div class="word-item"><span class="word-code">ac11</span>accurate</div>
+    <div class="word-item"><span class="word-code">ac12</span>accuse</div>
+    <!-- Add more 'ac' words here -->
+  </div>
+
+  <!-- Column 4: Words starting with 'ad' -->
+  <div class="column" id="ad-words">
+    <div class="letter-label">AD</div>
+    <div class="word-item"><span class="word-code">ad1</span>adapt</div>
+    <div class="word-item"><span class="word-code">ad2</span>add</div>
+    <div class="word-item"><span class="word-code">ad3</span>addition</div>
+    <div class="word-item"><span class="word-code">ad4</span>additional</div>
+    <div class="word-item"><span class="word-code">ad5</span>address</div>
+    <div class="word-item"><span class="word-code">ad6</span>adequate</div>
+    <div class="word-item"><span class="word-code">ad7</span>adjust</div>
+    <div class="word-item"><span class="word-code">ad8</span>admire</div>
+    <div class="word-item"><span class="word-code">ad9</span>admit</div>
+    <div class="word-item"><span class="word-code">ad10</span>adopt</div>
+    <div class="word-item"><span class="word-code">ad11</span>adult</div>
+    <div class="word-item"><span class="word-code">ad12</span>advance</div>
+    <!-- Add more 'ad' words here -->
+  </div>
+
+    <div class="container">
+  <!-- Column 5: Words starting with 'ae' -->
+  <div class="column" id="ae-words">
+    <div class="letter-label">AE</div>
+    <div class="word-item"><span class="word-code">ae1</span>aeroplane</div>
+    <div class="word-item"><span class="word-code">ae2</span>aesthetic</div>
+    <!-- Add more 'ae' words here -->
+  </div>
+
+  <!-- Column 6: Words starting with 'af' -->
+  <div class="column" id="af-words">
+    <div class="letter-label">AF</div>
+    <div class="word-item"><span class="word-code">af1</span>affair</div>
+    <div class="word-item"><span class="word-code">af2</span>affect</div>
+    <div class="word-item"><span class="word-code">af3</span>affection</div>
+    <div class="word-item"><span class="word-code">af4</span>afford</div>
+    <div class="word-item"><span class="word-code">af5</span>afraid</div>
+    <!-- Add more 'af' words here -->
+  </div>
+
+  <!-- Column 7: Words starting with 'ag' -->
+  <div class="column" id="ag-words">
+    <div class="letter-label">AG</div>
+    <div class="word-item"><span class="word-code">ag1</span>age</div>
+    <div class="word-item"><span class="word-code">ag2</span>agency</div>
+    <div class="word-item"><span class="word-code">ag3</span>agenda</div>
+    <div class="word-item"><span class="word-code">ag4</span>agent</div>
+    <div class="word-item"><span class="word-code">ag5</span>aggressive</div>
+    <div class="word-item"><span class="word-code">ag6</span>ago</div>
+    <div class="word-item"><span class="word-code">ag7</span>agree</div>
+    <div class="word-item"><span class="word-code">ag8</span>agreement</div>
+    <!-- Add more 'ag' words here -->
+  </div>
+
+  <!-- Column 8: Words starting with 'ah' -->
+  <div class="column" id="ah-words">
+    <div class="letter-label">AH</div>
+    <div class="word-item"><span class="word-code">ah1</span>ahead</div>
+    <!-- Add more 'ah' words here -->
+  </div>
+
+  <!-- Column 9: Words starting with 'ai' -->
+  <div class="column" id="ai-words">
+    <div class="letter-label">AI</div>
+    <div class="word-item"><span class="word-code">ai1</span>aid</div>
+    <div class="word-item"><span class="word-code">ai2</span>aim</div>
+    <div class="word-item"><span class="word-code">ai3</span>air</div>
+    <div class="word-item"><span class="word-code">ai4</span>aircraft</div>
+    <div class="word-item"><span class="word-code">ai5</span>airport</div>
+    <!-- Add more 'ai' words here -->
+  </div>
+
+  <!-- Column 10: Words starting with 'al' -->
+  <div class="column" id="al-words">
+    <div class="letter-label">AL</div>
+    <div class="word-item"><span class="word-code">al1</span>alarm</div>
+    <div class="word-item"><span class="word-code">al2</span>alarmed</div>
+    <div class="word-item"><span class="word-code">al3</span>alarming</div>
+    <div class="word-item"><span class="word-code">al4</span>alcohol</div>
+    <div class="word-item"><span class="word-code">al5</span>alcoholic</div>
+    <div class="word-item"><span class="word-code">al6</span>alive</div>
+    <div class="word-item"><span class="word-code">al7</span>all</div>
+    <div class="word-item"><span class="word-code">al8</span>allied</div>
+    <div class="word-item"><span class="word-code">al9</span>allow</div>
+    <div class="word-item"><span class="word-code">al10</span>ally</div>
+    <!-- Add more 'al' words here -->
+  </div>
+
+  <!-- Column 11: Words starting with 'am' -->
+  <div class="column" id="am-words">
+    <div class="letter-label">AM</div>
+    <div class="word-item"><span class="word-code">am1</span>amaze</div>
+    <div class="word-item"><span class="word-code">am2</span>amazed</div>
+    <div class="word-item"><span class="word-code">am3</span>amazing</div>
+    <div class="word-item"><span class="word-code">am4</span>ambition</div>
+    <div class="word-item"><span class="word-code">am5</span>ambulance</div>
+    <div class="word-item"><span class="word-code">am6</span>among</div>
+    <div class="word-item"><span class="word-code">am7</span>amount</div>
+    <div class="word-item"><span class="word-code">am8</span>amuse</div>
+    <div class="word-item"><span class="word-code">am9</span>amused</div>
+    <div class="word-item"><span class="word-code">am10</span>amusing</div>
+    <!-- Add more 'am' words here -->
+  </div>
+
+  <!-- Column 12: Words starting with 'an' -->
+  <div class="column" id="an-words">
+    <div class="letter-label">AN</div>
+    <div class="word-item"><span class="word-code">an1</span>an</div>
+    <div class="word-item"><span class="word-code">an2</span>analyse</div>
+    <div class="word-item"><span class="word-code">an3</span>analysis</div>
+    <div class="word-item"><span class="word-code">an4</span>ancient</div>
+    <div class="word-item"><span class="word-code">an5</span>anger</div>
+    <div class="word-item"><span class="word-code">an6</span>angle</div>
+    <div class="word-item"><span class="word-code">an7</span>angry</div>
+    <div class="word-item"><span class="word-code">an8</span>animal</div>
+    <div class="word-item"><span class="word-code">an9</span>announce</div>
+    <div class="word-item"><span class="word-code">an10</span>announcement</div>
+    <div class="word-item"><span class="word-code">an11</span>annoy</div>
+    <div class="word-item"><span class="word-code">an12</span>annoyed</div>
+    <div class="word-item"><span class="word-code">an13</span>annoying</div>
+    <div class="word-item"><span class="word-code">an14</span>annual</div>
+    <div class="word-item"><span class="word-code">an15</span>another</div>
+    <div class="word-item"><span class="word-code">an16</span>answer</div>
+    <div class="word-item"><span class="word-code">an17</span>ant</div>
+    <div class="word-item"><span class="word-code">an18</span>anticipate</div>
+    <div class="word-item"><span class="word-code">an19</span>anxiety</div>
+    <div class="word-item"><span class="word-code">an20</span>anxious</div>
+    <!-- Add more 'an' words here -->
+  </div>
+
+  <!-- Column 13: Words starting with 'ap' -->
+  <div class="column" id="ap-words">
+    <div class="letter-label">AP</div>
+    <div class="word-item"><span class="word-code">ap1</span>apologize</div>
+    <div class="word-item"><span class="word-code">ap2</span>apology</div>
+    <div class="word-item"><span class="word-code">ap3</span>apparent</div>
+    <div class="word-item"><span class="word-code">ap4</span>apparently</div>
+    <div class="word-item"><span class="word-code">ap5</span>appeal</div>
+    <div class="word-item"><span class="word-code">ap6</span>appear</div>
+    <div class="word-item"><span class="word-code">ap7</span>appearance</div>
+    <div class="word-item"><span class="word-code">ap8</span>apple</div>
+    <div class="word-item"><span class="word-code">ap9</span>application</div>
+    <div class="word-item"><span class="word-code">ap10</span>apply</div>
+    <div class="word-item"><span class="word-code">ap11</span>appoint</div>
+    <div class="word-item"><span class="word-code">ap12</span>appointment</div>
+    <div class="word-item"><span class="word-code">ap13</span>appreciate</div>
+    <div class="word-item"><span class="word-code">ap
+     <!-- Add more 'ap' words here -->
+  </div>
+    
+  <!-- Column 14: Words starting with 'ar' -->
+  <div class="column" id="ar-words">
+    <div class="letter-label">AR</div>
+    <div class="word-item"><span class="word-code">ar1</span>area</div>
+    <div class="word-item"><span class="word-code">ar2</span>argue</div>
+    <div class="word-item"><span class="word-code">ar3</span>argument</div>
+    <div class="word-item"><span class="word-code">ar4</span>arise</div>
+    <div class="word-item"><span class="word-code">ar5</span>arm</div>
+    <div class="word-item"><span class="word-code">ar6</span>armed</div>
+    <div class="word-item"><span class="word-code">ar7</span>arms</div>
+    <div class="word-item"><span class="word-code">ar8</span>army</div>
+    <div class="word-item"><span class="word-code">ar9</span>around</div>
+    <div class="word-item"><span class="word-code">ar10</span>arrange</div>
+    <div class="word-item"><span class="word-code">ar11</span>arrangement</div>
+    <div class="word-item"><span class="word-code">ar12</span>arrest</div>
+    <div class="word-item"><span class="word-code">ar13</span>arrival</div>
+    <div class="word-item"><span class="word-code">ar14</span>arrive</div>
+    <div class="word-item"><span class="word-code">ar15</span>arrow</div>
+    <div class="word-item"><span class="word-code">ar16</span>art</div>
+    <div class="word-item"><span class="word-code">ar17</span>article</div>
+    <div class="word-item"><span class="word-code">ar18</span>artificial</div>
+    <div class="word-item"><span class="word-code">ar19</span>artist</div>
+    <div class="word-item"><span class="word-code">ar20</span>artistic</div>
+    <!-- Add more 'ar' words here -->
+  </div>
+
+  <!-- Column 15: Words starting with 'as' -->
+  <div class="column" id="as-words">
+    <div class="letter-label">AS</div>
+    <div class="word-item"><span class="word-code">as1</span>ashamed</div>
+    <div class="word-item"><span class="word-code">as2</span>aside</div>
+    <div class="word-item"><span class="word-code">as3</span>ask</div>
+    <div class="word-item"><span class="word-code">as4</span>asleep</div>
+    <div class="word-item"><span class="word-code">as5</span>aspect</div>
+    <div class="word-item"><span class="word-code">as6</span>assist</div>
+    <div class="word-item"><span class="word-code">as7</span>assistance</div>
+    <div class="word-item"><span class="word-code">as8</span>assistant</div>
+    <div class="word-item"><span class="word-code">as9</span>associate</div>
+    <div class="word-item"><span class="word-code">as10</span>association</div>
+    <div class="word-item"><span class="word-code">as11</span>assume</div>
+    <div class="word-item"><span class="word-code">as12</span>assumption</div>
+    <div class="word-item"><span class="word-code">as13</span>assure</div>
+    <div class="word-item"><span class="word-code">as14</span>astonished</div>
+    <!-- Add more 'as' words here -->
+  </div>
+
+  <!-- Column 16: Words starting with 'at' -->
+  <div class="column" id="at-words">
+    <div class="letter-label">AT</div>
+    <div class="word-item"><span class="word-code">at</span>at</div>
+    <div class="word-item"><span class="word-code">at1</span>athlete</div>
+    <div class="word-item"><span class="word-code">at2</span>atmosphere</div>
+    <div class="word-item"><span class="word-code">at3</span>attach</div>
+    <div class="word-item"><span class="word-code">at4</span>attack</div>
+    <div class="word-item"><span class="word-code">at5</span>attempt</div>
+    <div class="word-item"><span class="word-code">at6</span>attend</div>
+    <div class="word-item"><span class="word-code">at7</span>attention</div>
+    <div class="word-item"><span class="word-code">at8</span>attitude</div>
+    <div class="word-item"><span class="word-code">at9</span>attract</div>
+    <div class="word-item"><span class="word-code">at10</span>attraction</div>
+    <div class="word-item"><span class="word-code">at11</span>attractive</div>
+    <!-- Add more 'at' words here -->
+  </div>
+
+  <!-- Column 17: Words starting with 'au' -->
+  <div class="column" id="au-words">
+    <div class="letter-label">AU</div>
+    <div class="word-item"><span class="word-code">at12</span>audience</div>
+    <div class="word-item"><span class="word-code">at13</span>author</div>
+    <div class="word-item"><span class="word-code">at14</span>authority</div>
+    <div class="word-item"><span class="word-code">at15</span>automatic</div>
+    <div class="word-item"><span class="word-code">at16</span>automatically</div>
+    <div class="word-item"><span class="word-code">au1</span>autumn</div>
+    <div class="word-item"><span class="word-code">au2</span>available</div>
+    <div class="word-item"><span class="word-code">au3</span>average</div>
+    <div class="word-item"><span class="word-code">au4</span>avoid</div>
+    <!-- Add more 'au' words here -->
+  </div>
+    
+  <div class="column" id="au-words">
+   <div class="letter-label">AV</div>
+   <div class="word-item"><span class="word-code">au4</span>avoid</div>
+    <!-- Add more 'av' words here -->
+  </div>
+
+  <!-- Column 18: Words starting with 'aw' -->
+  <div class="column" id="aw-words">
+    <div class="letter-label">AW</div>
+    <div class="word-item"><span class="word-code">au5</span>awake</div>
+    <div class="word-item"><span class="word-code">au6</span>award</div>
+    <div class="word-item"><span class="word-code">au7</span>aware</div>
+    <div class="word-item"><span class="word-code">au8</span>awareness</div>
+    <div class="word-item"><span class="word-code">aw1</span>away</div>
+    <div class="word-item"><span class="word-code">aw2</span>awful</div>
+    <div class="word-item"><span class="word-code">aw3</span>awkward</div>
+    <!-- Add more 'aw' words here -->
+  </div>
+
+  <!-- Column 19: Words starting with 'ax' -->
+  <div class="column" id="ax-words">
+    <div class="letter-label">AX</div>
+    <div class="word-item"><span class="word-code">ax1</span>axis</div>
+    <!-- Add more 'ax' words here -->
+  </div>
+
+  <!-- Column 20: Words starting with 'az' -->
+  <div class="column" id="az-words">
+    <div class="letter-label">AZ</div>
+    <div class="word-item"><span class="word-code">az1</span>azure</div>
+    <!-- Add more 'az' words here if needed -->
+  </div>
+</div>
+
+
+  <!-- Add more columns for 'ae', 'af', 'ag', etc., as needed -->
+</div>
+</body>
+</html>
