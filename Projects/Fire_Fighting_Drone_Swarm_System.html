@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Force desktop layout, disables mobile scaling -->
   <meta name="viewport" content="width=1024">
   <title>Fire Fighting Drone Swarm System (FFDSS)</title>
   <style>
@@ -14,6 +13,96 @@
       line-height: 1.6;
       padding: 2rem;
     }
+    /* Graphic Header Styles */
+    .graphic-header {
+      text-align: center;
+      margin-bottom: 2.6rem;
+      position: relative;
+      z-index: 2;
+      user-select: none;
+    }
+    .brand-title {
+      font-size: 2.7rem;
+      letter-spacing: 2px;
+      font-weight: bold;
+      color: #fff0e5;
+      position: relative;
+      padding-top: 0.9rem;
+      text-shadow:
+        0 0 12px #ff7b27bb,
+        0 0 32px #ffb65899,
+        0 3px 16px #420,
+        0 1px 0 #fff,
+        0 0 3px #fa0a,
+        0 0 1px #fff;
+    }
+    .flame-bar {
+      margin: 0.6em auto 0.6em auto;
+      width: 162px;
+      height: 28px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 2px;
+    }
+    .flame {
+      width: 19px;
+      height: 28px;
+      background: linear-gradient(180deg, #ffe3be 0%, #ff4500 72%, #ff5d00 100%);
+      border-radius: 12px 12px 24px 24px / 23px 23px 34px 34px;
+      box-shadow:
+        0 0 16px #ff5800bb,
+        0 0 32px #ffb65866,
+        0 3px 8px #ffb95833;
+      position: relative;
+      animation: flamewave 1.7s infinite alternate;
+      opacity: 0.85;
+    }
+    .flame:nth-child(2) {
+      height: 23px; width: 14px;
+      margin-left: -9px;
+      background: linear-gradient(180deg, #fffbe3 15%, #ff8800 82%, #ffb500 100%);
+      opacity: 0.74;
+      animation-delay: 0.4s;
+    }
+    .flame:nth-child(3) {
+      height: 31px; width: 20px;
+      margin-left: -9px;
+      background: linear-gradient(180deg, #fffde0 12%, #ff6600 82%, #ff9000 100%);
+      opacity: 0.93;
+      animation-delay: 0.15s;
+    }
+    .flame:nth-child(4) {
+      height: 18px; width: 13px;
+      margin-left: -6px;
+      background: linear-gradient(180deg, #fff8d1 25%, #ff9800 90%, #ffa100 100%);
+      opacity: 0.7;
+      animation-delay: 0.7s;
+    }
+    .flame:nth-child(5) {
+      height: 25px; width: 16px;
+      margin-left: -7px;
+      background: linear-gradient(180deg, #ffe7bf 10%, #ffb700 60%, #ff6100 100%);
+      opacity: 0.8;
+      animation-delay: 0.3s;
+    }
+    @keyframes flamewave {
+      0% { transform: scaleY(0.97) translateY(2px);}
+      55% { transform: scaleY(1.07) translateY(-2px);}
+      100% { transform: scaleY(0.93) translateY(3px);}
+    }
+    .brand-bg {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(90deg, #1e0e01 15%, #221100 40%, #341a02 60%, #1a0702 100%);
+      position: absolute;
+      left: 0; bottom: -14px;
+      z-index: -1;
+      opacity: 0.19;
+      border-radius: 0 0 21px 21px / 0 0 13px 13px;
+    }
+    /* Rest of your page styles... */
     .container {
       max-width: 960px;
       margin: auto;
@@ -48,7 +137,6 @@
     p {
       margin-top: 1rem;
     }
-    /* Font and spacing tweaks for better mobile look even in desktop mode */
     @media (max-width: 900px) {
       .container {
         padding: 1.1rem !important;
@@ -56,8 +144,9 @@
       body {
         padding: 0.5rem !important;
       }
-      h1 { font-size: 1.7rem; }
-      h2 { font-size: 1.15rem; }
+      .brand-title { font-size: 1.35rem; }
+      h1 { font-size: 1.15rem; }
+      h2 { font-size: 1.03rem; }
       .accent { font-size: 0.99rem; }
       ul, p { font-size: 0.98rem; }
     }
@@ -68,8 +157,9 @@
       body {
         padding: 0.3rem !important;
       }
-      h1 { font-size: 1.13rem; }
-      h2 { font-size: 0.99rem; }
+      .brand-title { font-size: 1.02rem; }
+      h1 { font-size: 0.99rem; }
+      h2 { font-size: 0.87rem; }
       .accent { font-size: 0.93rem; }
       ul, p { font-size: 0.93rem; }
     }
@@ -109,6 +199,18 @@
   </style>
 </head>
 <body>
+  <div class="graphic-header">
+    <div class="brand-title">WHATMORE INDUSTRIES</div>
+    <div class="flame-bar">
+      <div class="flame"></div>
+      <div class="flame"></div>
+      <div class="flame"></div>
+      <div class="flame"></div>
+      <div class="flame"></div>
+    </div>
+    <div class="brand-bg"></div>
+  </div>
+
   <div class="container">
     <h1>Fire Fighting Drone Swarm System (FFDSS)</h1>
     <div class="accent">
@@ -173,7 +275,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </body>
 </html>
