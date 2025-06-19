@@ -25,16 +25,14 @@
       font-size: 2.7rem;
       letter-spacing: 2px;
       font-weight: bold;
-      color: #fff0e5;
+      color: #e0e0e0; /* Changed to match main font */
       position: relative;
       padding-top: 0.9rem;
       text-shadow:
-        0 0 12px #ff7b27bb,
-        0 0 32px #ffb65899,
-        0 3px 16px #420,
-        0 1px 0 #fff,
-        0 0 3px #fa0a,
-        0 0 1px #fff;
+        0 0 12px #29292933,
+        0 0 2px #0004,
+        0 2px 8px #000c;
+      margin-bottom: 0.3em;
     }
     .flame-bar {
       margin: 0.6em auto 0.6em auto;
@@ -102,9 +100,11 @@
       opacity: 0.19;
       border-radius: 0 0 21px 21px / 0 0 13px 13px;
     }
-    /* Rest of your page styles... */
+    /* Main content container now 80% width, max 960px */
     .container {
+      width: 80vw;
       max-width: 960px;
+      min-width: 320px;
       margin: auto;
       border: 1px solid #333;
       padding: 2rem;
@@ -140,6 +140,7 @@
     @media (max-width: 900px) {
       .container {
         padding: 1.1rem !important;
+        width: 98vw;
       }
       body {
         padding: 0.5rem !important;
@@ -153,6 +154,7 @@
     @media (max-width: 600px) {
       .container {
         padding: 0.5rem !important;
+        width: 99vw;
       }
       body {
         padding: 0.3rem !important;
