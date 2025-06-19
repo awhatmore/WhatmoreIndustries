@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Force desktop layout, disables mobile scaling -->
+  <meta name="viewport" content="width=1024">
   <title>Whatmore Industries – Project Archive</title>
   <style>
     html, body {
@@ -133,16 +134,17 @@
       color: #fff;
       text-shadow: 0 0 4px #0ff7;
     }
-    @media (max-width: 600px) {
-      main {
-        padding: 1rem;
-        margin: 2rem 0.5rem;
-      }
-      .project-list {
-        grid-template-columns: 1fr;
-        gap: 14px;
-      }
+    /* Email link color fix */
+    a[href^="mailto:"] {
+      color: #0ef !important;
+      text-decoration: underline;
     }
+    a[href^="mailto:"]:hover {
+      color: #fff !important;
+      text-shadow: 0 0 4px #0ff7;
+    }
+    /* --- REMOVE MOBILE LAYOUT CHANGES: No @media, always desktop look --- */
+    /* If you ever want to re-enable responsive mobile view, add your @media back in here */
   </style>
 </head>
 <body>
