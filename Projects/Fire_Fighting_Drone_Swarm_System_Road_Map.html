@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=1024">
   <title>Fire Fighting Drone Swarm System – Advanced NSF Technical Roadmap</title>
   <style>
     body {
@@ -22,6 +22,61 @@
       background: rgba(20, 20, 20, 0.90);
       box-shadow: 0 0 12px #ff450044;
     }
+    /* --- Header styles --- */
+    .whatmore-header {
+      text-align: center;
+      margin-bottom: 1.9rem;
+    }
+    .whatmore-title {
+      font-size: 2.25rem;
+      font-weight: bold;
+      letter-spacing: 1.4px;
+      color: #ff4500;
+      text-shadow: 0 0 8px #ff450044, 0 2px 8px #000d;
+      margin-bottom: 0.2em;
+    }
+    .whatmore-contact {
+      margin-bottom: 0.6em;
+      color: #ffb87a;
+      font-size: 1.04rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45em;
+    }
+    .whatmore-contact a {
+      color: #ff4500 !important;
+      text-decoration: underline;
+      font-weight: 500;
+      margin: 0 0.4em;
+    }
+    .whatmore-contact a:hover {
+      color: #fff !important;
+      text-shadow: 0 0 4px #ff450077;
+    }
+    .qr-codes-row {
+      display: flex;
+      gap: 2em;
+      justify-content: center;
+      align-items: center;
+      margin-top: 0.25em;
+    }
+    .qr-codes-row img {
+      border-radius: 7px;
+      background: #fff;
+      box-shadow: 0 0 6px #ff450066;
+      height: 75px;
+      width: 75px;
+      margin: 0 0.3em;
+    }
+    /* Responsive: shrink header for smaller screens */
+    @media (max-width: 600px) {
+      .whatmore-title { font-size: 1.23rem; }
+      .container { padding: 0.7rem !important; }
+      .qr-codes-row img { height: 52px; width: 52px; }
+      .whatmore-contact { font-size: 0.95rem; }
+    }
+    /* -- Rest of your styles unchanged -- */
     h1, h2, h3 {
       color: #ff4500;
       text-shadow: 0 0 1px #ff450001, 0 0 2px #ff450002;
@@ -73,6 +128,24 @@
   </style>
 </head>
 <body>
+  <div class="whatmore-header">
+    <div class="whatmore-title">WHATMORE INDUSTRIES</div>
+    <div class="whatmore-contact">
+      <span>
+        <a href="mailto:awhatmore@whatmoreindustries.io">awhatmore@whatmoreindustries.io</a>
+      </span>
+      <div class="qr-codes-row">
+        <span>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io&size=75x75"
+               alt="QR WhatmoreIndustries.io">
+        </span>
+        <span>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=75x75"
+               alt="QR Email">
+        </span>
+      </div>
+    </div>
+  </div>
   <nav>
   <ul>
     <li><a href="#introduction">Introduction</a></li>
