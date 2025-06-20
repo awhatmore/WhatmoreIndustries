@@ -998,6 +998,84 @@ window.addEventListener('scroll', function() {
     </div>
   </details>
 </section>
+    <section>
+  <h2>🔥 Fireline Energy & Water Suppression Estimator</h2>
+  <div class="accent">
+    <p>
+      <b>Estimate the total thermal energy (work) your drone system must counter—then see how much water you'd need for full suppression.</b>
+    </p>
+  </div>
+  <form id="fire-calc-form" style="margin-bottom:1.3em;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1em;">
+      <label>
+        <b>Fireline Length (meters):</b>
+        <input type="number" id="fire-length" value="10" min="1" max="10000" style="width:90%;padding:0.3em;" required>
+      </label>
+      <label>
+        <b>Fire Intensity (kW/m):</b>
+        <input type="number" id="fire-intensity" value="80" min="10" max="3000" step="1" style="width:90%;padding:0.3em;" required>
+      </label>
+      <label>
+        <b>Defense Time (minutes):</b>
+        <input type="number" id="defense-mins" value="10" min="1" max="120" step="1" style="width:90%;padding:0.3em;" required>
+      </label>
+      <label>
+        <b>Vegetation Density (%)</b>
+        <input type="number" id="veg-density" value="70" min="10" max="100" step="1" style="width:90%;padding:0.3em;">
+      </label>
+      <label>
+        <b>Season/Dryness Factor</b>
+        <select id="season-factor" style="width:95%;padding:0.3em;">
+          <option value="1.2">Late summer (Very dry)</option>
+          <option value="1">Spring/Summer (Avg)</option>
+          <option value="0.8">Winter/Early spring (Wet)</option>
+        </select>
+      </label>
+    </div>
+    <button type="submit" style="margin:1em 0 0.2em 0;padding:0.5em 1.4em;border-radius:7px;background:#ff4500cc;color:#fff;font-weight:600;font-size:1.04em;border:none;box-shadow:0 0 6px #ff450044;cursor:pointer;">Calculate</button>
+  </form>
+  <div id="fire-calc-results" class="accent" style="font-size:1.13em;padding:1em 1.2em;"></div>
+
+  <details style="margin-top:1.2em;">
+    <summary style="cursor:pointer;font-weight:500;color:#ffb87a;">🔎 Formula Details</summary>
+    <div style="padding:0.7em 1.2em;">
+      <ol>
+        <li><b>Adjusted Fire Intensity</b> = Input (kW/m) × (Vegetation Density % / 70%) × (Season Factor)</li>
+        <li><b>Total Energy (J)</b> = Adjusted Intensity × Length × Time (s)</li>
+        <li><b>Water Needed (L)</b> = Energy / 2,600,000 (since 1 kg/L water absorbs ≈2.6 MJ before boiling away)</li>
+      </ol>
+      <small>
+        Higher density/seasonal dryness increases required energy (work) and thus water for defense.
+      </small>
+    </div>
+  </details>
+
+  <script>
+    document.getElementById('fire-calc-form').onsubmit = function(e){
+      e.preventDefault();
+
+      // Inputs
+      const L = +document.getElementById('fire-length').value;         // meters
+      const I0 = +document.getElementById('fire-intensity').value;     // kW/m
+      const T = +document.getElementById('defense-mins').value * 60;   // seconds
+      const D = +document.getElementById('veg-density').value/70;      // 70% is reference "moderate" forest
+      const S = +document.getElementById('season-factor').value;       // 1=avg, >1=drier, <1=wetter
+
+      // Adjusted Fire Intensity
+      const I = I0 * D * S;
+      const E = I * 1000 * L * T;           // kW to W, then ×length×time (Joules)
+      const W = E / 2_600_000;              // Water needed in kg/L (ΔH for heating+vaporizing 1 L water)
+
+      document.getElementById('fire-calc-results').innerHTML = `
+        <b>Adjusted Fire Intensity:</b> ${I.toFixed(1)} kW/m<br>
+        <b>Total Fireline Energy:</b> ${E.toLocaleString(undefined,{maximumFractionDigits:0})} J (${(E/1_000_000).toFixed(2)} MJ)<br>
+        <b>Water Required for Suppression:</b> <span style="color:#ffa45c">${W.toLocaleString(undefined,{maximumFractionDigits:1})} L</span>
+        <br><small>Assumes all water is delivered to fire zone and reaches 100°C, then vaporizes.</small>
+      `;
+    }
+  </script>
+</section>
+
 
   </div>
  
