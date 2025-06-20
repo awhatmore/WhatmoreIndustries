@@ -916,5 +916,91 @@ window.addEventListener('scroll', function() {
 
 
   </div>
+  <section>
+  <h2>🔥 Fire Thermal Energy & Water Suppression Calculator</h2>
+  <div class="accent">
+    <p>
+      <b>How much water do you need to stop the fire?</b> Use this reference table and formulas for quick field calculations.
+    </p>
+  </div>
+  <table>
+    <tr>
+      <th>Parameter</th>
+      <th>Typical Value</th>
+      <th>Reference</th>
+    </tr>
+    <tr>
+      <td><b>Fireline Intensity</b></td>
+      <td>40–120 kW/m (avg: 80 kW/m)</td>
+      <td>Wildfire edge, moderate–intense fire</td>
+    </tr>
+    <tr>
+      <td><b>Water Heat Absorption</b></td>
+      <td>1 kg (1 L) = 2.6 MJ<br>(Heat + vaporization)</td>
+      <td>ΔT: 20→100°C + vaporization</td>
+    </tr>
+    <tr>
+      <td><b>Bladder Example</b></td>
+      <td>200 L = 520 MJ</td>
+      <td>200 × 2.6 MJ</td>
+    </tr>
+    <tr>
+      <td><b>Suppression Time</b></td>
+      <td>650 sec (11 min) per 10 m (at 80 kW/m)</td>
+      <td>520,000 J / (800,000 W)</td>
+    </tr>
+  </table>
+  <h3>Quick Calculation:</h3>
+  <ul>
+    <li>
+      <b>Fire Energy per meter:</b><br>
+      <code>Energy_per_meter = Fire_Intensity × Time</code>
+    </li>
+    <li>
+      <b>Water Needed:</b><br>
+      <code>Water_kg = Energy_required / 2,600,000</code><br>
+      <small>(1 kg H₂O absorbs ≈ 2.6 MJ)</small>
+    </li>
+    <li>
+      <b>Example:</b><br>
+      <code>
+        10 m of fireline, 80 kW/m, 1 hour<br>
+        Total Power = 10 m × 80,000 W = 800,000 W<br>
+        Energy = 800,000 W × 3,600 s = 2,880,000,000 J (2.88 GJ)<br>
+        Water needed = 2,880,000,000 J / 2,600,000 J ≈ 1,108 kg (≈1,100 L)
+      </code>
+    </li>
+  </ul>
+  <div class="accent" style="background:rgba(255,69,0,0.09);">
+    <p>
+      <b>Summary:</b> For every <b>1 meter</b> of fireline at 80 kW/m, you'll need about <b>31 L</b> of water per minute of defense.<br>
+      Multiply up for your real fire edge and desired hold time!
+    </p>
+  </div>
+  <details style="margin-top:1em;">
+    <summary style="cursor:pointer;font-weight:500;color:#ffb87a;">🔎 Calculation Explanation</summary>
+    <div style="padding:0.5em 1em 0 1em;">
+      <ol>
+        <li>
+          <b>Estimate fire intensity</b> (kW/m) using IR camera or agency table.
+        </li>
+        <li>
+          <b>Calculate fire energy:</b><br>
+          <code>Power = Intensity × Length</code> (W); <code>Energy = Power × Time</code> (J)
+        </li>
+        <li>
+          <b>Divide energy by water's absorption:</b> <code>Water (kg) = Energy / 2,600,000</code>
+        </li>
+        <li>
+          <b>Plan water drops/hub bladders</b> for desired defense window (minutes or hours).
+        </li>
+      </ol>
+      <p>
+        For drone swarms, use <b>modular drops</b>—spread resources based on live IR readings, replenish as needed.
+      </p>
+    </div>
+  </details>
+</section>
+
 </body>
 </html>
