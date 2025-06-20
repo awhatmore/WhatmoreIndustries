@@ -22,109 +22,125 @@
       background: rgba(20, 20, 20, 0.90);
       box-shadow: 0 0 12px #ff450044;
     }
-    /* Sidebar styles */
-   .eve-sidebar {
-      position: fixed;
-      top: 0;            /* Stick to top */
-      left: 0;           /* Stick to left */
-      transform: none;   /* Remove translateY centering */
-      z-index: 50;
+    .whatmore-header {
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: rgba(20,28,34,0.90);  /* Soft, semi-black */
-      padding: 1.1em 0.4em;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+    .whatmore-title {
+      font-size: 2.35rem;
+      font-weight: bold;
+      letter-spacing: 1.4px;
+      color: #ff4500;
+      text-shadow: 0 0 8px #ff450055, 0 2px 8px #000d;
+      margin-bottom: 0.3em;
+      text-align: center;
+      line-height: 1.18;
+    }
+    @media (max-width: 600px) {
+      .whatmore-title {
+        font-size: 1.32rem;
+      }
+      .whatmore-header {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    /* Sidebar styles */
+   .eve-sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      background: rgba(255,69,0,0.90); /* translucent orange */
+      padding: 1.1em 0.3em 1.1em 0.3em;
       border-radius: 0 18px 18px 0;
-      box-shadow: 0 0 22px #ff450088;  /* Soft orange glow */
-      gap: 1.2em;
-      min-width: 66px;
+      box-shadow: 0 0 18px #ff450066;
+      min-width: 60px;
     }
     .eve-sidebar-btn {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       margin: 0.1em 0;
-      padding: 0.23em 0.15em;
+      padding: 0.23em 0.2em;
       border-radius: 50px;
-      transition: background 0.17s, box-shadow 0.23s;
+      transition: background 0.18s, box-shadow 0.22s;
       position: relative;
       text-decoration: none;
+      cursor: pointer;
     }
-    .eve-icon {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: #fff0;
-      box-shadow: 0 0 7px #ff450066, 0 1px 6px #ff450044;
-      transition: background 0.18s, box-shadow 0.18s;
-    }
-    .eve-sidebar-btn:hover .eve-icon,
-    .eve-sidebar-btn:focus .eve-icon {
-      background: #fff5;
-      box-shadow: 0 0 18px #fff, 0 2px 8px #ffb87a55;
-    }
-    .eve-sidebar-btn:hover .eve-icon svg path,
-    .eve-sidebar-btn:hover .eve-icon svg rect {
-      stroke: #ff4500;
-    }
-    .eve-sidebar-btn:focus .eve-icon svg path,
-    .eve-sidebar-btn:focus .eve-icon svg rect {
-      stroke: #ff4500;
-    }
-    .eve-tooltip {
-      opacity: 0;
-      position: absolute;
-      left: 45px;
-      background: #ff4500ee;
+    .eve-sidebar-index {
+      font-weight: 700;
+      font-size: 1.07em;
       color: #fff;
-      padding: 0.4em 1.05em;
-      border-radius: 12px;
-      font-size: 1em;
-      font-family: inherit;
-      pointer-events: none;
-      box-shadow: 0 0 9px #ff450055;
-      letter-spacing: 0.4px;
+      margin-left: 6px;
+      letter-spacing: 0.08em;
+    }
+    .eve-nav-list {
+      display: none;
+      flex-direction: column;
+      margin-top: 0.4em;
+      width: 200px;
+      background: rgba(255,69,0,0.95);
+      border-radius: 0 14px 14px 0;
+      box-shadow: 0 0 10px #ff450022;
+      padding: 0.25em 0 0.4em 0.2em;
+    }
+    .eve-nav-list a {
+      color: #fff;
       font-weight: 500;
-      transition: opacity 0.19s cubic-bezier(.5,0,.7,1);
-      white-space: nowrap;
+      padding: 0.52em 0.95em 0.52em 0.65em;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 0.09em;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
     }
-    .eve-sidebar-btn:hover .eve-tooltip,
-    .eve-sidebar-btn:focus .eve-tooltip {
-      opacity: 1;
+    .eve-nav-list a:hover {
+      background: #fff4;
+      color: #fff7cc;
     }
+    .eve-sidebar-btn.show-nav + .eve-nav-list,
+    .eve-sidebar-btn:hover + .eve-nav-list {
+      display: flex;
+    }
+    
     @media (max-width: 900px) {
-      .eve-sidebar { padding: 0.5em 0.12em; gap: 0.5em; }
-      .eve-icon { width: 27px; height: 27px;}
-      .eve-tooltip { font-size: 0.88em; left: 35px;}
+      .eve-nav-list { width: 140px; font-size: 0.96em;}
     }
     @media (max-width: 600px) {
       .eve-sidebar {
-        top: unset;
-        bottom: 12px;
-        left: 50%;
-        transform: translateX(-50%);
         flex-direction: row;
-        border-radius: 16px;
-        box-shadow: 0 0 11px #ff450077;
-        background: rgba(20,28,34,0.98);
-        padding: 0.4em 0.7em;
-        gap: 0.9em;
+        border-radius: 0 0 16px 16px;
         min-width: unset;
+        width: 100vw;
+        left: 0; top: 0;
+        padding: 0.3em 0.7em;
+        box-shadow: 0 0 11px #ff450077;
       }
-      .eve-sidebar-btn { flex-direction: column; padding: 0.09em 0.12em; }
-      .eve-tooltip {
-        position: absolute;
-        left: 50%;
-        top: 47px;
-        transform: translateX(-50%);
-        white-space: nowrap;
-        font-size: 0.92em;
-        z-index: 9999;
+    .eve-nav-list {
+        transition: opacity 0.18s cubic-bezier(.5,0,.7,1), transform 0.18s cubic-bezier(.5,0,.7,1);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
       }
+      .eve-sidebar-btn:focus + .eve-nav-list,
+      .eve-sidebar-btn:hover + .eve-nav-list,
+      .eve-nav-list:hover,
+      .eve-nav-list:focus-within {
+        display: flex;
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+      }
+
     }
+
 
 
     /* Rest of your styles... */
@@ -264,61 +280,70 @@ window.addEventListener('scroll', function() {
 
 
   <!-- EVE Online–Style Floating Sidebar (Orange) -->
-  <div class="eve-sidebar">
-    <a href="/" class="eve-sidebar-btn" title="Home">
-      <span class="eve-icon">
-        <!-- Home icon SVG -->
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M5 12L14 5L23 12V23C23 23.5523 22.5523 24 22 24H6C5.44772 24 5 23.5523 5 23V12Z" stroke="#fff" stroke-width="2" fill="none" />
-          <rect x="10" y="17" width="8" height="7" rx="1.5" stroke="#fff" stroke-width="2" fill="none"/>
-        </svg>
-      </span>
-      <span class="eve-tooltip">Home</span>
-    </a>
-    <a href="#projects-list" class="eve-sidebar-btn" title="Projects">
-      <span class="eve-icon">
-        <!-- Projects icon SVG (grid) -->
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <rect x="4" y="4" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
-          <rect x="16" y="4" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
-          <rect x="4" y="16" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
-          <rect x="16" y="16" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
-        </svg>
-      </span>
-      <span class="eve-tooltip">Projects</span>
-    </a>
-    <a href="#contact" class="eve-sidebar-btn" title="Contact">
-      <span class="eve-icon">
-        <!-- Contact icon SVG (envelope) -->
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <rect x="4" y="7" width="20" height="14" rx="3" stroke="#fff" stroke-width="2" fill="none"/>
-          <path d="M4 8l10 8l10-8" stroke="#fff" stroke-width="2" fill="none"/>
-        </svg>
-      </span>
-      <span class="eve-tooltip">Contact</span>
-    </a>
-    <!-- Section links -->
-
+<div class="eve-sidebar">
+  <!-- Home Icon -->
+  <a href="/" class="eve-sidebar-btn" title="Home">
+    <span class="eve-icon">
+      <!-- Home icon SVG -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M5 12L14 5L23 12V23C23 23.5523 22.5523 24 22 24H6C5.44772 24 5 23.5523 5 23V12Z" stroke="#fff" stroke-width="2" fill="none" />
+        <rect x="10" y="17" width="8" height="7" rx="1.5" stroke="#fff" stroke-width="2" fill="none"/>
+      </svg>
+    </span>
+    <span class="eve-tooltip">Home</span>
+  </a>
+  <!-- Projects Icon -->
+  <a href="#projects-list" class="eve-sidebar-btn" title="Projects">
+    <span class="eve-icon">
+      <!-- Projects icon SVG (grid) -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="4" y="4" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+        <rect x="16" y="4" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+        <rect x="4" y="16" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+        <rect x="16" y="16" width="8" height="8" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+      </svg>
+    </span>
+    <span class="eve-tooltip">Projects</span>
+  </a>
+  <!-- Contact Icon -->
+  <a href="#contact" class="eve-sidebar-btn" title="Contact">
+    <span class="eve-icon">
+      <!-- Contact icon SVG (envelope) -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="4" y="7" width="20" height="14" rx="3" stroke="#fff" stroke-width="2" fill="none"/>
+        <path d="M4 8l10 8l10-8" stroke="#fff" stroke-width="2" fill="none"/>
+      </svg>
+    </span>
+    <span class="eve-tooltip">Contact</span>
+  </a>
+  <!-- Index Dropdown Button -->
+  <div class="eve-sidebar-btn" id="eve-index-btn" tabindex="0">
+    <span class="eve-icon" style="background: #ff4500cc; box-shadow: 0 0 7px #fff4;">
+      <!-- List/hamburger icon -->
+      <svg width="28" height="28" viewBox="0 0 28 28">
+        <rect y="6" width="28" height="3" rx="1.5" fill="#fff"/>
+        <rect y="13" width="28" height="3" rx="1.5" fill="#fff"/>
+        <rect y="20" width="28" height="3" rx="1.5" fill="#fff"/>
+      </svg>
+    </span>
+    <span class="eve-sidebar-index">Index</span>
   </div>
+  <nav class="eve-nav-list" id="eve-nav-list">
+    <a href="#introduction">Introduction</a>
+    <a href="#phase-plan">Phase Plan & Chokepoints</a>
+    <a href="#materials">Materials & Protection</a>
+    <a href="#sdr">SDR Comms & Navigation</a>
+    <a href="sdr-details.html">SDR Full Details & Research &rarr;</a>
+  </nav>
+</div>
+
+
 
   <!-- Whatmore header directly after sidebar -->
-  <div class="whatmore-header">
-    <div class="whatmore-title">WHATMORE INDUSTRIES</div>
-    
-  </div>
-
-  </div>
-  <nav>
-  <ul>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#phase-plan">Phase Plan & Chokepoints</a></li>
-    <li><a href="#materials">Materials & Protection</a></li>
-    <li><a href="#sdr">SDR Comms & Navigation</a></li>
-    <li><a href="sdr-details.html">SDR Full Details & Research →</a></li>
-    <!-- ...etc -->
-  </ul>
-</nav>
-
+<div class="whatmore-header">
+  <div class="whatmore-title">WHATMORE INDUSTRIES</div>
+</div>
+  
   <div class="container">
     <h1>Fire Fighting Drone Swarm System (FFDSS) — Advanced NSF Technical Roadmap</h1>
     <div class="accent">
@@ -822,6 +847,30 @@ window.addEventListener('scroll', function() {
     google.maps.event.addDomListener(window, 'load', initWaterHeatMap);
   }
 </script>
+    <script>
+  const btn = document.getElementById('eve-index-btn');
+  const nav = document.getElementById('eve-nav-list');
+  let open = false;
+  btn.addEventListener('click', (e) => {
+    open = !open;
+    if(open) {
+      btn.classList.add('show-nav');
+      nav.style.display = 'flex';
+    } else {
+      btn.classList.remove('show-nav');
+      nav.style.display = 'none';
+    }
+  });
+  // Hide nav if click outside (optional)
+  document.addEventListener('click', (e) => {
+    if(!btn.contains(e.target) && !nav.contains(e.target)) {
+      btn.classList.remove('show-nav');
+      nav.style.display = 'none';
+      open = false;
+    }
+  });
+</script>
+
 
 
 
