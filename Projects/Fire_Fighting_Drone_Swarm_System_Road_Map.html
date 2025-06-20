@@ -211,13 +211,16 @@
   </style>
 </head>
 <body>
-<!-- Floating Top Left: Email & QR -->
-<div class="corner-qr corner-qr-topleft">
-  <a href="mailto:awhatmore@whatmoreindustries.io" style="color:#ff4500;text-decoration:none;font-weight:bold;font-size:1.12em;">
+<!-- Floating Top Right: Email & QR -->
+<div class="corner-qr corner-qr-topright" id="email-qr-box">
+  <a href="mailto:awhatmore@whatmoreindustries.io"
+     id="email-qr-text"
+     style="color:#ff4500;text-decoration:none;font-weight:bold;font-size:1.12em;white-space:nowrap;transition:opacity 0.3s,max-width 0.33s;">
     awhatmore@whatmoreindustries.io
   </a>
   <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=75x75&color=255-69-0&bgcolor=10-10-10"
-       alt="QR Email" class="qr-img" tabindex="0">
+       alt="QR Email" class="qr-img" tabindex="0"
+       onclick="toggleQrZoom(this)" ontouchstart="toggleQrZoom(this)">
 </div>
 
 <!-- Floating Bottom Right: Project QR -->
@@ -225,8 +228,7 @@
   <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io%2FProjects%2FFire_Fighting_Drone_Swarm_System_Road_Map.html&size=75x75&color=255-69-0&bgcolor=10-10-10"
        alt="QR Project Roadmap"
        class="qr-img" tabindex="0"
-       onclick="toggleQrZoom(this)"
-       ontouchstart="toggleQrZoom(this)">
+       onclick="toggleQrZoom(this)" ontouchstart="toggleQrZoom(this)">
 </div>
 
 <!-- QR Zoom Overlay -->
@@ -245,8 +247,9 @@
   display: flex;
   align-items: center;
   gap: 0.65em;
+  transition: box-shadow 0.19s, background 0.19s;
 }
-.corner-qr-topleft { top: 18px; left: 18px; }
+.corner-qr-topright { top: 18px; right: 18px; flex-direction: row-reverse; }
 .corner-qr-bottomright { bottom: 18px; right: 18px; }
 
 .qr-img {
@@ -262,6 +265,20 @@
 .qr-img:active, .qr-img:focus {
   box-shadow: 0 0 16px #fff8e2;
   outline: 2px solid #fff8e2;
+}
+
+/* Hide email text on scroll */
+#email-qr-text.hide {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s, max-width 0.36s;
+}
+#email-qr-text {
+  opacity: 1;
+  max-width: 300px;
+  transition: opacity 0.35s, max-width 0.36s;
 }
 
 #qr-zoom-overlay {
@@ -287,7 +304,7 @@
 }
 
 @media (max-width: 700px) {
-  .corner-qr-topleft, .corner-qr-bottomright { left: 4px; right: 4px; top: 4px; bottom: 4px; }
+  .corner-qr-topright, .corner-qr-bottomright { left: 4px; right: 4px; top: 4px; bottom: 4px; }
   .corner-qr { gap: 0.2em; padding: 0.5em 0.4em; }
   .qr-img { height: 38px; width: 38px; }
 }
@@ -306,11 +323,25 @@ function closeQrZoom() {
   overlay.classList.remove('active');
   overlay.style.display = 'none';
 }
-// Also support keyboard for accessibility
+// Keyboard accessibility
 document.addEventListener('keydown', function(e) {
   if (e.key === "Escape") closeQrZoom();
 });
+
+// Collapse email text on scroll
+let emailCollapsed = false;
+window.addEventListener('scroll', function() {
+  const emailText = document.getElementById('email-qr-text');
+  if (window.scrollY > 24 && !emailCollapsed) {
+    emailText.classList.add('hide');
+    emailCollapsed = true;
+  } else if (window.scrollY <= 24 && emailCollapsed) {
+    emailText.classList.remove('hide');
+    emailCollapsed = false;
+  }
+});
 </script>
+
 
   <!-- EVE Online–Style Floating Sidebar (Orange) -->
   <div class="eve-sidebar">
