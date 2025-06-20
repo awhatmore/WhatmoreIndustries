@@ -208,7 +208,34 @@
       .whatmore-contact { font-size: 0.95rem; }
     }
     /* Rest of your styles... */
-    .corner-qr {
+  </style>
+</head>
+<body>
+<!-- Floating Top Left: Email & QR -->
+<div class="corner-qr corner-qr-topleft">
+  <a href="mailto:awhatmore@whatmoreindustries.io" style="color:#ff4500;text-decoration:none;font-weight:bold;font-size:1.12em;">
+    awhatmore@whatmoreindustries.io
+  </a>
+  <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=75x75&color=255-69-0&bgcolor=10-10-10"
+       alt="QR Email" class="qr-img" tabindex="0">
+</div>
+
+<!-- Floating Bottom Right: Project QR -->
+<div class="corner-qr corner-qr-bottomright">
+  <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io%2FProjects%2FFire_Fighting_Drone_Swarm_System_Road_Map.html&size=75x75&color=255-69-0&bgcolor=10-10-10"
+       alt="QR Project Roadmap"
+       class="qr-img" tabindex="0"
+       onclick="toggleQrZoom(this)"
+       ontouchstart="toggleQrZoom(this)">
+</div>
+
+<!-- QR Zoom Overlay -->
+<div id="qr-zoom-overlay" style="display:none;" onclick="closeQrZoom()">
+  <img id="qr-zoom-img" src="" alt="QR Code Enlarged">
+</div>
+
+<style>
+.corner-qr {
   position: fixed;
   z-index: 150;
   background: rgba(20,20,20,0.90);
@@ -264,31 +291,27 @@
   .corner-qr { gap: 0.2em; padding: 0.5em 0.4em; }
   .qr-img { height: 38px; width: 38px; }
 }
-  </style>
-</head>
-<body>
-  <!-- Floating Top Left: Email & QR -->
-<div class="corner-qr corner-qr-topleft">
-  <a href="mailto:awhatmore@whatmoreindustries.io" style="color:#ff4500;text-decoration:none;font-weight:bold;font-size:1.12em;">
-    awhatmore@whatmoreindustries.io
-  </a>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=75x75&color=255-69-0&bgcolor=10-10-10"
-       alt="QR Email" class="qr-img" tabindex="0">
-</div>
+</style>
 
-<!-- Floating Bottom Right: Project QR -->
-<div class="corner-qr corner-qr-bottomright">
-  <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io%2FProjects%2FFire_Fighting_Drone_Swarm_System_Road_Map.html&size=75x75&color=255-69-0&bgcolor=10-10-10"
-       alt="QR Project Roadmap"
-       class="qr-img" tabindex="0"
-       onclick="toggleQrZoom(this)"
-       ontouchstart="toggleQrZoom(this)">
-</div>
+<script>
+function toggleQrZoom(img) {
+  const overlay = document.getElementById('qr-zoom-overlay');
+  const zoomImg = document.getElementById('qr-zoom-img');
+  zoomImg.src = img.src;
+  overlay.classList.add('active');
+  overlay.style.display = 'flex';
+}
+function closeQrZoom() {
+  const overlay = document.getElementById('qr-zoom-overlay');
+  overlay.classList.remove('active');
+  overlay.style.display = 'none';
+}
+// Also support keyboard for accessibility
+document.addEventListener('keydown', function(e) {
+  if (e.key === "Escape") closeQrZoom();
+});
+</script>
 
-<!-- QR Zoom Overlay -->
-<div id="qr-zoom-overlay" style="display:none;" onclick="closeQrZoom()">
-  <img id="qr-zoom-img" src="" alt="QR Code Enlarged">
-</div>
   <!-- EVE Online–Style Floating Sidebar (Orange) -->
   <div class="eve-sidebar">
     <a href="/" class="eve-sidebar-btn" title="Home">
@@ -862,24 +885,7 @@
     google.maps.event.addDomListener(window, 'load', initWaterHeatMap);
   }
 </script>
-    <script>
-function toggleQrZoom(img) {
-  const overlay = document.getElementById('qr-zoom-overlay');
-  const zoomImg = document.getElementById('qr-zoom-img');
-  zoomImg.src = img.src;
-  overlay.classList.add('active');
-  overlay.style.display = 'flex';
-}
-function closeQrZoom() {
-  const overlay = document.getElementById('qr-zoom-overlay');
-  overlay.classList.remove('active');
-  overlay.style.display = 'none';
-}
-// Also support keyboard for accessibility
-document.addEventListener('keydown', function(e) {
-  if (e.key === "Escape") closeQrZoom();
-});
-</script>
+
 
 
   </div>
