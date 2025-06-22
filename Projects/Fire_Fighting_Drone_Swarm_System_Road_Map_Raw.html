@@ -1152,7 +1152,7 @@ window.addEventListener('scroll', function() {
 </section>
 
 
-<script>
+<!--script>
 (function() {
   // Set your base/default font size
   const BASE = 16; // px
@@ -1224,7 +1224,81 @@ window.addEventListener('scroll', function() {
   if (typeof google !== "undefined") {
     google.maps.event.addDomListener(window, 'load', initWaterHeatMap);
   }
+    </script-->
+
+    <!-- Font Size Controls Script -->
+<script>
+(function() {
+  const BASE = 16;
+  let fontSize = BASE;
+  const root = document.documentElement;
+  const controls = document.getElementById('font-controls');
+  const plusBtn = document.getElementById('font-plus');
+  const minusBtn = document.getElementById('font-minus');
+  const peek = document.getElementById('font-peek');
+  let peekTimeout;
+
+  function setFont(size) {
+    fontSize = Math.max(12, Math.min(28, size));
+    root.style.fontSize = fontSize + 'px';
+    peek.textContent = fontSize + 'px';
+    controls.classList.add('font-peek-show');
+    clearTimeout(peekTimeout);
+    peekTimeout = setTimeout(() => controls.classList.remove('font-peek-show'), 1300);
+  }
+
+  plusBtn.addEventListener('click', () => setFont(fontSize + 2));
+  minusBtn.addEventListener('click', () => setFont(fontSize - 2));
+  document.addEventListener('keydown', e => {
+    if (e.key === '+' || e.key === '=') setFont(fontSize + 2);
+    if (e.key === '-') setFont(fontSize - 2);
+  });
+  setFont(BASE);
+})();
 </script>
+
+<!-- Leaflet Map & Heat Overlay -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<div id="water-access-map" style="height: 500px; border-radius: 1em; overflow: hidden; margin-top: 1em;"></div>
+
+<script>
+  function initLeafletHeatMap() {
+    const center = [38.88499, -119.61212]; // Initial focus
+
+    const map = L.map('water-access-map', {
+      center: center,
+      zoom: 13,
+      scrollWheelZoom: false
+    });
+
+    // OpenStreetMap Tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Fire Points (fake data for now)
+    const firePoints = [
+      { lat: 38.88499, lon: -119.61212, weight: 4 },
+      { lat: 38.88550, lon: -119.61000, weight: 3 },
+      { lat: 38.88620, lon: -119.61450, weight: 5 }
+    ];
+
+    firePoints.forEach(fire => {
+      const color = `rgba(255, 0, 0, ${0.2 + fire.weight * 0.15})`;
+      L.circle([fire.lat, fire.lon], {
+        radius: 200 + fire.weight * 100,
+        color: 'transparent',
+        fillColor: color,
+        fillOpacity: 0.7
+      }).addTo(map);
+    });
+  }
+
+  window.addEventListener('load', initLeafletHeatMap);
+</script>
+
  
  <section id="drone-wildfire-mist" style="background: #181818; color: #f5f5f5; border-radius: 1.5em; box-shadow: 0 4px 24px #0004; max-width: 800px; margin: 2em auto; padding: 2.5em;">
   <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1em;">Drone-Based Wildfire Mist Suppression</h2>
