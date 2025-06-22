@@ -39,16 +39,27 @@
       color: #8defff;
       margin-bottom: 0.6em;
     }
+
     .checklist-item {
       margin-left: 1.5em;
-      padding-left: 1em;
+      padding-left: 1.8em;
       position: relative;
+      cursor: pointer;
+      transition: color 0.2s;
     }
     .checklist-item::before {
-      content: "✔️";
+      content: "⬜";
       position: absolute;
       left: 0;
+      color: #aaa;
+      transition: color 0.2s;
+    }
+    .checklist-item.checked::before {
+      content: "✅";
       color: #8fff94;
+    }
+    .checklist-item.checked {
+      color: #b8ffcc;
     }
   </style>
 </head>
@@ -75,7 +86,14 @@
       <div class="section-title">Special Time Reminders</div>
       <div class="checklist-item">Review Post-5pm Note</div>
     </div>
-
   </div>
+
+  <script>
+    document.querySelectorAll('.checklist-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('checked');
+      });
+    });
+  </script>
 </body>
 </html>
