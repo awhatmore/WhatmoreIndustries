@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Force desktop layout, disables mobile scaling -->
+  <meta name="viewport" content="width=1024">
+  <title>Whatmore Industries – Project Archive</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #eee;
+      height: 100%;
+      line-height: 1.6;
+      box-sizing: border-box;
+    }
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+    header {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.2em;
+      letter-spacing: 1px;
+      color: #00f7ff;
+      text-shadow: 0 0 8px #0ff3;
+    }
+    header p {
+      font-size: 1.1rem;
+      color: #9ff;
+      margin-top: 0;
+      margin-bottom: 2em;
+      letter-spacing: 0.5px;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      background: rgba(34, 34, 34, 0.92);
+      padding: 0.7rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: 500;
+    }
+    nav a:hover, .dropdown:hover .dropbtn {
+      background: #222;
+    }
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropbtn {
+      background: transparent;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #181a1f;
+      min-width: 210px;
+      box-shadow: 0 4px 18px #0009;
+      z-index: 100;
+      border-radius: 10px;
+      margin-top: 0.6rem;
+      left: 0;
+    }
+    .dropdown-content a {
+      color: #fff;
+      padding: 0.7rem 1rem;
+      text-decoration: none;
+      display: block;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+    .dropdown-content a:hover {
+      background: #222e;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    main {
+      max-width: 780px;
+      margin: 3rem auto 2rem;
+      padding: 1.5rem;
+      background: rgba(20,20,24,0.87);
+      border-radius: 16px;
+      box-shadow: 0 0 28px #0af3;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    .project-list {
+      margin: 2rem 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .project-card {
+      background: #232831;
+      border-radius: 9px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 0 8px #0ff2;
+    }
+    .project-card a {
+      color: #0ef;
+      font-size: 1.11rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .project-card a:hover {
+      color: #fff;
+      text-shadow: 0 0 4px #0ff7;
+    }
+    /* Email link color fix */
+    a[href^="mailto:"] {
+      color: #0ef !important;
+      text-decoration: underline;
+    }
+    a[href^="mailto:"]:hover {
+      color: #fff !important;
+      text-shadow: 0 0 4px #0ff7;
+    }
+    /* Smaller font for About/Contact, both desktop and mobile */
+    #about, #about p, #contact, #contact p {
+      font-size: 0.98rem !important;
+      line-height: 1.45;
+    }
+    @media (max-width: 600px) {
+      #about, #about p, #contact, #contact p {
+        font-size: 0.91rem !important;
+        line-height: 1.34;
+      }
+    }
+    .eve-sidebar {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(20,28,34,0.90);
+      padding: 1.1em 0.4em;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 0 22px #0ef2;
+      gap: 1.2em;
+    }
+    .eve-sidebar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0.1em 0;
+      padding: 0.23em 0.15em;
+      border-radius: 50px;
+      transition: background 0.17s, box-shadow 0.23s;
+      position: relative;
+      text-decoration: none;
+    }
+    .eve-icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #161b21;
+      box-shadow: 0 0 7px #0ef4, 0 1px 6px #01071c77;
+      transition: background 0.18s, box-shadow 0.18s;
+    }
+    .eve-sidebar-btn:hover .eve-icon,
+    .eve-sidebar-btn:focus .eve-icon {
+      background: #0ef;
+      box-shadow: 0 0 18px #0efc, 0 2px 8px #00f7ff22;
+    }
+    .eve-sidebar-btn:hover .eve-icon svg path,
+    .eve-sidebar-btn:hover .eve-icon svg rect {
+      stroke: #111;
+    }
+    .eve-sidebar-btn:focus .eve-icon svg path,
+    .eve-sidebar-btn:focus .eve-icon svg rect {
+      stroke: #111;
+    }
+    .eve-tooltip {
+      opacity: 0;
+      position: absolute;
+      left: 45px;
+      background: #0ef;
+      color: #101018;
+      padding: 0.4em 1.05em;
+      border-radius: 12px;
+      font-size: 1em;
+      font-family: inherit;
+      pointer-events: none;
+      box-shadow: 0 0 9px #0ef5;
+      letter-spacing: 0.4px;
+      font-weight: 500;
+      transition: opacity 0.19s cubic-bezier(.5,0,.7,1);
+      white-space: nowrap;
+    }
+    .eve-sidebar-btn:hover .eve-tooltip,
+    .eve-sidebar-btn:focus .eve-tooltip {
+      opacity: 1;
+    }
+    @media (max-width: 900px) {
+      .eve-sidebar {
+        padding: 0.5em 0.12em;
+        gap: 0.5em;
+      }
+      .eve-icon { width: 27px; height: 27px;}
+      .eve-tooltip { font-size: 0.88em; left: 35px;}
+    }
+    @media (max-width: 600px) {
+      .eve-sidebar {
+        top: unset;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+        border-radius: 16px;
+        box-shadow: 0 0 11px #0ef5;
+        background: rgba(16,22,27,0.97);
+        padding: 0.4em 0.7em;
+        gap: 0.9em;
+      }
+      .eve-sidebar-btn {
+        flex-direction: column;
+        padding: 0.09em 0.12em;
+      }
+      .eve-tooltip {
+        position: absolute;
+        left: 50%;
+        top: 47px;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        font-size: 0.92em;
+        z-index: 9999;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- EVE Online–Style Floating Sidebar -->
+<div class="eve-sidebar">
+  <a href="/" class="eve-sidebar-btn" title="Home">
+    <span class="eve-icon">
+      <!-- Home icon SVG -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <path d="M5 12L14 5L23 12V23C23 23.5523 22.5523 24 22 24H6C5.44772 24 5 23.5523 5 23V12Z" stroke="#0ef" stroke-width="2" fill="none" />
+        <rect x="10" y="17" width="8" height="7" rx="1.5" stroke="#0ef" stroke-width="2" fill="none"/>
+      </svg>
+    </span>
+    <span class="eve-tooltip">Home</span>
+  </a>
+  <a href="#projects-list" class="eve-sidebar-btn" title="Projects">
+    <span class="eve-icon">
+      <!-- Projects icon SVG (grid) -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="4" y="4" width="8" height="8" rx="2" stroke="#0ef" stroke-width="2" fill="none"/>
+        <rect x="16" y="4" width="8" height="8" rx="2" stroke="#0ef" stroke-width="2" fill="none"/>
+        <rect x="4" y="16" width="8" height="8" rx="2" stroke="#0ef" stroke-width="2" fill="none"/>
+        <rect x="16" y="16" width="8" height="8" rx="2" stroke="#0ef" stroke-width="2" fill="none"/>
+      </svg>
+    </span>
+    <span class="eve-tooltip">Projects</span>
+  </a>
+  <a href="#contact" class="eve-sidebar-btn" title="Contact">
+    <span class="eve-icon">
+      <!-- Contact icon SVG (envelope) -->
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="4" y="7" width="20" height="14" rx="3" stroke="#0ef" stroke-width="2" fill="none"/>
+        <path d="M4 8l10 8l10-8" stroke="#0ef" stroke-width="2" fill="none"/>
+      </svg>
+    </span>
+    <span class="eve-tooltip">Contact</span>
+  </a>
+</div>
+
+  <header>
+    <h1>WHATMORE INDUSTRIES</h1>
+    <p>"A Living Archive: A Mind in Motion."</p>
+  </header>
+  <nav>
+    <a href="/">Home</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects ▾</button>
+      <div class="dropdown-content">
+        <a href="#projects-list">View All Projects</a>
+        <a href="AI-Fluency">AI Fluency</a>
+        <a href="Universal_Calculator.html">Universal Calculator</a>
+        <a href="Fire_Fighting_Drone_Swarm_System.html">Fire Fighting Drone Swarm System</a>
+        <a href="Quantum-Time-Consciousness-Framework.html">Quantum-Time-Consciousness Framework</a>
+        <!-- Add any other quick links here -->
+      </div>
+    </div>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <main>
+    <section id="projects-list">
+      <h2>Project Archive</h2>
+      <div class="project-list">
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">A Living Lecture Woven in Spirals</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">AI Fluency (Coming Soon)</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">AI Scalable Reference Archive</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Calculator Layout</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Directional VLF Antenna Array Using Coordinated Underwater Drones</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Fire Fighting Drone Swarm System Deliverable</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Quantum-Time-Consciousness Framework</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Fire Fighting Drone Swarm System Road Map</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Submarine Drone Antenna Array</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Time Entropy Interaction Theory</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Time Friction and Entropic Path Hypothesis (TFEPH)</a></div>
+      <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Universal Calculator</a></div>
+      </div>
+      <!-- QR code for the main site -->
+      <div style="text-align:center; margin-top:2rem;">
+        <span style="font-size:1rem; color:#0ef;">Scan for Whatmore Industries</span><br>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io&size=90x90&color=0-238-255&bgcolor=17-17-17"
+             alt="QR WhatmoreIndustries.io">
+      </div>
+    </section>
+    <section id="about">
+      <h2>About</h2>
+      <p>I am the founder of Whatmore Industries. I build, test, observe, and connect — from off-grid systems and theoretical models to hands-on fabrication and prototyping. Every line I draw and every circuit I etch aims to serve a greater curiosity: what more is possible?</p>
+    </section>
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>
+        To collaborate, ask questions, or propose a mission — reach out at
+        <span style="vertical-align:middle;">
+          <a href="mailto:awhatmore@whatmoreindustries.io" style="color:#0ef;">awhatmore@whatmoreindustries.io</a>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=90x90&color=0-238-255&bgcolor=17-17-17"
+               alt="QR Email">
+        </span>
+      </p>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Whatmore Industries. All rights reserved.
+  </footer>
+</body>
+</html>
