@@ -39,7 +39,6 @@
       color: #8defff;
       margin-bottom: 0.6em;
     }
-
     .checklist-item {
       margin-left: 1.5em;
       padding-left: 1.8em;
@@ -61,13 +60,29 @@
     .checklist-item.checked {
       color: #b8ffcc;
     }
+
+    .add-btn {
+      display: block;
+      margin: 1em auto 0;
+      padding: 0.5em 1.2em;
+      font-size: 1rem;
+      background-color: #00b4ff;
+      color: #000;
+      border: none;
+      border-radius: 0.5em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .add-btn:hover {
+      background-color: #0096cc;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="title">Project Reminder Log</div>
 
-    <div class="section">
+    <div class="section" id="log-section">
       <div class="section-title">Log</div>
       <div class="checklist-item">Blood Toxicity Monitoring & External Liver System</div>
       <div class="checklist-item">Non-Invasive Arterial Blood Monitoring via Multispectral Analysis</div>
@@ -86,14 +101,29 @@
       <div class="section-title">Special Time Reminders</div>
       <div class="checklist-item">Review Post-5pm Note</div>
     </div>
+
+    <button class="add-btn" onclick="addReminder()">+ Add New Reminder</button>
   </div>
 
   <script>
-    document.querySelectorAll('.checklist-item').forEach(item => {
+    function addChecklistFunctionality(item) {
       item.addEventListener('click', () => {
         item.classList.toggle('checked');
       });
-    });
+    }
+
+    document.querySelectorAll('.checklist-item').forEach(addChecklistFunctionality);
+
+    function addReminder() {
+      const text = prompt("Enter your new reminder:");
+      if (text) {
+        const div = document.createElement('div');
+        div.className = 'checklist-item';
+        div.textContent = text;
+        addChecklistFunctionality(div);
+        document.getElementById('log-section').appendChild(div);
+      }
+    }
   </script>
 </body>
 </html>
