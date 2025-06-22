@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1024">
+  <title>Project Reminder Log</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0a0a0a;
+      color: #e0f8ff;
+      line-height: 1.6;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 1024px;
+      margin: auto;
+      border: 1px solid #244b5a;
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(10, 30, 40, 0.95);
+      box-shadow: 0 0 12px #00b4ff33;
+    }
+    .title {
+      font-size: 2.35rem;
+      font-weight: bold;
+      letter-spacing: 1.4px;
+      color: #00b4ff;
+      text-shadow: 0 0 8px #00b4ff44, 0 2px 8px #000d;
+      margin-bottom: 1em;
+      text-align: center;
+    }
+    .section {
+      margin-bottom: 2em;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      color: #8defff;
+      margin-bottom: 0.6em;
+    }
+    .checklist-item {
+      margin-left: 1.5em;
+      padding-left: 1em;
+      position: relative;
+    }
+    .checklist-item::before {
+      content: "✔️";
+      position: absolute;
+      left: 0;
+      color: #8fff94;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Project Reminder Log</div>
+
+    <div class="section">
+      <div class="section-title">Log</div>
+      <div class="checklist-item">Blood Toxicity Monitoring & External Liver System</div>
+      <div class="checklist-item">Non-Invasive Arterial Blood Monitoring via Multispectral Analysis</div>
+      <div class="checklist-item">Biochemistry: Brain, Blood, Liver Toxicity Connection</div>
+      <div class="checklist-item">Concave Dimple Antenna Design</div>
+      <div class="checklist-item">Drone-Based Wildfire Mist Suppression</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Future Features</div>
+      <div class="checklist-item">Modular Section Imports with Completion Markers</div>
+      <div class="checklist-item">Quick Add Button for Future Projects</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Special Time Reminders</div>
+      <div class="checklist-item">Review Post-5pm Note</div>
+    </div>
+
+  </div>
+</body>
+</html>
