@@ -74,10 +74,11 @@
     }
     .checklist-arrows {
       display: flex;
-      flex-direction: column;
-      margin-left: 1.7em; /* space from checkmark */
+      flex-direction: row;    /* changed from column */
+      margin-left: 1.7em;
       margin-right: 1em;
-      gap: 0.18em;
+      gap: 0.45em;            /* more space side-by-side */
+      align-items: center;
     }
     .swap-btn {
       background: #193654;
@@ -88,8 +89,9 @@
       padding: 0.14em 0.44em;
       cursor: pointer;
       min-width: 1.5em;
-      margin: 0.08em 0;
+      margin: 0;
       transition: background 0.15s;
+      vertical-align: middle;
     }
     .swap-btn:active, .swap-btn:hover {
       background: #197fa6;
@@ -219,7 +221,7 @@
           }
         };
 
-        // Arrows container
+        // Arrows container (side by side)
         const arrows = document.createElement('div');
         arrows.className = 'checklist-arrows';
         arrows.appendChild(upBtn);
