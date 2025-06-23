@@ -1279,37 +1279,33 @@ window.addEventListener('scroll', function() {
     }).addTo(map);
 
     // === Load Your GeoJSON! ===
-    fetch('https://github.com/awhatmore/WhatmoreIndustries/blob/08b43148781c55187ec6f477514bed938560a8df/Projects/23%20June%2025%20Eldorado%20.geojson')
-      .then(response => response.json())
-      .then(data => {
-        L.geoJSON(data, {
-          pointToLayer: function (feature, latlng) {
-            return L.circle(latlng, {
-              radius: 200,
-              color: '#f03',
-              fillColor: '#f35',
-              fillOpacity: 0.7
-            });
-          },
-          onEachFeature: function (feature, layer) {
-            // Optional: Popup with properties
-            if (feature.properties) {
-              let popupContent = '';
-              for (let key in feature.properties) {
-                popupContent += `<b>${key}</b>: ${feature.properties[key]}<br>`;
-              }
-              layer.bindPopup(popupContent);
+  fetch('https://raw.githubusercontent.com/awhatmore/WhatmoreIndustries/08b43148781c55187ec6f477514bed938560a8df/Projects/23%20June%2025%20Eldorado%20.geojson')
+    .then(response => response.json())
+    .then(data => {
+      L.geoJSON(data, {
+        pointToLayer: function (feature, latlng) {
+          return L.circle(latlng, {
+            radius: 200,
+            color: '#f03',
+            fillColor: '#f35',
+            fillOpacity: 0.7
+          });
+        },
+        onEachFeature: function (feature, layer) {
+          if (feature.properties) {
+            let popupContent = '';
+            for (let key in feature.properties) {
+              popupContent += `<b>${key}</b>: ${feature.properties[key]}<br>`;
             }
+            layer.bindPopup(popupContent);
           }
-        }).addTo(map);
-      })
-      .catch(err => {
-        console.error('GeoJSON loading error:', err);
-      });
-  }
+        }
+      }).addTo(map);
+    })
+    .catch(err => {
+      console.error('GeoJSON loading error:', err);
+    });
 
-  window.addEventListener('load', initLeafletHeatMap);
-</script>
 
 
  
