@@ -41,15 +41,15 @@
     }
     .checklist-item {
       position: relative;
+      display: flex;
+      align-items: center;
       cursor: pointer;
       transition: color 0.2s, background 0.2s;
-      padding-left: 2em;
-      margin-bottom: 0.2em;
+      padding-left: 2.2em;
+      margin-bottom: 0.25em;
       background: none;
       user-select: none;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
       min-height: 2.1em;
     }
     .checklist-item:hover {
@@ -63,7 +63,7 @@
       color: #aaa;
       transition: color 0.2s;
       font-size: 1.25em;
-      top: 0.23em;
+      top: 0.25em;
     }
     .checklist-item.checked::before {
       content: "✅";
@@ -72,11 +72,35 @@
     .checklist-item.checked {
       color: #b8ffcc;
     }
+    .checklist-arrows {
+      display: flex;
+      flex-direction: column;
+      margin-left: 1.7em; /* space from checkmark */
+      margin-right: 1em;
+      gap: 0.18em;
+    }
+    .swap-btn {
+      background: #193654;
+      border: none;
+      color: #87f8fd;
+      font-size: 1.15em;
+      border-radius: 0.4em;
+      padding: 0.14em 0.44em;
+      cursor: pointer;
+      min-width: 1.5em;
+      margin: 0.08em 0;
+      transition: background 0.15s;
+    }
+    .swap-btn:active, .swap-btn:hover {
+      background: #197fa6;
+      color: #fff;
+    }
     .checklist-content {
       display: flex;
       justify-content: flex-start;
       gap: 1em;
       width: 100%;
+      align-items: center;
     }
     .checklist-left, .checklist-right {
       white-space: nowrap;
@@ -100,25 +124,12 @@
       color: #ff7373;
       background: none;
       border: none;
-      font-size: 1.12em;
+      font-size: 1.13em;
       cursor: pointer;
       transition: color 0.17s;
     }
     .checklist-remove-btn:hover {
       color: #ff4040;
-    }
-    .swap-btn {
-      margin-left: 0.5em;
-      color: #00b4ff;
-      background: none;
-      border: none;
-      font-size: 1.3em;
-      cursor: pointer;
-      padding: 0;
-      transition: color 0.17s;
-    }
-    .swap-btn:active {
-      color: #43e3ff;
     }
     .add-btn {
       display: block;
@@ -208,6 +219,12 @@
           }
         };
 
+        // Arrows container
+        const arrows = document.createElement('div');
+        arrows.className = 'checklist-arrows';
+        arrows.appendChild(upBtn);
+        arrows.appendChild(downBtn);
+
         // Remove button
         const removeBtn = document.createElement('button');
         removeBtn.className = 'checklist-remove-btn';
@@ -237,8 +254,8 @@
           update(ref(db, `reminders/${data.key}`), { checked });
         };
 
-        div.appendChild(upBtn);
-        div.appendChild(downBtn);
+        // Build final layout
+        div.appendChild(arrows);
         div.appendChild(content);
         div.appendChild(removeBtn);
         log.appendChild(div);
