@@ -77,6 +77,19 @@
       background-color: #0096cc;
     }
   </style>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAaJ_Xt0l7O4He6YWrx2XWg_xvsPMThnxM",
+      authDomain: "reminderapp-27266.firebaseapp.com",
+      projectId: "reminderapp-27266"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
 </head>
 <body>
   <div class="container">
@@ -84,11 +97,6 @@
 
     <div class="section" id="log-section">
       <div class="section-title">Log</div>
-      <div class="checklist-item">Blood Toxicity Monitoring & External Liver System</div>
-      <div class="checklist-item">Non-Invasive Arterial Blood Monitoring via Multispectral Analysis</div>
-      <div class="checklist-item">Biochemistry: Brain, Blood, Liver Toxicity Connection</div>
-      <div class="checklist-item">Concave Dimple Antenna Design</div>
-      <div class="checklist-item">Drone-Based Wildfire Mist Suppression</div>
     </div>
 
     <div class="section">
@@ -101,31 +109,37 @@
       <div class="section-title">Special Time Reminders</div>
       <div class="checklist-item">Review Post-5pm Note</div>
       <div class="checklist-item">Firebase Google API / Close-Circuit Reminder System</div>
-
     </div>
 
     <button class="add-btn" onclick="addReminder()">+ Add New Reminder</button>
   </div>
 
   <script>
-    function addChecklistFunctionality(item) {
+    function addChecklistFunctionality(item, id) {
       item.addEventListener('click', () => {
         item.classList.toggle('checked');
+        if (id) db.collection("reminders").doc(id).update({ checked: item.classList.contains('checked') });
       });
     }
-
-    document.querySelectorAll('.checklist-item').forEach(addChecklistFunctionality);
 
     function addReminder() {
       const text = prompt("Enter your new reminder:");
       if (text) {
-        const div = document.createElement('div');
-        div.className = 'checklist-item';
-        div.textContent = text;
-        addChecklistFunctionality(div);
-        document.getElementById('log-section').appendChild(div);
+        db.collection("reminders").add({ text, checked: false, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
       }
     }
+
+    db.collection("reminders").orderBy("timestamp").get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement('div');
+        div.className = 'checklist-item';
+        div.textContent = data.text;
+        if (data.checked) div.classList.add('checked');
+        addChecklistFunctionality(div, doc.id);
+        document.getElementById('log-section').appendChild(div);
+      });
+    });
   </script>
 </body>
 </html>
