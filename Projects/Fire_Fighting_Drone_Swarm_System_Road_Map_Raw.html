@@ -1279,7 +1279,7 @@ window.addEventListener('scroll', function() {
     }).addTo(map);
 
     // === Load Your GeoJSON! ===
-    fetch('/Projects/Fire_Data/eldorado.geojson')
+    fetch('https://github.com/awhatmore/WhatmoreIndustries/blob/08b43148781c55187ec6f477514bed938560a8df/Projects/23%20June%2025%20Eldorado%20.geojson')
       .then(response => response.json())
       .then(data => {
         L.geoJSON(data, {
