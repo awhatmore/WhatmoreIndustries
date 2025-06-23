@@ -61,24 +61,24 @@
     }
     .checklist-content {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 1em;
+      padding-left: 20%;
     }
     .checklist-left, .checklist-right {
-      flex: 1;
       white-space: nowrap;
     }
     .checklist-left {
       text-align: right;
-      padding-right: 0.5em;
-    }
-    .checklist-right {
-      text-align: left;
-      padding-left: 0.5em;
+      flex: 1;
     }
     .checklist-divider {
       flex: 0;
       color: #888;
+    }
+    .checklist-right {
+      text-align: left;
+      flex: 2;
     }
     .add-btn {
       display: block;
