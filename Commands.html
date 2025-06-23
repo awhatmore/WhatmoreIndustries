@@ -60,25 +60,30 @@
       color: #b8ffcc;
     }
     .checklist-content {
-      display: flex;
-      justify-content: flex-start;
-      gap: 1em;
-      padding-left: 20%;
+       display: flex;
+       justify-content: flex-start;
+       gap: 1em;
+       /* Remove padding-left, use flex only */
+      margin-left: 0;
     }
     .checklist-left, .checklist-right {
       white-space: nowrap;
     }
-    .checklist-left {
+   .checklist-left {
       text-align: right;
-      flex: 1;
+      flex: 2;
+      white-space: nowrap;
     }
     .checklist-divider {
       flex: 0;
       color: #888;
+      min-width: 2em; /* optional: wider dash for balance */
+      text-align: center;
     }
     .checklist-right {
       text-align: left;
-      flex: 2;
+      flex: 5;
+      white-space: nowrap;
     }
     .add-btn {
       display: block;
