@@ -43,7 +43,7 @@
       position: relative;
       cursor: pointer;
       transition: color 0.2s, background 0.2s;
-      padding-left: 2.5em;
+      padding-left: 2em;
       margin-bottom: 0.2em;
       background: none;
       user-select: none;
@@ -51,11 +51,6 @@
       display: flex;
       align-items: center;
       min-height: 2.1em;
-    }
-    .checklist-item:active,
-    .checklist-item.dragging {
-      opacity: 0.7;
-      background: #192631;
     }
     .checklist-item:hover {
       background: #162433;
@@ -76,15 +71,6 @@
     }
     .checklist-item.checked {
       color: #b8ffcc;
-    }
-    .checklist-drag {
-      margin-right: 0.8em;
-      cursor: grab;
-      font-size: 1.3em;
-      color: #3ec6fd;
-      opacity: 0.93;
-      user-select: none;
-      transition: opacity 0.2s;
     }
     .checklist-content {
       display: flex;
@@ -121,12 +107,18 @@
     .checklist-remove-btn:hover {
       color: #ff4040;
     }
-    .checklist-placeholder {
-      height: 2.2em;
-      border: 2px dashed #00b4ff;
-      background: #011a2e;
-      border-radius: 6px;
-      margin: 0.2em 0;
+    .swap-btn {
+      margin-left: 0.5em;
+      color: #00b4ff;
+      background: none;
+      border: none;
+      font-size: 1.3em;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.17s;
+    }
+    .swap-btn:active {
+      color: #43e3ff;
     }
     .add-btn {
       display: block;
@@ -162,13 +154,12 @@
     const db = getDatabase(app);
     const listRef = ref(db, "reminders");
 
-    let draggingKey = null;
-    let dragOverIndex = null;
-    let lastItems = [];
-
-    // Helper: returns sorted items by order
     function sortItems(items) {
       return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    }
+
+    function swap(arr, i, j) {
+      [arr[i], arr[j]] = [arr[j], arr[i]];
     }
 
     function renderChecklist(items) {
@@ -180,30 +171,42 @@
         div.dataset.key = data.key;
         div.dataset.index = idx;
         if (data.checked) div.classList.add('checked');
-        if (draggingKey === data.key) div.classList.add('dragging');
 
         // Parse left/right sides
         const parts = data.text.split("-");
         const left = parts[0]?.trim() ?? "";
         const right = parts[1]?.trim() ?? "";
 
-        // Drag handle
-        const dragHandle = document.createElement('span');
-        dragHandle.className = 'checklist-drag';
-        dragHandle.innerHTML = '&#9776;';
-        dragHandle.draggable = true;
-        dragHandle.addEventListener('dragstart', (e) => {
-          draggingKey = data.key;
-          dragOverIndex = idx;
-          e.dataTransfer.effectAllowed = 'move';
-          e.dataTransfer.setData('text/plain', '');
-          renderChecklist(lastItems); // re-render to update dragging class
-        });
-        dragHandle.addEventListener('dragend', () => {
-          draggingKey = null;
-          dragOverIndex = null;
-          renderChecklist(lastItems);
-        });
+        // Up/Down swap buttons
+        const upBtn = document.createElement('button');
+        upBtn.className = 'swap-btn';
+        upBtn.title = "Move up";
+        upBtn.innerHTML = '&#8593;';
+        upBtn.disabled = idx === 0;
+        upBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (idx > 0) {
+            swap(items, idx, idx - 1);
+            items.forEach((item, order) => {
+              update(ref(db, `reminders/${item.key}`), { order });
+            });
+          }
+        };
+
+        const downBtn = document.createElement('button');
+        downBtn.className = 'swap-btn';
+        downBtn.title = "Move down";
+        downBtn.innerHTML = '&#8595;';
+        downBtn.disabled = idx === items.length - 1;
+        downBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (idx < items.length - 1) {
+            swap(items, idx, idx + 1);
+            items.forEach((item, order) => {
+              update(ref(db, `reminders/${item.key}`), { order });
+            });
+          }
+        };
 
         // Remove button
         const removeBtn = document.createElement('button');
@@ -228,46 +231,14 @@
 
         // Toggle check
         div.onclick = (e) => {
-          if (e.target === removeBtn) return;
+          if ([removeBtn, upBtn, downBtn].includes(e.target)) return;
           const checked = !div.classList.contains('checked');
           div.classList.toggle('checked');
           update(ref(db, `reminders/${data.key}`), { checked });
         };
 
-        // DRAG & DROP logic for the row (accept drops)
-        div.addEventListener('dragover', (e) => {
-          e.preventDefault();
-          if (draggingKey && draggingKey !== data.key) {
-            dragOverIndex = idx;
-            renderChecklist(lastItems);
-          }
-        });
-        div.addEventListener('drop', (e) => {
-          e.preventDefault();
-          if (draggingKey && draggingKey !== data.key) {
-            const fromIdx = lastItems.findIndex(x => x.key === draggingKey);
-            const toIdx = idx;
-            const reordered = [...lastItems];
-            const [moved] = reordered.splice(fromIdx, 1);
-            reordered.splice(toIdx, 0, moved);
-            // Write new order to Firebase
-            reordered.forEach((item, order) => {
-              update(ref(db, `reminders/${item.key}`), { order });
-            });
-            draggingKey = null;
-            dragOverIndex = null;
-            // After update, Firebase onValue will re-render
-          }
-        });
-
-        // Insert placeholder if we're dragging above this index
-        if (draggingKey && dragOverIndex === idx && draggingKey !== data.key) {
-          const placeholder = document.createElement('div');
-          placeholder.className = 'checklist-placeholder';
-          log.appendChild(placeholder);
-        }
-
-        div.appendChild(dragHandle);
+        div.appendChild(upBtn);
+        div.appendChild(downBtn);
         div.appendChild(content);
         div.appendChild(removeBtn);
         log.appendChild(div);
@@ -275,17 +246,14 @@
     }
 
     onValue(listRef, (snapshot) => {
-      // Get all items, sorted by order
       const arr = [];
       snapshot.forEach(child => {
         arr.push({ key: child.key, ...child.val() });
       });
       sortItems(arr);
-      lastItems = arr; // store for drag logic
       renderChecklist(arr);
     });
 
-    // Add new reminder
     window.addReminder = async function () {
       const text = prompt("Enter your new reminder:");
       if (text) {
