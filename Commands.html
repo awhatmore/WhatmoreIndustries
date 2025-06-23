@@ -40,13 +40,10 @@
       margin-bottom: 0.6em;
     }
     .checklist-item {
-      margin-left: 1.5em;
-      padding-left: 1.8em;
       position: relative;
       cursor: pointer;
       transition: color 0.2s;
-      display: flex;
-      justify-content: space-between;
+      padding-left: 2em;
     }
     .checklist-item::before {
       content: "⬜";
@@ -64,19 +61,22 @@
     }
     .checklist-content {
       display: flex;
-      justify-content: space-between;
-      width: 100%;
+      justify-content: center;
+      gap: 1em;
+    }
+    .checklist-left, .checklist-right {
+      flex: 1;
+      white-space: nowrap;
     }
     .checklist-left {
-      text-align: left;
-      flex: 1;
+      text-align: right;
+      padding-right: 0.5em;
     }
     .checklist-right {
-      text-align: right;
-      flex: 1;
+      text-align: left;
+      padding-left: 0.5em;
     }
     .checklist-divider {
-      margin: 0 0.8em;
       flex: 0;
       color: #888;
     }
@@ -96,7 +96,6 @@
       background-color: #0096cc;
     }
   </style>
-  <!-- Firebase Realtime DB Scripts -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
     import { getDatabase, ref, push, onValue, update } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
@@ -115,7 +114,6 @@
     const db = getDatabase(app);
     const listRef = ref(db, "reminders");
 
-    // Load checklist
     onValue(listRef, (snapshot) => {
       const log = document.getElementById("log-section");
       log.innerHTML = '<div class="section-title">Command List</div>';
@@ -149,7 +147,6 @@
       });
     });
 
-    // Add new reminder
     window.addReminder = async function () {
       const text = prompt("Enter your new reminder:");
       if (text) {
