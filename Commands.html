@@ -41,19 +41,23 @@
     }
     .checklist-item {
       position: relative;
-      cursor: pointer;
-      transition: color 0.2s;
-      padding-left: 2em;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      transition: background 0.18s, color 0.2s;
+      padding-left: 2em;
+      cursor: pointer;
+      border-radius: 0.4em;
+      min-height: 2.4em;
     }
     .checklist-item::before {
       content: "⬜";
       position: absolute;
       left: 0;
+      font-size: 1.25em;
       color: #aaa;
       transition: color 0.2s;
+      cursor: pointer;
     }
     .checklist-item.checked::before {
       content: "✅";
@@ -62,31 +66,43 @@
     .checklist-item.checked {
       color: #b8ffcc;
     }
+    .checklist-item:hover, .checklist-item:focus-within {
+      background: #00335655;
+    }
+    .checklist-item:hover .checklist-left,
+    .checklist-item:hover .checklist-divider,
+    .checklist-item:hover .checklist-right,
+    .checklist-item:focus-within .checklist-left,
+    .checklist-item:focus-within .checklist-divider,
+    .checklist-item:focus-within .checklist-right {
+      color: #69d2ff;
+    }
     .checklist-content {
       display: flex;
       justify-content: flex-start;
       gap: 1em;
       margin-left: 0;
       flex: 1;
+      user-select: none;
     }
     .checklist-left, .checklist-right {
       white-space: nowrap;
+      transition: color 0.2s;
     }
     .checklist-left {
       text-align: right;
       flex: 2;
-      white-space: nowrap;
     }
     .checklist-divider {
       flex: 0;
       color: #888;
       min-width: 2em;
       text-align: center;
+      transition: color 0.2s;
     }
     .checklist-right {
       text-align: left;
       flex: 5;
-      white-space: nowrap;
     }
     .delete-btn {
       display: none;
@@ -98,7 +114,8 @@
       cursor: pointer;
       transition: color 0.2s;
     }
-    .checklist-item:hover .delete-btn {
+    .checklist-item:hover .delete-btn,
+    .checklist-item:focus-within .delete-btn {
       display: inline;
     }
     .add-btn {
@@ -145,6 +162,15 @@
         div.className = 'checklist-item';
         if (data.checked) div.classList.add('checked');
 
+        // Checkmark click area
+        div.addEventListener('click', (e) => {
+          // If it's the delete button, don't toggle!
+          if (e.target.classList.contains('delete-btn')) return;
+          const checked = !div.classList.contains('checked');
+          div.classList.toggle('checked');
+          update(ref(db, `reminders/${key}`), { checked });
+        });
+
         const parts = data.text.split("-");
         const left = parts[0]?.trim() ?? "";
         const right = parts[1]?.trim() ?? "";
@@ -157,18 +183,12 @@
           <span class="checklist-right">${right}</span>
         `;
 
-        // Toggle check status (on text click)
-        content.onclick = () => {
-          const checked = !div.classList.contains('checked');
-          div.classList.toggle('checked');
-          update(ref(db, `reminders/${key}`), { checked });
-        };
-
-        // Delete button
+        // Delete button (only deletes, does not toggle)
         const delBtn = document.createElement('button');
         delBtn.className = 'delete-btn';
         delBtn.textContent = '❌';
         delBtn.title = 'Delete this item';
+        delBtn.tabIndex = 0;
         delBtn.onclick = (e) => {
           e.stopPropagation();
           if (confirm("Remove this item?")) {
