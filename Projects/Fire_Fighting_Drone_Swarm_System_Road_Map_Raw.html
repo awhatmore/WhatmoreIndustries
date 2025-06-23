@@ -1278,26 +1278,39 @@ window.addEventListener('scroll', function() {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Fire Points (fake data for now)
-    const firePoints = [
-      { lat: 38.88499, lon: -119.61212, weight: 4 },
-      { lat: 38.88550, lon: -119.61000, weight: 3 },
-      { lat: 38.88620, lon: -119.61450, weight: 5 }
-    ];
-
-    firePoints.forEach(fire => {
-      const color = `rgba(255, 0, 0, ${0.2 + fire.weight * 0.15})`;
-      L.circle([fire.lat, fire.lon], {
-        radius: 200 + fire.weight * 100,
-        color: 'transparent',
-        fillColor: color,
-        fillOpacity: 0.7
-      }).addTo(map);
-    });
+    // === Load Your GeoJSON! ===
+    fetch('/Projects/Fire_Data/eldorado.geojson')
+      .then(response => response.json())
+      .then(data => {
+        L.geoJSON(data, {
+          pointToLayer: function (feature, latlng) {
+            return L.circle(latlng, {
+              radius: 200,
+              color: '#f03',
+              fillColor: '#f35',
+              fillOpacity: 0.7
+            });
+          },
+          onEachFeature: function (feature, layer) {
+            // Optional: Popup with properties
+            if (feature.properties) {
+              let popupContent = '';
+              for (let key in feature.properties) {
+                popupContent += `<b>${key}</b>: ${feature.properties[key]}<br>`;
+              }
+              layer.bindPopup(popupContent);
+            }
+          }
+        }).addTo(map);
+      })
+      .catch(err => {
+        console.error('GeoJSON loading error:', err);
+      });
   }
 
   window.addEventListener('load', initLeafletHeatMap);
 </script>
+
 
  
  <section id="drone-wildfire-mist" style="background: #181818; color: #f5f5f5; border-radius: 1.5em; box-shadow: 0 4px 24px #0004; max-width: 800px; margin: 2em auto; padding: 2.5em;">
