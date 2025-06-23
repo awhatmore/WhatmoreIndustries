@@ -105,19 +105,25 @@
       flex: 5;
     }
     .delete-btn {
-      display: none;
+      opacity: 0;
+      pointer-events: none;
       background: none;
       border: none;
       color: #ff8888;
       font-size: 1.2em;
       margin-left: 0.5em;
       cursor: pointer;
-      transition: color 0.2s;
+      transition: opacity 0.2s, color 0.2s;
+      width: 2em; /* ensure consistent width */
+      height: 2em;
+      vertical-align: middle;
     }
     .checklist-item:hover .delete-btn,
     .checklist-item:focus-within .delete-btn {
-      display: inline;
+      opacity: 1;
+      pointer-events: auto;
     }
+
     .add-btn {
       display: block;
       margin: 1em auto 0;
