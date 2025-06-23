@@ -41,23 +41,34 @@
     }
     .checklist-item {
       position: relative;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+      padding-left: 2.5em;
+      margin-bottom: 0.2em;
+      background: none;
+      user-select: none;
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      justify-content: flex-start;
-      transition: background 0.18s, color 0.2s;
-      padding-left: 2em;
-      cursor: pointer;
-      border-radius: 0.4em;
-      min-height: 2.4em;
+      min-height: 2.1em;
+    }
+    .checklist-item:active,
+    .checklist-item.dragging {
+      opacity: 0.65;
+      background: #192631;
+    }
+    .checklist-item:hover {
+      background: #162433;
+      color: #64cbff;
     }
     .checklist-item::before {
       content: "⬜";
       position: absolute;
-      left: 0;
-      font-size: 1.25em;
+      left: 0.6em;
       color: #aaa;
       transition: color 0.2s;
-      cursor: pointer;
+      font-size: 1.25em;
+      top: 0.23em;
     }
     .checklist-item.checked::before {
       content: "✅";
@@ -66,28 +77,22 @@
     .checklist-item.checked {
       color: #b8ffcc;
     }
-    .checklist-item:hover, .checklist-item:focus-within {
-      background: #00335655;
-    }
-    .checklist-item:hover .checklist-left,
-    .checklist-item:hover .checklist-divider,
-    .checklist-item:hover .checklist-right,
-    .checklist-item:focus-within .checklist-left,
-    .checklist-item:focus-within .checklist-divider,
-    .checklist-item:focus-within .checklist-right {
-      color: #69d2ff;
+    .checklist-drag {
+      margin-right: 0.8em;
+      cursor: grab;
+      font-size: 1.3em;
+      color: #3ec6fd;
+      opacity: 0.93;
+      user-select: none;
     }
     .checklist-content {
       display: flex;
       justify-content: flex-start;
       gap: 1em;
-      margin-left: 0;
-      flex: 1;
-      user-select: none;
+      width: 100%;
     }
     .checklist-left, .checklist-right {
       white-space: nowrap;
-      transition: color 0.2s;
     }
     .checklist-left {
       text-align: right;
@@ -98,32 +103,30 @@
       color: #888;
       min-width: 2em;
       text-align: center;
-      transition: color 0.2s;
     }
     .checklist-right {
       text-align: left;
       flex: 5;
     }
-    .delete-btn {
-      opacity: 0;
-      pointer-events: none;
+    .checklist-remove-btn {
+      margin-left: 1em;
+      color: #ff7373;
       background: none;
       border: none;
-      color: #ff8888;
-      font-size: 1.2em;
-      margin-left: 0.5em;
+      font-size: 1.12em;
       cursor: pointer;
-      transition: opacity 0.2s, color 0.2s;
-      width: 2em; /* ensure consistent width */
-      height: 2em;
-      vertical-align: middle;
+      transition: color 0.17s;
     }
-    .checklist-item:hover .delete-btn,
-    .checklist-item:focus-within .delete-btn {
-      opacity: 1;
-      pointer-events: auto;
+    .checklist-remove-btn:hover {
+      color: #ff4040;
     }
-
+    .checklist-placeholder {
+      height: 2.2em;
+      border: 2px dashed #00b4ff;
+      background: #011a2e;
+      border-radius: 6px;
+      margin: 0.2em 0;
+    }
     .add-btn {
       display: block;
       margin: 1em auto 0;
@@ -158,29 +161,54 @@
     const db = getDatabase(app);
     const listRef = ref(db, "reminders");
 
+    let dragSrcKey = null;
+    let dragSrcIndex = null;
+    let placeholder = null;
+
+    // Helper: returns sorted items by order
+    function sortItems(items) {
+      return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    }
+
     onValue(listRef, (snapshot) => {
       const log = document.getElementById("log-section");
       log.innerHTML = '<div class="section-title">Command List</div>';
+      // Read all as array, sorted
+      const arr = [];
       snapshot.forEach(child => {
-        const key = child.key;
-        const data = child.val();
+        arr.push({ key: child.key, ...child.val() });
+      });
+      sortItems(arr).forEach((data, idx) => {
         const div = document.createElement('div');
         div.className = 'checklist-item';
+        div.draggable = true;
+        div.dataset.key = data.key;
+        div.dataset.index = idx;
         if (data.checked) div.classList.add('checked');
 
-        // Checkmark click area
-        div.addEventListener('click', (e) => {
-          // If it's the delete button, don't toggle!
-          if (e.target.classList.contains('delete-btn')) return;
-          const checked = !div.classList.contains('checked');
-          div.classList.toggle('checked');
-          update(ref(db, `reminders/${key}`), { checked });
-        });
-
+        // Parse left/right sides
         const parts = data.text.split("-");
         const left = parts[0]?.trim() ?? "";
         const right = parts[1]?.trim() ?? "";
 
+        // Drag handle
+        const dragHandle = document.createElement('span');
+        dragHandle.className = 'checklist-drag';
+        dragHandle.innerHTML = '&#9776;'; // Hamburger/drag icon
+
+        // Remove button
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'checklist-remove-btn';
+        removeBtn.title = "Remove item";
+        removeBtn.innerHTML = '&times;';
+        removeBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (confirm("Remove this item?")) {
+            remove(ref(db, `reminders/${data.key}`));
+          }
+        };
+
+        // Content
         const content = document.createElement('div');
         content.className = 'checklist-content';
         content.innerHTML = `
@@ -189,29 +217,77 @@
           <span class="checklist-right">${right}</span>
         `;
 
-        // Delete button (only deletes, does not toggle)
-        const delBtn = document.createElement('button');
-        delBtn.className = 'delete-btn';
-        delBtn.textContent = '❌';
-        delBtn.title = 'Delete this item';
-        delBtn.tabIndex = 0;
-        delBtn.onclick = (e) => {
-          e.stopPropagation();
-          if (confirm("Remove this item?")) {
-            remove(ref(db, `reminders/${key}`));
-          }
+        // Toggle check
+        div.onclick = (e) => {
+          if (e.target === removeBtn) return; // Don't toggle on remove click
+          const checked = !div.classList.contains('checked');
+          div.classList.toggle('checked');
+          update(ref(db, `reminders/${data.key}`), { checked });
         };
 
+        // DRAG & DROP logic:
+        div.addEventListener('dragstart', e => {
+          dragSrcKey = data.key;
+          dragSrcIndex = idx;
+          div.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', '');
+        });
+        div.addEventListener('dragend', () => {
+          dragSrcKey = null;
+          dragSrcIndex = null;
+          div.classList.remove('dragging');
+          if (placeholder) placeholder.remove();
+          placeholder = null;
+        });
+        div.addEventListener('dragover', e => {
+          e.preventDefault();
+          if (!placeholder) {
+            placeholder = document.createElement('div');
+            placeholder.className = 'checklist-placeholder';
+            div.parentNode.insertBefore(placeholder, div);
+          }
+        });
+        div.addEventListener('dragleave', () => {
+          if (placeholder) {
+            placeholder.remove();
+            placeholder = null;
+          }
+        });
+        div.addEventListener('drop', e => {
+          e.preventDefault();
+          // Find all item keys in new order
+          const items = Array.from(log.querySelectorAll('.checklist-item'));
+          const newOrder = items.map(el => el.dataset.key);
+          // Update order in Firebase
+          newOrder.forEach((key, order) => {
+            update(ref(db, `reminders/${key}`), { order });
+          });
+          if (placeholder) placeholder.remove();
+          placeholder = null;
+        });
+
+        // Attach drag handle, content, remove button
+        div.appendChild(dragHandle);
         div.appendChild(content);
-        div.appendChild(delBtn);
+        div.appendChild(removeBtn);
         log.appendChild(div);
       });
     });
 
+    // Add new reminder
     window.addReminder = async function () {
       const text = prompt("Enter your new reminder:");
       if (text) {
-        push(listRef, { text, checked: false });
+        // Find max order:
+        onValue(listRef, (snapshot) => {
+          let maxOrder = -1;
+          snapshot.forEach(child => {
+            const order = child.val().order;
+            if (typeof order === "number" && order > maxOrder) maxOrder = order;
+          });
+          push(listRef, { text, checked: false, order: maxOrder + 1 });
+        }, { onlyOnce: true });
       }
     };
   </script>
