@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=1024">
-  <title>Breacher Reminder Log</title>
+  <title>Breacher Commands</title>
   <style>
     body {
       margin: 0;
@@ -31,14 +31,36 @@
       margin-bottom: 1em;
       text-align: center;
     }
-    .section {
+    .email-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5em;
       margin-bottom: 2em;
+      font-size: 1.15em;
     }
-    .section-title {
-      font-size: 1.5rem;
-      color: #8defff;
-      margin-bottom: 0.6em;
+    .email-link {
+      color: #00eaff;
+      text-decoration: none;
+      font-weight: bold;
     }
+    .email-link:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .email-qr {
+      background: #111;
+      border-radius: 0.6em;
+      padding: 0.3em;
+      box-shadow: 0 0 8px #00b4ff22;
+      border: 1px solid #133544;
+      margin-left: 1em;
+      height: 70px;
+      width: 70px;
+    }
+    /* Checklist styles (your existing styles) ... */
+    .section { margin-bottom: 2em; }
+    .section-title { font-size: 1.5rem; color: #8defff; margin-bottom: 0.6em; }
     .checklist-item {
       position: relative;
       display: flex;
@@ -52,10 +74,7 @@
       border-radius: 8px;
       min-height: 2.1em;
     }
-    .checklist-item:hover {
-      background: #162433;
-      color: #64cbff;
-    }
+    .checklist-item:hover { background: #162433; color: #64cbff; }
     .checklist-item::before {
       content: "⬜";
       position: absolute;
@@ -65,89 +84,39 @@
       font-size: 1.25em;
       top: 0.25em;
     }
-    .checklist-item.checked::before {
-      content: "✅";
-      color: #8fff94;
-    }
-    .checklist-item.checked {
-      color: #b8ffcc;
-    }
+    .checklist-item.checked::before { content: "✅"; color: #8fff94; }
+    .checklist-item.checked { color: #b8ffcc; }
     .checklist-arrows {
-      display: flex;
-      flex-direction: row;    /* changed from column */
-      margin-left: 1.7em;
-      margin-right: 1em;
-      gap: 0.45em;            /* more space side-by-side */
+      display: flex; flex-direction: row;
+      margin-left: 1.7em; margin-right: 1em; gap: 0.45em;
       align-items: center;
     }
     .swap-btn {
-      background: #193654;
-      border: none;
-      color: #87f8fd;
-      font-size: 1.15em;
-      border-radius: 0.4em;
-      padding: 0.14em 0.44em;
-      cursor: pointer;
-      min-width: 1.5em;
-      margin: 0;
-      transition: background 0.15s;
-      vertical-align: middle;
+      background: #193654; border: none; color: #87f8fd;
+      font-size: 1.15em; border-radius: 0.4em; padding: 0.14em 0.44em;
+      cursor: pointer; min-width: 1.5em; margin: 0; transition: background 0.15s;
     }
-    .swap-btn:active, .swap-btn:hover {
-      background: #197fa6;
-      color: #fff;
-    }
+    .swap-btn:active, .swap-btn:hover { background: #197fa6; color: #fff; }
     .checklist-content {
-      display: flex;
-      justify-content: flex-start;
-      gap: 1em;
-      width: 100%;
-      align-items: center;
+      display: flex; justify-content: flex-start;
+      gap: 1em; width: 100%; align-items: center;
     }
-    .checklist-left, .checklist-right {
-      white-space: nowrap;
-    }
-    .checklist-left {
-      text-align: right;
-      flex: 2;
-    }
-    .checklist-divider {
-      flex: 0;
-      color: #888;
-      min-width: 2em;
-      text-align: center;
-    }
-    .checklist-right {
-      text-align: left;
-      flex: 5;
-    }
+    .checklist-left, .checklist-right { white-space: nowrap; }
+    .checklist-left { text-align: right; flex: 2; }
+    .checklist-divider { flex: 0; color: #888; min-width: 2em; text-align: center; }
+    .checklist-right { text-align: left; flex: 5; }
     .checklist-remove-btn {
-      margin-left: 1em;
-      color: #ff7373;
-      background: none;
-      border: none;
-      font-size: 1.13em;
-      cursor: pointer;
-      transition: color 0.17s;
+      margin-left: 1em; color: #ff7373; background: none; border: none;
+      font-size: 1.13em; cursor: pointer; transition: color 0.17s;
     }
-    .checklist-remove-btn:hover {
-      color: #ff4040;
-    }
+    .checklist-remove-btn:hover { color: #ff4040; }
     .add-btn {
-      display: block;
-      margin: 1em auto 0;
-      padding: 0.5em 1.2em;
-      font-size: 1rem;
-      background-color: #00b4ff;
-      color: #000;
-      border: none;
-      border-radius: 0.5em;
-      cursor: pointer;
+      display: block; margin: 1em auto 0; padding: 0.5em 1.2em;
+      font-size: 1rem; background-color: #00b4ff; color: #000;
+      border: none; border-radius: 0.5em; cursor: pointer;
       transition: background-color 0.3s;
     }
-    .add-btn:hover {
-      background-color: #0096cc;
-    }
+    .add-btn:hover { background-color: #0096cc; }
   </style>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
@@ -171,9 +140,7 @@
       return items.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
     }
 
-    function swap(arr, i, j) {
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
+    function swap(arr, i, j) { [arr[i], arr[j]] = [arr[j], arr[i]]; }
 
     function renderChecklist(items) {
       const log = document.getElementById("log-section");
@@ -184,7 +151,6 @@
         div.dataset.key = data.key;
         div.dataset.index = idx;
         if (data.checked) div.classList.add('checked');
-
         // Parse left/right sides
         const parts = data.text.split("-");
         const left = parts[0]?.trim() ?? "";
@@ -291,17 +257,16 @@
 </head>
 <body>
   <div class="container">
-    <div class="title">Email </div>
+    <div class="title">Breacher Commands</div>
+    <div class="email-row">
+      <span>Contact:</span>
+      <a href="mailto:awhatmore@whatmoreindustries.io" class="email-link">awhatmore@whatmoreindustries.io</a>
+      <img class="email-qr"
+        src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=90x90&color=0-238-255&bgcolor=17-17-17"
+        alt="QR Email">
+    </div>
     <div class="section" id="log-section">
       <div class="section-title">Command List</div>
-       <p>
-        Contact: 
-        <span style="vertical-align:middle;">
-          <a href="mailto:awhatmore@whatmoreindustries.io" style="color:#0ef;">awhatmore@whatmoreindustries.io</a>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=90x90&color=0-238-255&bgcolor=17-17-17"
-               alt="QR Email">
-        </span>
-      </p>
     </div>
     <button class="add-btn" onclick="addReminder()">+ Add New Command</button>
   </div>
