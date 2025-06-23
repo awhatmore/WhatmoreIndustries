@@ -44,6 +44,9 @@
       cursor: pointer;
       transition: color 0.2s;
       padding-left: 2em;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
     .checklist-item::before {
       content: "⬜";
@@ -64,6 +67,7 @@
       justify-content: flex-start;
       gap: 1em;
       margin-left: 0;
+      flex: 1;
     }
     .checklist-left, .checklist-right {
       white-space: nowrap;
@@ -83,6 +87,19 @@
       text-align: left;
       flex: 5;
       white-space: nowrap;
+    }
+    .delete-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #ff8888;
+      font-size: 1.2em;
+      margin-left: 0.5em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .checklist-item:hover .delete-btn {
+      display: inline;
     }
     .add-btn {
       display: block;
@@ -140,18 +157,27 @@
           <span class="checklist-right">${right}</span>
         `;
 
-        div.onclick = () => {
-          if (!div.classList.contains('checked')) {
-            div.classList.add('checked');
-            update(ref(db, `reminders/${key}`), { checked: true });
-          } else {
-            if (confirm("Remove this item?")) {
-              remove(ref(db, `reminders/${key}`));
-            }
+        // Toggle check status (on text click)
+        content.onclick = () => {
+          const checked = !div.classList.contains('checked');
+          div.classList.toggle('checked');
+          update(ref(db, `reminders/${key}`), { checked });
+        };
+
+        // Delete button
+        const delBtn = document.createElement('button');
+        delBtn.className = 'delete-btn';
+        delBtn.textContent = '❌';
+        delBtn.title = 'Delete this item';
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          if (confirm("Remove this item?")) {
+            remove(ref(db, `reminders/${key}`));
           }
         };
 
         div.appendChild(content);
+        div.appendChild(delBtn);
         log.appendChild(div);
       });
     });
