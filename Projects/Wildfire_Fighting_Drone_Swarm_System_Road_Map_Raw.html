@@ -1426,6 +1426,86 @@ window.addEventListener('scroll', function() {
     *Estimated detection resolution for custom satellite tasking assumes optimal low Earth orbit (LEO) configuration and active fire monitoring capability.
   </p>
 </section>
+
+  <section id="hybrid-scoop-system" style="padding: 2rem; background-color: #0f0f0f; color: #e0e0e0; border-radius: 12px; margin-top: 2rem; line-height: 1.6;">
+  <h2 style="color: #4fc3f7; font-size: 1.8rem;">🔥 Capsule: Hybrid Scoop-Injected Water Refill System</h2>
+
+  <p><strong>Capsule Type:</strong> Engineering Design & Workflow Integration</p>
+  <p><strong>Purpose:</strong> Enable rapid, stable, and autonomous water refilling in-flight for fixed-wing wildfire suppression drones using a hybrid of speed-assisted and pump-boosted water intake.</p>
+
+  <hr style="border: 0; height: 1px; background: #333; margin: 1rem 0;">
+
+  <h3 style="color: #81d4fa;">🧩 System Architecture Overview</h3>
+  <ul>
+    <li><strong>Low-Profile Scoop Intake:</strong> Belly-mounted, shaped for surface skimming.</li>
+    <li><strong>Water Ducting Channel:</strong> Smooth internal flow into tank.</li>
+    <li><strong>Inline Impeller Pump:</strong> Boosts flow if passive fill is insufficient.</li>
+    <li><strong>12L Internal Tank:</strong> With baffles for in-flight stability.</li>
+    <li><strong>Flow Sensor + Valve:</strong> For fill monitoring and splashback control.</li>
+  </ul>
+
+  <p><strong>Operation Modes:</strong><br>
+  1. Passive Speed Fill via ram pressure<br>
+  2. Active Boost Fill via pump if needed</p>
+
+  <hr style="border: 0; height: 1px; background: #333; margin: 1rem 0;">
+
+  <h3 style="color: #81d4fa;">⚙️ Design Specifications</h3>
+  <table style="width: 100%; border-collapse: collapse; background-color: #1a1a1a;">
+    <thead style="background-color: #222;">
+      <tr>
+        <th style="padding: 0.6rem; border: 1px solid #333;">Component</th>
+        <th style="padding: 0.6rem; border: 1px solid #333;">Target Spec</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Scoop Width</td><td style="padding: 0.6rem; border: 1px solid #333;">6–12 cm, shovel-shaped profile</td></tr>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Duct Diameter</td><td style="padding: 0.6rem; border: 1px solid #333;">2.5–4 cm, anti-splash</td></tr>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Tank Volume</td><td style="padding: 0.6rem; border: 1px solid #333;">12–14L with baffles</td></tr>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Pump Type</td><td style="padding: 0.6rem; border: 1px solid #333;">12–24V brushless impeller (3–5 L/sec)</td></tr>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Entry Altitude</td><td style="padding: 0.6rem; border: 1px solid #333;">0.3–1.0 m AGL</td></tr>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Approach Speed</td><td style="padding: 0.6rem; border: 1px solid #333;">25–40 km/h</td></tr>
+      <tr><td style="padding: 0.6rem; border: 1px solid #333;">Refill Time</td><td style="padding: 0.6rem; border: 1px solid #333;">3–6 seconds</td></tr>
+    </tbody>
+  </table>
+
+  <hr style="border: 0; height: 1px; background: #333; margin: 1rem 0;">
+
+  <h3 style="color: #81d4fa;">🧠 Flight Logic Tree (Simplified)</h3>
+  <ol>
+    <li>Enter scoop zone (GPS waypoint)</li>
+    <li>Lower to scoop altitude</li>
+    <li>Open scoop valve</li>
+    <li>If flow detected → continue filling</li>
+    <li>Else → activate pump</li>
+    <li>Once full or timeout → close valve</li>
+    <li>Resume misting flight path</li>
+  </ol>
+
+  <h3 style="color: #81d4fa;">🔄 Safety Features</h3>
+  <ul>
+    <li>Emergency Dump Valve</li>
+    <li>Flow Pressure Sensor (overflow protection)</li>
+    <li>Abort Logic (pitch/speed-based scoop retraction)</li>
+  </ul>
+
+  <h3 style="color: #81d4fa;">📦 Workflow Integration</h3>
+  <p><strong>Deployment:</strong> Integrates into CW‑25H-class fixed-wing drones.<br>
+  <strong>Software:</strong> Compatible with PX4 or ArduPilot systems.<br>
+  <strong>Ground:</strong> Refill channels, lakes, or mobile tanks with shallow scoop zones.</p>
+
+  <h3 style="color: #81d4fa;">🛠️ Next Steps</h3>
+  <ul>
+    <li>Create CAD for scoop housing and duct</li>
+    <li>Select pump/valve components</li>
+    <liDevelop autopilot logic tree</li>
+    <li>Prototype refill testing in shallow controlled water zone</li>
+  </ul>
+
+  <blockquote style="border-left: 4px solid #4fc3f7; padding-left: 1rem; color: #ccc; margin-top: 1.5rem;">
+    “This capsule ensures water meets fire faster than manned systems ever could — without ever needing to stop flying.”
+  </blockquote>
+</section>
  </div>
 </body>
 </html>
