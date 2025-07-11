@@ -229,16 +229,34 @@ function parenthesizeDenominator(expr) {
   
 function appendCalc(val) {
   const box = document.getElementById('input-box');
-  // Do NOT set readonly here!
   const start = box.selectionStart;
   const end = box.selectionEnd;
   const text = box.value;
-  box.value = text.slice(0, start) + val + text.slice(end);
-  const caretPos = start + val.length;
+
+  const prevChar = text[start - 1] || '';
+  const nextChar = text[start] || '';
+
+  // Determine if we need to inject a * before this val
+  let needsMult = false;
+
+  // Add * if: number followed by variable or vice versa, or ) before ( or number/letter
+  if (
+    (/[0-9]/.test(prevChar) && /[a-zA-Z(]/.test(val)) || 
+    (/[a-zA-Z)]/.test(prevChar) && /[0-9a-zA-Z(]/.test(val))
+  ) {
+    needsMult = true;
+  }
+
+  const insert = (needsMult ? '*' : '') + val;
+
+  box.value = text.slice(0, start) + insert + text.slice(end);
+  const caretPos = start + insert.length;
   box.setSelectionRange(caretPos, caretPos);
-  box.focus(); // optional, keeps focus after button press
+  box.focus();
+
   calculate();
 }
+
 
 function clearCalc() {
   document.getElementById('input-box').value = '';
