@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CNN Top Stories</title>
+</head>
+<body>
+  <h1>CNN – Top Stories</h1>
+  <ul id="headlines"></ul>
+
+  <script>
+    async function loadCNN() {
+      try {
+        // Use a public CORS proxy to bypass cross‑origin restrictions.
+        const rssUrl = 'https://rss.cnn.com/rss/cnn_latest.rss';
+        const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(rssUrl);
+
+        const response = await fetch(proxyUrl);
+        const xmlText  = await response.text();
+
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, 'application/xml');
+
+        const items = xml.querySelectorAll('item');
+        const list  = document.getElementById('headlines');
+
+        items.forEach(item => {
+          const title = item.querySelector('title').textContent;
+          const link  = item.querySelector('link').textContent;
+
+          const li = document.createElement('li');
+          const a  = document.createElement('a');
+          a.href        = link;
+          a.textContent = title;
+          a.target      = '_blank';
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+      } catch (err) {
+        console.error('Failed to fetch CNN feed:', err);
+        document.getElementById('headlines').textContent = 'Error loading CNN headlines.';
+      }
+    }
+
+    loadCNN();
+  </script>
+</body>
+</html>
