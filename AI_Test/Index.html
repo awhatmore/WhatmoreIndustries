@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Aggregator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 1rem;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      section {
+        margin-bottom: 2rem;
+      }
+      h2 {
+        margin-bottom: 0.5rem;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 0.25rem;
+      }
+      ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      li {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
+      }
+      a {
+        font-weight: bold;
+        text-decoration: none;
+        color: #003366;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      p {
+        margin: 0.25rem 0 0;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>News Aggregator</h1>
+    <section>
+      <h2>Fox News</h2>
+      <ul id="fox-list"></ul>
+    </section>
+    <section>
+      <h2>CNN</h2>
+      <ul id="cnn-list"></ul>
+    </section>
+    <section>
+      <h2>Reuters</h2>
+      <ul id="reuters-list"></ul>
+    </section>
+    <script>
+      function loadSection(listId, jsonUrl) {
+        fetch(jsonUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            const ul = document.getElementById(listId);
+            data.forEach((item) => {
+              const li = document.createElement("li");
+              const a = document.createElement("a");
+              a.href = item.link;
+              a.textContent = item.title;
+              a.target = "_blank";
+              li.appendChild(a);
+              const p = document.createElement("p");
+              p.textContent = item.description;
+              li.appendChild(p);
+              ul.appendChild(li);
+            });
+          })
+          .catch((err) => {
+            console.error(`Failed to load ${jsonUrl}`, err);
+            const ul = document.getElementById(listId);
+            const li = document.createElement("li");
+            li.textContent = "Error loading headlines.";
+            ul.appendChild(li);
+          });
+      }
+      // Load all sections
+      loadSection("fox-list", "data/fox.json");
+      loadSection("cnn-list", "data/cnn.json");
+      loadSection("reuters-list", "data/reuters.json");
+    </script>
+  </body>
+</html>
