@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>From Inspection to Protection — Wildfire Detection Drone Program</title>
+  <style>
+    :root{
+      --bg:#0b0f14;--panel:#111722;--ink:#e8eef8;--ink-dim:#b5c0d4;--brand:#53b2ff;--accent:#79ffa8;--warn:#ffcc66;--danger:#ff6b6b;--ok:#86efac;--muted:#7aa2c7;
+      --card:#0f141d;--edge:#1c2a3a;--pill:#162131;--shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#0a0e13 60%,#0b111a);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Inter,"Helvetica Neue",Arial}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .banner{background:linear-gradient(90deg,#09243b, #0e2f4e);border:1px solid var(--edge);padding:10px 14px;border-radius:14px;color:var(--ink);display:flex;gap:10px;align-items:center;box-shadow:var(--shadow)}
+    .banner b{color:var(--accent)}
+    header{margin:24px 0 14px}
+    h1{font-size:38px;line-height:1.15;margin:16px 0 6px}
+    h2{font-size:22px;color:var(--ink);margin:26px 0 10px}
+    h3{font-size:18px;color:var(--ink);margin:22px 0 8px}
+    p.lead{color:var(--ink-dim);font-size:18px;max-width:950px}
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:var(--pill);border:1px solid var(--edge);color:var(--ink);padding:6px 10px;border-radius:999px;font-size:13px}
+    .kpi{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--edge);border-radius:14px;padding:14px}
+    .kpi .big{font-size:26px;font-weight:700}
+    .kpi small{color:var(--ink-dim)}
+    .table{width:100%;border-collapse:separate;border-spacing:0}
+    .table th,.table td{padding:12px 10px;border-bottom:1px solid var(--edge)}
+    .table th{color:#cfe4ff;text-align:left;background:#0d1520}
+    .note{font-size:14px;color:var(--ink-dim)}
+    .tag{display:inline-block;padding:4px 10px;border-radius:999px;border:1px solid var(--edge);background:#0f1724;color:var(--muted);font-size:12px;margin-right:6px}
+    .callout{border:1px dashed var(--edge);padding:14px;border-radius:14px;background:#0e1520}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .btn{background:linear-gradient(180deg,#1b66a8,#144c7d);color:white;border:none;border-radius:12px;padding:12px 16px;font-weight:700;box-shadow:var(--shadow)}
+    .btn.alt{background:linear-gradient(180deg,#1c6f4c,#135d3d)}
+    .muted{color:var(--ink-dim)}
+    .ok{color:var(--ok)}.warn{color:var(--warn)}.danger{color:var(--danger)}
+    footer{margin:28px 0 40px;color:var(--ink-dim);font-size:14px}
+    .hr{height:1px;background:linear-gradient(90deg,transparent,var(--edge),transparent);margin:22px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner" role="banner" aria-label="motto">
+      <span>🟢</span>
+      <div><b>We win by helping others win.</b> — Program Proposal Draft v1</div>
+    </div><header>
+  <h1>From Inspection to Protection</h1>
+  <p class="lead">A plug‑and‑play upgrade that converts PG&amp;E’s existing drone capability into a real‑time wildfire <b>detection</b> and <b>action</b> network with measurable coverage, executive‑clear costs, and phased deployment.</p>
+  <div class="cta">
+    <span class="pill">⏱&nbsp; Alerting &lt; 60s from anomaly</span>
+    <span class="pill">🛰️ Satellite intervals ~6h (for comparison)</span>
+    <span class="pill">🧭 Patrol dwell per sector ≤ 5 min</span>
+  </div>
+</header>
+
+<section class="grid cols-3">
+  <div class="kpi"><div class="big">~250</div><small>linear miles of high‑risk corridor per drone / day</small></div>
+  <div class="kpi"><div class="big">~60</div><small>sq. miles/day effective area coverage per drone</small></div>
+  <div class="kpi"><div class="big">91,250</div><small>linear miles per drone / year (continuous ops)</small></div>
+</section>
+
+<div class="hr"></div>
+
+<section class="grid cols-2">
+  <div class="card">
+    <h2>Per‑Drone Output & Cost</h2>
+    <table class="table" aria-label="Per-Drone Costs">
+      <thead><tr><th>Category</th><th>Amount (USD)</th></tr></thead>
+      <tbody>
+        <tr><td>Acquisition &amp; Outfitting (platform + sensors + AI + comms)</td><td>$68,000</td></tr>
+        <tr><td>Daily Operational Cost (pilots, energy, data)</td><td>$420 / day</td></tr>
+        <tr><td>Annual Ops Cost (365 days)</td><td>$153,300 / year</td></tr>
+        <tr><td>Annual Maintenance &amp; Replacement</td><td>$12,000 / year</td></tr>
+        <tr><td><b>Total Year 1 / Drone</b></td><td><b>$233,300</b></td></tr>
+        <tr><td><b>Total Year 2+ / Drone</b></td><td><b>$165,300</b></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Output is achieved via multiple flight windows with rapid battery swaps to ensure continuous route coverage; no single sector is unwatched for more than ~5 minutes during elevated risk ops.</p>
+  </div>
+
+  <div class="card">
+    <h2>Coverage Context (Relatable Scale)</h2>
+    <ul>
+      <li><b>Per Drone:</b> ~60 sq mi/day — ≈ size of San Francisco</li>
+      <li><b>5 Drones (Pilot):</b> ~300 sq mi/day — ≈ 5× Washington, D.C.</li>
+      <li><b>20 Drones (Phase 2):</b> ~1,200 sq mi/day — ≈ Rhode Island</li>
+      <li><b>50 Drones (Full):</b> ~3,000 sq mi/day — ≈ Connecticut</li>
+    </ul>
+    <div class="callout">For ~$233K in Year 1, one drone delivers ~91k linear miles of annual patrol. Preventing a single ignition offsets this investment for decades.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Fleet‑Level Program Costs & Daily Coverage</h2>
+  <table class="table" aria-label="Fleet Costs">
+    <thead><tr><th>Fleet Size</th><th>Daily Corridor Miles</th><th>Daily Area Coverage</th><th>Year 1 Cost</th><th>Year 2+ Cost</th></tr></thead>
+    <tbody>
+      <tr><td>5 drones (Pilot)</td><td>~1,250</td><td>~275–325 sq mi</td><td>$1.17M</td><td>$0.83M</td></tr>
+      <tr><td>20 drones (Phase 2)</td><td>~5,000</td><td>~1,100–1,300 sq mi</td><td>$4.67M</td><td>$3.31M</td></tr>
+      <tr><td>50 drones (Full Program)</td><td>~12,500</td><td>~2,750–3,250 sq mi</td><td>$11.67M</td><td>$8.26M</td></tr>
+    </tbody>
+  </table>
+  <p class="note">Executive lens: A full 50‑drone network sweeps Connecticut‑sized territory daily at &lt; 3% of one average major wildfire settlement.</p>
+</section>
+
+<section class="grid cols-2">
+  <div class="card">
+    <h2>Detection: Satellite vs. Drone</h2>
+    <table class="table" aria-label="Detection Comparison">
+      <thead><tr><th>Capability</th><th>Satellite (typical)</th><th>Proposed Drone Network</th></tr></thead>
+      <tbody>
+        <tr><td>Update cadence</td><td>~6 hours</td><td><b>≤ 5 minutes dwell per sector</b></td></tr>
+        <tr><td>Alert time from anomaly</td><td>Hours</td><td><b>&lt; 60 seconds</b></td></tr>
+        <tr><td>Weather/Smoke resilience</td><td>Limited by clouds/smoke</td><td>Thermal + optical in haze/smoke</td></tr>
+        <tr><td>Capex to add coverage</td><td>$10M+ per launch (indicative)</td><td>~$68k per additional drone</td></tr>
+      </tbody>
+    </table>
+    <p class="note">We align battery swap rotations with satellite revisit windows to maximize aerial coverage without opening blind spots.</p>
+  </div>
+  <div class="card">
+    <h2>Insurance & Government Offsets (Indicative)</h2>
+    <ul>
+      <li><b>Average major settlement exposure:</b> $500M–$6B; frequency ~1 every 2–3 years</li>
+      <li><b>Insurance premium reduction:</b> 5–15% with verified continuous aerial detection program</li>
+      <li><b>Deductible reduction:</b> up to 50% upon meeting insurer mitigation thresholds</li>
+      <li><b>Regulatory/Grant offsets:</b> $3M–$15M/yr potential via CA wildfire mitigation credits + federal hazard mitigation grants</li>
+    </ul>
+    <div class="callout">Even preventing <b>one</b> large ignition every 3 years implies ~$166M/yr avoided losses — a ~14× ROI vs. full‑program annual cost before offsets.</div>
+  </div>
+</section>
+
+<section class="grid cols-2">
+  <div class="card">
+    <h2>Post‑Detection → Action</h2>
+    <ul>
+      <li><b>Hotspot Priority Zone:</b> GPS‑tagged ignition point (&lt; 3 m) auto‑published to PG&amp;E ops map</li>
+      <li><b>Instant Dispatch Packet:</b> thermal snapshot, coordinates, access routes, wind‑aware spread cue</li>
+      <li><b>Ground &amp; Air Deconfliction:</b> recommended ground crew positions, aircraft drop path, and ground “stay‑clear” zones</li>
+      <li><b>ATAK‑Ready:</b> targets, exclusion zones, and safety layers pushed to crew devices in real time</li>
+      <li><b>Direct Swarm Option:</b> autonomous suppressant micro‑drones can engage &lt; 10 m² ignitions within minutes</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Patrol Design (No Blind Gaps)</h2>
+    <ul>
+      <li><b>Sector dwell:</b> ≤ 5 minutes between passes in elevated risk</li>
+      <li><b>Overlap:</b> adjacent routes overlap at edges for redundancy</li>
+      <li><b>Terrain‑follow:</b> RTK + LiDAR for consistent thermal geometry</li>
+      <li><b>Dynamic surge:</b> route density increases under Red Flag conditions</li>
+      <li><b>Battery orchestration:</b> swap cycles align to low‑probability windows</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Modular Tech Stack (COTS, Field‑Proven)</h2>
+  <table class="table" aria-label="Tech Specs">
+    <thead><tr><th>Component</th><th>Spec / Example</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Airframe</td><td>DJI Matrice 350 RTK (or retrofit M300)</td><td>Heavy‑lift, weather‑resistant, ~55 min flights</td></tr>
+      <tr><td>Thermal</td><td>FLIR Vue TZ20‑R (dual 640×512, radiometric)</td><td>Night &amp; haze detection of heat anomalies</td></tr>
+      <tr><td>Optical</td><td>H20T (20MP, 23× optical zoom)</td><td>Long‑range visual confirmation</td></tr>
+      <tr><td>On‑board AI</td><td>NVIDIA Jetson Xavier NX</td><td>Real‑time smoke/thermal anomaly detection</td></tr>
+      <tr><td>Comms</td><td>LTE + RF fallback (e.g., Silvus MN‑MIMO)</td><td>Live video + alerts in low‑signal terrain</td></tr>
+      <tr><td>Nav</td><td>RTK + terrain‑follow LiDAR</td><td>Precision patrols along risk corridors</td></tr>
+    </tbody>
+  </table>
+  <p class="note">All components are commercial off‑the‑shelf (COTS). Integration and patrol logic remain proprietary to ensure unique performance.</p>
+</section>
+
+<section class="card">
+  <h2>Phased Deployment (Low Upfront, Proof‑First)</h2>
+  <ol>
+    <li><b>Phase 0 – Discovery &amp; Readiness (2–4 weeks):</b> corridor selection, regulatory alignment, data hooks into PG&amp;E ops; <i>fixed‑fee</i>.</li>
+    <li><b>Phase 1 – Pilot (3 months, 5 drones):</b> continuous patrol of top Tier‑3 corridors, alerts &lt; 60s, 5‑minute dwell; monthly KPI reports; <i>milestone‑based</i>.</li>
+    <li><b>Phase 2 – Regional Expansion (6 months, 20 drones):</b> twice‑daily sweeps of all high‑risk corridors; insurer validation package delivered.</li>
+    <li><b>Phase 3 – Full Program (ongoing, 50 drones):</b> statewide Tier‑3 coverage, surge operations for Red Flag days, quarterly ROI dashboards.</li>
+    <li><b>Phase S – R&amp;D (parallel):</b> suppression swarm prototyping for sub‑10 m² ignitions; optional separate track.</li>
+  </ol>
+  <div class="callout">Procurement‑ready: fixed fees for Phase 0; milestone billing for Phases 1–3; clear SLAs and KPIs baked in.</div>
+</section>
+
+<section class="grid cols-2">
+  <div class="card">
+    <h2>KPIs & Reporting</h2>
+    <ul>
+      <li>Time‑to‑alert (median &amp; 95th percentile)</li>
+      <li>False positive / negative rates (with CAL FIRE cross‑validation)</li>
+      <li>Corridor miles &amp; sq. miles covered (daily / monthly)</li>
+      <li>Detection‑to‑containment timelines (when available)</li>
+      <li>Insurance &amp; regulatory credit attainment progress</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Assumptions & Notes</h2>
+    <ul>
+      <li>All costs are indicative and subject to site conditions and final scope.</li>
+      <li>Coverage estimates assume 350–400 ft AGL, ~30 mph patrol speed, 1,500–2,000 ft lateral detection corridor.</li>
+      <li>Where satellite cadence is ~6 hours, battery orchestration uses windows to avoid creating blind sectors.</li>
+      <li>Proprietary flight logic, detection tuning, and comms orchestration are withheld pending NDA.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Call to Action</h2>
+  <p>PG&amp;E already flies inspection drones. This program turns that asset into a continuous wildfire detection and action network.</p>
+  <div class="cta">
+    <button class="btn">Schedule a 15‑minute pilot briefing</button>
+    <button class="btn alt">Request Phase 0 fixed‑fee proposal</button>
+  </div>
+</section>
+
+<footer>
+  <div>© 2025 — Wildfire Aerial Detection & Response Program (Proposal Draft v1). All methods and integration logic proprietary and available under NDA.</div>
+</footer>
+
+  </div>
+</body>
+</html>
