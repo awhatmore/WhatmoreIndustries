@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>From Inspection to Protection — Wildfire Detection Drone Program</title>
+  <style>
+    :root {
+      --bg:#0b0f14;--panel:#111722;--ink:#e8eef8;--ink-dim:#b5c0d4;--brand:#53b2ff;--accent:#79ffa8;--warn:#ffcc66;--danger:#ff6b6b;--ok:#86efac;--edge:#1c2a3a;--shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui, sans-serif; padding-bottom:76px; }
+    a { color:var(--brand); }
+    .wrap { max-width:1100px; margin:0 auto; padding:16px; }
+    h1,h2,h3 { margin-top:0; }
+    .banner { background:var(--panel); border:1px solid var(--edge); padding:8px 12px; border-radius:12px; margin-bottom:16px; }
+    .pill { display:inline-block; padding:6px 10px; background:var(--panel); border:1px solid var(--edge); border-radius:999px; font-size:13px; margin:2px; }
+    .kpi { background:var(--panel); border:1px solid var(--edge); border-radius:12px; padding:12px; text-align:center; }
+    .kpi .big { font-size:22px; font-weight:bold; }
+    .card { background:var(--panel); border:1px solid var(--edge); border-radius:12px; padding:14px; margin-bottom:16px; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { padding:8px; border-bottom:1px solid var(--edge); text-align:left; }
+    th { background:#0d1520; color:var(--ink); position:sticky; top:0; }
+    .callout { border:1px dashed var(--edge); padding:10px; border-radius:8px; background:#0e1520; margin-top:8px; }/* Buttons & CTAs */
+.btn { display:inline-block; border:none; border-radius:12px; padding:12px 16px; font-weight:700; color:#fff; background:linear-gradient(180deg,#1b66a8,#144c7d); box-shadow:var(--shadow); cursor:pointer; }
+.btn.alt { background:linear-gradient(180deg,#1c6f4c,#135d3d); }
+.cta { display:flex; gap:12px; flex-wrap:wrap; }
+
+/* Desktop grid */
+@media (min-width:768px) {
+  .grid { display:grid; gap:16px; }
+  .cols-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .cols-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+
+/* Mobile-first improvements */
+@media (max-width:767.98px) {
+  .pill { font-size:12px; }
+  .cta .btn { width:100%; }
+  table { display:block; overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+  th, td { min-width:120px; }
+  .bottom-cta { position:fixed; left:0; right:0; bottom:0; background:#0e1520; border-top:1px solid var(--edge); padding:10px 12px; display:flex; gap:10px; z-index:100; }
+  .bottom-cta .btn { flex:1; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="banner"><b>We win by helping others win.</b> — Program Proposal Draft v1</div>
+    <h1>From Inspection to Protection</h1>
+    <p>A plug‑and‑play upgrade that converts PG&E’s existing drone capability into a real‑time wildfire detection and action network with measurable coverage, executive‑clear costs, and phased deployment.</p>
+    <div>
+      <span class="pill">⏱ Alert &lt; 60s</span>
+      <span class="pill">🛰 Satellite ~6h</span>
+      <span class="pill">🧭 ≤ 5 min dwell</span>
+    </div><div class="grid cols-3" style="margin-top:12px;">
+  <div class="kpi"><div class="big">~250</div><div>miles/day per drone</div></div>
+  <div class="kpi"><div class="big">~60</div><div>sq mi/day per drone</div></div>
+  <div class="kpi"><div class="big">91,250</div><div>miles/year per drone</div></div>
+</div>
+
+<div class="card">
+  <h2>Per‑Drone Output & Cost</h2>
+  <table>
+    <tr><th>Category</th><th>Amount</th></tr>
+    <tr><td>Acquisition & Outfitting</td><td>$68,000</td></tr>
+    <tr><td>Daily Operational Cost</td><td>$420/day</td></tr>
+    <tr><td>Annual Ops Cost</td><td>$153,300</td></tr>
+    <tr><td>Annual Maintenance</td><td>$12,000</td></tr>
+    <tr><td><b>Total Year 1</b></td><td><b>$233,300</b></td></tr>
+    <tr><td><b>Total Year 2+</b></td><td><b>$165,300</b></td></tr>
+  </table>
+  <p>Continuous coverage with rapid battery swaps; no sector unwatched more than ~5 minutes during elevated risk.</p>
+</div>
+
+<div class="card">
+  <h2>Coverage Context</h2>
+  <ul>
+    <li>Per Drone: ≈ San Francisco</li>
+    <li>5 Drones: ≈ 5× Washington D.C.</li>
+    <li>20 Drones: ≈ Rhode Island</li>
+    <li>50 Drones: ≈ Connecticut</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Fleet Costs & Coverage</h2>
+  <table>
+    <tr><th>Fleet</th><th>Miles/day</th><th>Sq mi/day</th><th>Year 1</th><th>Year 2+</th></tr>
+    <tr><td>5 drones</td><td>1,250</td><td>275–325</td><td>$1.17M</td><td>$0.83M</td></tr>
+    <tr><td>20 drones</td><td>5,000</td><td>1,100–1,300</td><td>$4.67M</td><td>$3.31M</td></tr>
+    <tr><td>50 drones</td><td>12,500</td><td>2,750–3,250</td><td>$11.67M</td><td>$8.26M</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Detection: Satellite vs Drone</h2>
+  <table>
+    <tr><th>Capability</th><th>Satellite</th><th>Drone Network</th></tr>
+    <tr><td>Update cadence</td><td>~6 hours</td><td>≤ 5 min dwell</td></tr>
+    <tr><td>Alert time</td><td>Hours</td><td>&lt; 60s</td></tr>
+    <tr><td>Weather/smoke</td><td>Limited</td><td>Thermal + optical</td></tr>
+    <tr><td>Capex for coverage</td><td>$10M+</td><td>$68k per drone</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Post‑Detection → Action</h2>
+  <ul>
+    <li>Hotspot GPS-tagged & sent to ops</li>
+    <li>Instant dispatch packet to crews</li>
+    <li>Ground & air coordination (ATAK-ready)</li>
+    <li>Optional suppressant swarm deployment</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>Phased Deployment</h2>
+  <ol>
+    <li>Phase 0: Discovery & Readiness (2–4 wks)</li>
+    <li>Phase 1: Pilot (3 mo, 5 drones)</li>
+    <li>Phase 2: Expansion (6 mo, 20 drones)</li>
+    <li>Phase 3: Full Program (50 drones)</li>
+    <li>Phase S: R&D suppression swarm</li>
+  </ol>
+</div>
+
+  </div>
+  <div class="bottom-cta" aria-label="mobile actions">
+    <button class="btn">Schedule a 15‑minute pilot briefing</button>
+    <button class="btn alt">Request Phase 0 fixed‑fee proposal</button>
+  </div>
+</body>
+</html>
