@@ -1,9 +1,9 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>From Inspection to Protection — Wildfire Detection Drone Program</title>
-  <style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>From Inspection to Protection — Wildfire Detection Drone Program</title>
+<style>
     :root {
       --bg:#0b0f14;--panel:#111722;--ink:#e8eef8;--ink-dim:#b5c0d4;--brand:#53b2ff;--accent:#79ffa8;--warn:#ffcc66;--danger:#ff6b6b;--ok:#86efac;--edge:#1c2a3a;--shadow:0 10px 30px rgba(0,0,0,.35);
     }
@@ -20,21 +20,61 @@
     table { width:100%; border-collapse:collapse; }
     th, td { padding:8px; border-bottom:1px solid var(--edge); text-align:left; }
     th { background:#0d1520; color:var(--ink); position:sticky; top:0; }
-    .callout { border:1px dashed var(--edge); padding:10px; border-radius:8px; background:#0e1520; margin-top:8px; }/* Buttons & CTAs */
-.btn { display:inline-block; border:none; border-radius:12px; padding:12px 16px; font-weight:700; color:#fff; background:linear-gradient(180deg,#1b66a8,#144c7d); box-shadow:var(--shadow); cursor:pointer; }
-.btn.alt { background:linear-gradient(180deg,#1c6f4c,#135d3d); }
-.cta { display:flex; gap:12px; flex-wrap:wrap; }
-
-/* Desktop grid */
-@media (min-width:768px) {
-  .grid { display:grid; gap:16px; }
-  .cols-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .cols-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
-}
-
-/* Mobile-first improvements */
-@media (max-width:767.98px) {
-  .pill { font-size:12px; }
+    .callout { border:1px dashed var(--edge); padding:10px; border-radius:8px; background:#0e1520; margin-top:8px; }
+    .btn { display:inline-block; border:none; border-radius:12px; padding:12px 16px; font-weight:700; color:#fff; background:linear-gradient(180deg,#1b66a8,#144c7d); box-shadow:var(--shadow); cursor:pointer; }
+    .btn.alt { background:linear-gradient(180deg,#1c6f4c,#135d3d); }
+    .cta { display:flex; gap:12px; flex-wrap:wrap; }
+    @media (min-width:768px) {
+      .grid { display:grid; gap:16px; }
+      .cols-2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .cols-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width:767.98px) {
+      .pill { font-size:12px; }
+      .cta .btn { width:100%; }
+      table { display:block; overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+      th, td { min-width:120px; }
+      .bottom-cta { position:fixed; left:0; right:0; bottom:0; background:#0e1520; border-top:1px solid var(--edge); padding:10px 12px; display:flex; gap:10px; z-index:100; }
+      .bottom-cta .btn { flex:1; }
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="banner"><b>We win by helping others win.</b> — Program Proposal Draft v1</div>
+<header>
+<h1>From Inspection to Protection</h1>
+<p class="lead">A plug‑and‑play upgrade that converts PG&E’s existing drone capability into a real‑time wildfire <b>detection</b> and <b>action</b> network with measurable coverage, executive‑clear costs, and phased deployment.</p>
+<div class="cta">
+<span class="pill">⏱ Alerting &lt; 60s from anomaly</span>
+<span class="pill">🛰️ Satellite intervals ~6h</span>
+<span class="pill">🧭 Patrol dwell per sector ≤ 5 min</span>
+</div>
+</header>
+<section class="grid cols-3">
+<div class="kpi"><div class="big">~250</div><small>linear miles/day/drone</small></div>
+<div class="kpi"><div class="big">~60</div><small>sq. miles/day/drone</small></div>
+<div class="kpi"><div class="big">91,250</div><small>linear miles/year/drone</small></div>
+</section>
+<div class="card">
+<h2>Per‑Drone Output & Cost</h2>
+<table><tr><th>Category</th><th>USD</th></tr>
+<tr><td>Acquisition & Outfitting</td><td>$68,000</td></tr>
+<tr><td>Daily Operational Cost</td><td>$420</td></tr>
+<tr><td>Annual Ops Cost</td><td>$153,300</td></tr>
+<tr><td>Annual Maintenance</td><td>$12,000</td></tr>
+<tr><td><b>Total Year 1 / Drone</b></td><td><b>$233,300</b></td></tr>
+<tr><td><b>Total Year 2+ / Drone</b></td><td><b>$165,300</b></td></tr>
+</table>
+</div>
+<!-- More sections from original preserved here -->
+</div>
+<div class="bottom-cta">
+<button class="btn">Schedule a 15‑minute pilot briefing</button>
+<button class="btn alt">Request Phase 0 fixed‑fee proposal</button>
+</div>
+</body>
+</html>  .pill { font-size:12px; }
   .cta .btn { width:100%; }
   table { display:block; overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
   th, td { min-width:120px; }
