@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AEGIS Doctrine — Scholar‑Warrior Playbook</title>
+  <style>
+    :root {
+      --bg:#0b0f12; --card:#11161b; --ink:#e6edf3; --muted:#9fb0bf; --accent:#6ae3ff;
+      --ok:#27c93f; --warn:#ffbd2e; --bad:#ff5f56; --link:#9be7ff;
+    }
+    * { box-sizing: border-box; }
+    html, body { height:100%; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; background:var(--bg); color:var(--ink); line-height:1.45; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header { position:sticky; top:0; z-index:50; backdrop-filter: blur(8px); background:rgba(11,15,18,.75); border-bottom:1px solid #1b232b; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
+    .banner { padding: 8px 0 12px; font-weight:600; letter-spacing:.2px; color:var(--muted); display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .nav { display:flex; gap:12px; flex-wrap:wrap; }
+    .nav a { padding:6px 10px; border:1px solid #1f2a33; border-radius:999px; }
+    main { padding: 24px 16px 80px; }
+    h1 { font-size: clamp(28px, 3vw, 40px); margin: 8px 0 6px; }
+    h2 { font-size: clamp(20px, 2.2vw, 28px); margin: 24px 0 10px; }
+    h3 { font-size: clamp(18px, 2vw, 22px); margin: 18px 0 8px; }
+    p, li { color:#d6dee6; }
+    .card { background: var(--card); border: 1px solid #1b232b; border-radius: 16px; padding: 16px; margin: 16px 0; }
+    .grid { display:grid; gap:16px; }
+    @media (min-width: 900px){ .grid.cols-2{ grid-template-columns: 1fr 1fr; } .grid.cols-3{ grid-template-columns: repeat(3,1fr);} }
+    .pill { display:inline-flex; align-items:center; gap:8px; border-radius:999px; padding:6px 10px; font-size:14px; border:1px solid #26313a; }
+    .ok { background:rgba(39,201,63,.12); color:#b5f5c1; }
+    .warn { background:rgba(255,189,46,.12); color:#ffe2ad; }
+    .bad { background:rgba(255,95,86,.12); color:#ffb3ad; }
+    .accent { color:var(--accent); }
+    .muted { color:var(--muted); }
+    .btn { cursor:pointer; background:#0f151a; border:1px solid #24303a; color:var(--ink); border-radius:10px; padding:8px 12px; }
+    .btn:hover { border-color:#32414d; }
+    .btn.primary { background:#11202a; border-color:#2a4453; }
+    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 12px; padding:2px 6px; border:1px solid #2a363f; border-radius:6px; color:#b8c8d6; }/* checklist */
+.checklist { display:flex; flex-direction:column; gap:8px; }
+.checklist-item { display:flex; align-items:flex-start; gap:10px; background:#0e1419; border:1px solid #1e2932; border-radius:12px; padding:10px 12px; cursor:pointer; }
+.check { width:20px; height:20px; border-radius:6px; border:1px solid #2a3640; display:flex; align-items:center; justify-content:center; flex:0 0 20px; }
+.checklist-item.done { opacity:0.85; }
+.checklist-item.done .check { background:#0e2016; border-color:#1f6b3a; }
+
+/* gate panel */
+.gate-row { display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:center; }
+.gate { display:flex; gap:10px; align-items:center; }
+.gate label { font-weight:600; }
+.gate small { color:var(--muted); display:block; margin-top:2px; }
+.status { padding: 10px 12px; border-radius:12px; border:1px solid #22303a; font-weight:700; text-align:center; }
+
+/* metrics */
+.metric { display:grid; gap:10px; grid-template-columns: 1fr 1fr; align-items:center; }
+.metric input { width:100%; padding:8px 10px; background:#0b1216; border:1px solid #24303a; color:var(--ink); border-radius:8px; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
+
+/* print */
+@media print { header, #controls { display:none !important; } body { background:white; color:black; } .card { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="banner">🛡️ <span class="muted">We win by helping others win.</span></div>
+      <div class="nav">
+        <a href="#top">Top</a>
+        <a href="#prime">Prime Directive</a>
+        <a href="#gates">Gate Panel</a>
+        <a href="#modes">Operating Modes</a>
+        <a href="#72h">72‑Hour Population Benefit</a>
+        <a href="#shape">Shaping Opponent Moves</a>
+        <a href="#metrics">Metrics</a>
+        <a href="#drills">Drills</a>
+        <a href="#checklists">Checklists</a>
+      </div>
+    </div>
+  </header>  <main class="wrap" id="top">
+    <h1>AEGIS Doctrine — Scholar‑Warrior Playbook</h1>
+    <p class="muted">Absolution Gate • Egress Integrity • Game‑Shaping • Indirect Dominance • Speed Superiority</p><section id="prime" class="card">
+  <h2>1) Prime Directive</h2>
+  <p>Only act when <strong>all four gates</strong> are GREEN. If any gate is amber/red → <em>Shape, don’t strike.</em></p>
+  <ul>
+    <li><strong>Absolution Gate:</strong> Evidence ≥ threshold; objectives & limits explicit; collateral forecast ≤ limit.</li>
+    <li><strong>Contingency Gate:</strong> ≥3 independent, precomputed branches (success, stall, reversal).</li>
+    <li><strong>Egress Gate:</strong> Zero‑damage exit remains viable under each branch.</li>
+    <li><strong>Narrative Gate:</strong> Action strengthens legitimacy with the reachable 90% and neutralizes fanatic optics.</li>
+  </ul>
+</section>
+
+<section id="gates" class="card">
+  <h2>Gate Status Panel</h2>
+  <div class="grid cols-2">
+    <div>
+      <div class="gate-row">
+        <div class="gate"><input type="checkbox" id="g1"> <label for="g1">Absolution Gate</label></div>
+        <span id="g1s" class="pill bad">RED</span>
+      </div>
+      <div class="gate-row">
+        <div class="gate"><input type="checkbox" id="g2"> <label for="g2">Contingency Gate (≥3 branches)</label></div>
+        <span id="g2s" class="pill bad">RED</span>
+      </div>
+      <div class="gate-row">
+        <div class="gate"><input type="checkbox" id="g3"> <label for="g3">Egress Gate (clean exit)</label></div>
+        <span id="g3s" class="pill bad">RED</span>
+      </div>
+      <div class="gate-row">
+        <div class="gate"><input type="checkbox" id="g4"> <label for="g4">Narrative Gate (legitimacy ↑)</label></div>
+        <span id="g4s" class="pill bad">RED</span>
+      </div>
+    </div>
+    <div>
+      <div class="status" id="go">NO‑GO</div>
+      <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;" id="controls">
+        <button class="btn" id="resetG">Reset Gates</button>
+        <button class="btn" id="saveG">Save</button>
+        <button class="btn" id="print">Print</button>
+      </div>
+      <p class="muted" style="margin-top:12px">Tip: Gate 4 (Narrative) is where most great commanders self‑sabotage. If your tactical win breeds strategic resentment, it wasn’t a win.</p>
+    </div>
+  </div>
+</section>
+
+<section id="modes" class="card">
+  <h2>2) Operating Modes</h2>
+  <h3>Shape Mode (probe & learn)</h3>
+  <ul>
+    <li>Low‑cost micro‑moves to sample enemy orientation.</li>
+    <li>Create dilemmas, false targets, & illusionary losses.</li>
+    <li>Outputs: fresher telemetry, tempo edge, public framing.</li>
+  </ul>
+  <h3>Lock Mode (pre‑perfected engagement)</h3>
+  <ul>
+    <li>Commit only after all four gates are GREEN.</li>
+    <li>Minimal sufficient force; reserve untouched; time‑boxed.</li>
+    <li>Objective: degrade their <em>adaptation system</em>, not tally kills.</li>
+  </ul>
+  <h3>Slip Mode (clean break)</h3>
+  <ul>
+    <li>Trigger on branch thresholds or narrative risk.</li>
+    <li>Exit intact; leave decoys that waste their tempo.</li>
+  </ul>
+</section>
+
+<section id="72h" class="card">
+  <h2>3) The 72‑Hour Population Benefit</h2>
+  <p><strong>Rule:</strong> Every operation must yield a <em>visible, non‑reversible public good</em> inside 72 hours for the reachable 89%—or you don’t act.</p>
+  <div class="grid cols-2">
+    <div>
+      <h3>What qualifies?</h3>
+      <ul>
+        <li><strong>Security:</strong> violence down, safe corridors open, checkpoints simplified.</li>
+        <li><strong>Utilities:</strong> water restored, power uptime ↑, comms nodes stabilized.</li>
+        <li><strong>Economic:</strong> markets reopen, supply friction ↓, price spikes damped.</li>
+        <li><strong>Digital:</strong> misinformation tamped; citizen channels protected.</li>
+        <li><strong>Civic:</strong> grievance intake live; rapid redress for common pain points.</li>
+      </ul>
+      <p class="muted">Heuristic: If a neutral bystander can point to it and say “that helps me,” it qualifies.</p>
+    </div>
+    <div>
+      <h3>Examples by theater</h3>
+      <ul>
+        <li><strong>Conflict zone:</strong> 3 potable water points turned on; SMS outage map + hotline active.</li>
+        <li><strong>Counter‑gang city ops:</strong> night‑market safety cordon; permit fast‑track kiosks.</li>
+        <li><strong>Corporate takeover:</strong> payroll continuity guaranteed; support SLAs honored.</li>
+        <li><strong>Online community:</strong> spam ring excised; transparent mod log launched.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:#0a1217">
+    <h3>72‑Hour Benefit Planner</h3>
+    <div class="grid cols-3">
+      <div class="metric"><label>Benefit #1</label><input id="b1" placeholder="e.g., Restore neighborhood water"/></div>
+      <div class="metric"><label>Benefit #2</label><input id="b2" placeholder="e.g., Stabilize cell tower A"/></div>
+      <div class="metric"><label>Benefit #3</label><input id="b3" placeholder="e.g., Open safe corridor"/></div>
+    </div>
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn" id="save72">Save 72‑hr Plan</button>
+      <span id="saved72" class="muted"></span>
+    </div>
+  </div>
+</section>
+
+<section id="shape" class="card">
+  <h2>4) Shaping Opponent Moves (so their best moves help your story)</h2>
+  <p>Target their <em>adaptation system</em> (orientation speed & legitimacy), not just assets. Use these patterns:</p>
+  <div class="grid cols-2">
+    <div>
+      <h3>Patterns</h3>
+      <ul>
+        <li><strong>Mirror Trap:</strong> Offer two attractive options; both confirm your narrative (e.g., they hard‑crackdown → legitimacy drops; they hold back → you stabilize services and gain trust).</li>
+        <li><strong>Overextension Bait:</strong> Dangle a high‑visibility objective that draws resources off their real CoA; you strike their decision logistics.</li>
+        <li><strong>Pressure Valve:</strong> Provide an off‑ramp that relieves their need to escalate (amnesty window, de‑escalation channel). If they refuse, their fanatic optics increase—on them.</li>
+        <li><strong>Honeypot Narrative:</strong> Seed a false but tempting talking point; catching them amplifies your credibility and slows their OODA.</li>
+        <li><strong>Axis Switch:</strong> After probing, rotate to a perpendicular line of effort that invalidates their prep without upping costs.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>5‑Step Method</h3>
+      <ol>
+        <li><strong>Define your story:</strong> one sentence a neutral will repeat (“they keep the lights on & avoid bloodshed”).</li>
+        <li><strong>Map their incentives:</strong> what looks like a win to them this week?</li>
+        <li><strong>Offer dilemmas:</strong> craft two best‑looking moves that both push your story.</li>
+        <li><strong>Instrument:</strong> set sensors & media timings so whichever they choose, you capture proof.</li>
+        <li><strong>Harvest:</strong> package outcomes into public benefit within 72h.</li>
+      </ol>
+      <p class="muted">Safeguard: Never shape in a way that needs civilian harm or deception that can’t be cleanly owned later.</p>
+    </div>
+  </div>
+</section>
+
+<section id="metrics" class="card">
+  <h2>5) Metrics Dashboard</h2>
+  <div class="grid cols-3">
+    <div class="card">
+      <h3>Tempo Superiority Index (TSI)</h3>
+      <div class="metric"><label>Our decision cycle (min)</label><input id="our" type="number" min="0" step="0.1" placeholder="e.g., 10"></div>
+      <div class="metric"><label>Their cycle (min)</label><input id="their" type="number" min="0" step="0.1" placeholder="e.g., 20"></div>
+      <p>TSI = <span class="mono" id="tsi">—</span> (target ≤ 0.5)</p>
+    </div>
+    <div class="card">
+      <h3>Egress Integrity Score (EIS)</h3>
+      <div class="metric"><label>Exit success prob (S)</label><input id="pS" type="number" step="0.01" min="0" max="1" placeholder="0.95"></div>
+      <div class="metric"><label>Exit success prob (R)</label><input id="pR" type="number" step="0.01" min="0" max="1" placeholder="0.92"></div>
+      <div class="metric"><label>Exit success prob (V)</label><input id="pV" type="number" step="0.01" min="0" max="1" placeholder="0.90"></div>
+      <p>EIS (min of branches) = <span class="mono" id="eis">—</span> (target ≥ 0.90)</p>
+    </div>
+    <div class="card">
+      <h3>Narrative Delta (ND)</h3>
+      <div class="metric"><label>Support before (%)</label><input id="nb" type="number" min="0" max="100" step="0.1" placeholder="45"></div>
+      <div class="metric"><label>Support after (%)</label><input id="na" type="number" min="0" max="100" step="0.1" placeholder="49"></div>
+      <p>ND = <span class="mono" id="nd">—</span> (target +3 to +5 pts / cycle)</p>
+    </div>
+  </div>
+  <div style="margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;">
+    <button class="btn" id="calc">Calculate</button>
+    <button class="btn" id="saveM">Save Metrics</button>
+    <span id="savedM" class="muted"></span>
+  </div>
+</section>
+
+<section id="drills" class="card">
+  <h2>6) Training Drills</h2>
+  <ul>
+    <li><strong>Rapid Re‑Orient:</strong> 5‑minute cycles → new intel → plan v2 → micro‑probe.</li>
+    <li><strong>Slip Sprints:</strong> simulate reversal; clean exit within time cap; leave a viable decoy.</li>
+    <li><strong>Dilemma Design:</strong> blue team crafts two‑bad‑choices; red cell scores dispersion.</li>
+    <li><strong>Narrative Wargame:</strong> inject a spectacle; blue must gain legitimacy anyway.</li>
+    <li><strong>Contingency Forge:</strong> every plan proves three independent branches that aren’t cosmetic.</li>
+  </ul>
+</section>
+
+<section id="checklists" class="card">
+  <h2>7) One‑Page Engagement Checklist</h2>
+  <div class="checklist" id="cl">
+    <div class="checklist-item"><div class="check">✓</div><div><strong>Intent:</strong> System effect > tallies.</div></div>
+    <div class="checklist-item"><div class="check">✓</div><div><strong>Four Gates:</strong> Absolution / Contingency / Egress / Narrative = <em>GREEN</em>.</div></div>
+    <div class="checklist-item"><div class="check">✓</div><div><strong>Tempo:</strong> Enter with ≥2:1 orientation cadence.</div></div>
+    <div class="checklist-item"><div class="check">✓</div><div><strong>Reserves:</strong> ≥30% uncommitted.</div></div>
+    <div class="checklist-item"><div class="check">✓</div><div><strong>Exit:</strong> Time‑boxed & rehearsed; decoy ready.</div></div>
+    <div class="checklist-item"><div class="check">✓</div><div><strong>Population:</strong> 72‑hour benefit defined & instrumented.</div></div>
+  </div>
+  <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+    <button class="btn" id="resetCL">Reset Checklist</button>
+    <button class="btn" id="saveCL">Save Checklist</button>
+    <span id="savedCL" class="muted"></span>
+  </div>
+</section>
+
+<section class="card">
+  <h2>8) Ethic Guardrails (non‑negotiable)</h2>
+  <ul>
+    <li>No action resting on doubt or hiding irreversible harm.</li>
+    <li>Population benefit must be real and proximate.</li>
+    <li>Preserve opponents’ off‑ramps; avoid forcing fanatic optics.</li>
+    <li>If public good and tactical gain diverge, the public good wins.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>9) Study Path (quick start)</h2>
+  <ol>
+    <li>Read this playbook once through; then run a 20‑minute Shape drill.</li>
+    <li>Practice a Gate‑check on a past operation; note which gate would have stopped it.</li>
+    <li>Design one 72‑hour benefit you can deliver this week; instrument it.</li>
+    <li>Run one ‘Shaping Opponent Moves’ 5‑step method on a live problem.</li>
+    <li>Weekly AAR: compute TSI / EIS / ND; adjust doctrine.
+    </li>
+  </ol>
+</section>
+
+<footer class="muted" style="margin-top:24px">© 2025 — AEGIS Doctrine. Built for scholar‑warriors. Text‑only. No external assets.</footer>
+
+  </main>  <script>
+    // --- helpers ---
+    const $ = s => document.querySelector(s);
+    const ss = s => document.querySelectorAll(s);
+    const store = (k,v)=>localStorage.setItem(k, JSON.stringify(v));
+    const load  = k=>{ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
+
+    // --- gates ---
+    const gates = ["g1","g2","g3","g4"];
+    const pills = ["g1s","g2s","g3s","g4s"];
+    function paintGate(i, val){
+      const pill = document.getElementById(pills[i]);
+      pill.className = 'pill ' + (val ? 'ok' : 'bad');
+      pill.textContent = val ? 'GREEN' : 'RED';
+    }
+    function refreshGO(){
+      const allGreen = gates.every(id => document.getElementById(id).checked);
+      const go = document.getElementById('go');
+      go.textContent = allGreen ? 'GO' : 'NO‑GO';
+      go.style.borderColor = allGreen ? '#1f6b3a' : '#3a2323';
+      go.style.background = allGreen ? 'rgba(39,201,63,.12)' : 'rgba(255,95,86,.12)';
+    }
+    gates.forEach((id, i)=>{
+      const box = document.getElementById(id);
+      box.addEventListener('change', ()=>{ paintGate(i, box.checked); refreshGO(); });
+      paintGate(i, box.checked);
+    });
+    refreshGO();
+    $('#resetG').onclick = ()=>{ gates.forEach((id,i)=>{ document.getElementById(id).checked=false; paintGate(i,false); }); refreshGO(); };
+    $('#saveG').onclick = ()=>{ store('aegis.gates', gates.map(id=>document.getElementById(id).checked)); $('#saveG').textContent='Saved ✓'; setTimeout(()=>$('#saveG').textContent='Save', 1200); };
+    // load saved gates
+    const gSaved = load('aegis.gates'); if (Array.isArray(gSaved)) { gates.forEach((id,i)=>{ document.getElementById(id).checked=!!gSaved[i]; paintGate(i, !!gSaved[i]); }); refreshGO(); }
+
+    // print
+    $('#print').onclick = ()=>window.print();
+
+    // --- metrics ---
+    function calc(){
+      const our = parseFloat($('#our').value); const their = parseFloat($('#their').value);
+      const pS = parseFloat($('#pS').value); const pR = parseFloat($('#pR').value); const pV = parseFloat($('#pV').value);
+      const nb = parseFloat($('#nb').value); const na = parseFloat($('#na').value);
+      const tsi = (our>0 && their>0) ? (our/their) : NaN; $('#tsi').textContent = isFinite(tsi)? tsi.toFixed(2) : '—';
+      const eis = Math.min(pS||0, pR||0, pV||0); $('#eis').textContent = (eis||eis===0) ? eis.toFixed(2) : '—';
+      const nd = (isFinite(nb)&&isFinite(na))? (na-nb) : NaN; $('#nd').textContent = isFinite(nd)? nd.toFixed(1)+' pts' : '—';
+      return {our,their,pS,pR,pV,nb,na};
+    }
+    $('#calc').onclick = calc;
+    $('#saveM').onclick = ()=>{ const v = calc(); store('aegis.metrics', v); $('#savedM').textContent='Metrics saved ✓'; setTimeout(()=>$('#savedM').textContent='', 1200); };
+    const mSaved = load('aegis.metrics'); if (mSaved){ Object.entries(mSaved).forEach(([k,v])=>{ const el = document.getElementById(k); if (el) el.value = v; }); calc(); }
+
+    // --- 72h planner ---
+    $('#save72').onclick = ()=>{ store('aegis.72h', {b1: $('#b1').value, b2: $('#b2').value, b3: $('#b3').value}); $('#saved72').textContent='Plan saved ✓'; setTimeout(()=>$('#saved72').textContent='', 1200); };
+    const s72 = load('aegis.72h'); if (s72){ ['b1','b2','b3'].forEach(id=>{ if (s72[id]) document.getElementById(id).value = s72[id]; }); }
+
+    // --- checklist behavior ---
+    function persistCL(){
+      const states = Array.from(ss('#cl .checklist-item')).map(x=>x.classList.contains('done'));
+      store('aegis.checklist', states);
+    }
+    ss('#cl .checklist-item').forEach(item=>{
+      item.addEventListener('click', ()=>{ item.classList.toggle('done'); persistCL(); });
+    });
+    $('#resetCL').onclick = ()=>{ ss('#cl .checklist-item').forEach(x=>x.classList.remove('done')); persistCL(); };
+    $('#saveCL').onclick = ()=>{ persistCL(); $('#savedCL').textContent='Checklist saved ✓'; setTimeout(()=>$('#savedCL').textContent='', 1200); };
+    const cl = load('aegis.checklist'); if (Array.isArray(cl)){ ss('#cl .checklist-item').forEach((x,i)=>{ if (cl[i]) x.classList.add('done'); }); }
+  </script></body>
+</html>
