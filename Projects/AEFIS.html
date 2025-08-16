@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projectile Energy Explorer — Educational Physics Sandbox</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#121821; --ink:#e7eef7; --muted:#9db0c8; --accent:#4fb3ff; --ok:#6de28a; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; color:var(--ink); background:linear-gradient(180deg,#0b0f14,#0a0e13 60%,#0b0f14); }
+    header { position:sticky; top:0; background:rgba(10,14,19,.9); backdrop-filter:blur(6px); border-bottom:1px solid #1c2430; padding:10px 14px; z-index:10; }
+    header .motto { font-weight:700; letter-spacing:.2px; color:var(--ok); }
+    main { max-width:1100px; margin: 24px auto; padding: 0 14px 80px; }
+    .grid { display:grid; grid-template-columns: 1fr; gap:14px; }
+    @media (min-width: 980px) { .grid { grid-template-columns: 360px 1fr; } }
+    .card { background:var(--card); border:1px solid #1c2430; border-radius:16px; padding:14px; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+    h1 { font-size: 20px; margin: 0 0 6px; }
+    h2 { font-size: 15px; margin: 12px 0 6px; color: var(--muted); font-weight:600; }
+    .row { display:flex; align-items:center; gap:10px; margin: 8px 0; }
+    .row label { width: 170px; color:#c5d6ea; font-size:13px; }
+    .row input[type=range] { width: 100%; }
+    .row .val { width: 110px; text-align:right; color:#b9cbe1; font-feature-settings: "tnum" 1, "ss01" 1; font-variant-numeric: tabular-nums; }
+    .muted { color:var(--muted); font-size: 12px; }
+    .kpi { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; }
+    @media (min-width:700px){ .kpi{ grid-template-columns: repeat(4, minmax(0,1fr)); }}
+    .kpi .box { padding:10px; border-radius:12px; background:#0e141c; border:1px solid #1b2230; }
+    .kpi .label { color:#9db0c8; font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+    .kpi .value { font-size:18px; font-weight:700; margin-top:3px; }
+    canvas { width:100%; height:280px; background:#0c121a; border:1px solid #1a2130; border-radius:12px; }
+    .small { font-size:11px; color:#9db0c8; }
+    .note { color:#9db0c8; font-size:12px; line-height:1.35; }
+    .switch { display:flex; align-items:center; gap:8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="motto">We win by helping others win.</div>
+    <div class="small">Projectile Energy Explorer · Educational physics sandbox (no load data, no build guidance)</div>
+  </header>  <main>
+    <div class="grid">
+      <!-- Controls -->
+      <section class="card" id="controls">
+        <h1>Inputs</h1>
+        <div class="muted">Adjust sliders to explore how mass, diameter, drag, velocity, and optional onboard thrust affect <em>kinetic energy vs. distance</em>. Simplified, flat-fire model.</div><h2>Geometry & Mass</h2>
+    <div class="row"><label>Mass</label><input id="mass" type="range" min="1" max="500" value="62" step="1"><div class="val"><span id="massVal"></span> g</div></div>
+    <div class="row"><label>Diameter</label><input id="diam" type="range" min="3" max="30" value="7" step="0.1"><div class="val"><span id="diamVal"></span> mm</div></div>
+    <div class="row"><label>Drag Coefficient (Cd)</label><input id="cd" type="range" min="0.08" max="0.8" value="0.32" step="0.01"><div class="val"><span id="cdVal"></span></div></div>
+
+    <h2>Launch / Environment</h2>
+    <div class="row"><label>Initial Velocity</label><input id="v0" type="range" min="100" max="1500" value="900" step="10"><div class="val"><span id="v0Val"></span> m/s</div></div>
+    <div class="row"><label>Air Density</label><input id="rho" type="range" min="0.7" max="1.4" value="1.2" step="0.01"><div class="val"><span id="rhoVal"></span> kg/m³</div></div>
+
+    <h2>Optional Onboard Thrust (e.g., rocket assist)</h2>
+    <div class="row switch"><input id="thrustEnable" type="checkbox"><label for="thrustEnable">Enable thrust</label></div>
+    <div id="thrustBlock" style="display:none;">
+      <div class="row"><label>Thrust</label><input id="thrust" type="range" min="0" max="150" value="30" step="1"><div class="val"><span id="thrustVal"></span> N</div></div>
+      <div class="row"><label>Burn Time</label><input id="burn" type="range" min="0" max="2.5" value="0.4" step="0.05"><div class="val"><span id="burnVal"></span> s</div></div>
+    </div>
+
+    <h2>Range Probe</h2>
+    <div class="row"><label>Probe Distance</label><input id="probe" type="range" min="0" max="2000" value="800" step="10"><div class="val"><span id="probeVal"></span> m</div></div>
+    <div class="note">This model computes horizontal flight with quadratic drag and (optionally) constant thrust during the burn. Gravity is neglected for energy-vs-distance estimation; use for <em>qualitative</em> learning only.</div>
+  </section>
+
+  <!-- Outputs -->
+  <section class="card">
+    <h1>Results</h1>
+    <div class="kpi">
+      <div class="box"><div class="label">Muzzle Energy</div><div class="value" id="ke0">–</div></div>
+      <div class="box"><div class="label">Muzzle Momentum</div><div class="value" id="p0">–</div></div>
+      <div class="box"><div class="label">Energy @ Probe</div><div class="value" id="kep">–</div></div>
+      <div class="box"><div class="label">Velocity @ Probe</div><div class="value" id="vp">–</div></div>
+    </div>
+    <h2 style="margin-top:14px;">Energy vs Distance</h2>
+    <canvas id="chart" width="900" height="280" aria-label="Energy vs distance plot"></canvas>
+    <div class="small">Tip: Try increasing mass while lowering velocity to see how momentum rises for the same energy. Then change diameter/Cd to watch how BC-like effects alter downrange energy retention.</div>
+  </section>
+</div>
+
+<section class="card" style="margin-top:14px;">
+  <h1>Model Details (Simplified)</h1>
+  <div class="note">
+    We integrate forward in small steps Δx along the downrange axis. Drag is D=\tfrac12 \rho C_d A v^2. Optional thrust adds a constant force during burn time. Mass is held constant (no propellant mass flow modeled). Gravity and yaw/instability are ignored to keep it educational, not prescriptive.
+  </div>
+</section>
+
+  </main>  <script>
+    // Utilities
+    const el = id => document.getElementById(id);
+    const fmt = (x,unit) => `${x.toLocaleString(undefined,{maximumFractionDigits: (Math.abs(x)<10?2:0)})}${unit?" "+unit:""}`;
+
+    // Inputs
+    const mass = el('mass');
+    const diam = el('diam');
+    const cd   = el('cd');
+    const v0   = el('v0');
+    const rho  = el('rho');
+    const thrustEnable = el('thrustEnable');
+    const thrust = el('thrust');
+    const burn = el('burn');
+    const probe = el('probe');
+
+    const massVal = el('massVal');
+    const diamVal = el('diamVal');
+    const cdVal = el('cdVal');
+    const v0Val = el('v0Val');
+    const rhoVal = el('rhoVal');
+    const thrustVal = el('thrustVal');
+    const burnVal = el('burnVal');
+    const probeVal = el('probeVal');
+    const thrustBlock = el('thrustBlock');
+
+    const ke0 = el('ke0');
+    const p0 = el('p0');
+    const kep = el('kep');
+    const vp = el('vp');
+
+    const canvas = el('chart');
+    const ctx = canvas.getContext('2d');
+
+    function setLabels(){
+      massVal.textContent = (+mass.value).toFixed(0);
+      diamVal.textContent = (+diam.value).toFixed(1);
+      cdVal.textContent   = (+cd.value).toFixed(2);
+      v0Val.textContent   = (+v0.value).toFixed(0);
+      rhoVal.textContent  = (+rho.value).toFixed(2);
+      thrustVal.textContent = (+thrust.value).toFixed(0);
+      burnVal.textContent   = (+burn.value).toFixed(2);
+      probeVal.textContent  = (+probe.value).toFixed(0);
+      thrustBlock.style.display = thrustEnable.checked ? 'block' : 'none';
+    }
+
+    function simulate(){
+      setLabels();
+      const m = +mass.value / 1000;         // kg
+      const d = +diam.value / 1000;         // m
+      const A = Math.PI * (d*d) / 4;        // m^2
+      const Cd = +cd.value;
+      const V0 = +v0.value;                 // m/s
+      const Rho = +rho.value;               // kg/m^3
+      const probeM = +probe.value;          // m
+      const Fthrust = thrustEnable.checked ? +thrust.value : 0; // N
+      const tburn   = thrustEnable.checked ? +burn.value   : 0; // s
+
+      // Initial state
+      let v = V0;
+      let x = 0;
+      let t = 0;
+
+      // KPIs at muzzle
+      const KE0 = 0.5*m*V0*V0;    // J
+      const P0  = m*V0;           // N·s
+
+      // Integrate vs distance up to 2000 m
+      const xmax = 2000;
+      const dx = 1; // m step
+      const xs = []; const Es = [];
+
+      // To convert dx -> dt, use dt = dx / v (avoid divide by 0)
+      while(x <= xmax){
+        const KE = 0.5*m*v*v;
+        xs.push(x); Es.push(KE);
+
+        // Forces: drag opposite v, optional thrust along v during burn
+        const Fd = 0.5*Rho*Cd*A*v*v; // magnitude
+        const Ft = (t < tburn) ? Fthrust : 0;
+        // Acceleration along axis
+        const a = (Ft - Fd) / m;
+        // Convert dx to dt step
+        const dt = Math.max(1e-4, dx / Math.max(1e-3, v));
+        // Integrate velocity (semi-implicit)
+        v = Math.max(0, v + a*dt);
+        x += dx;
+        t += dt;
+      }
+
+      // Interpolate probe value
+      function interp(arr, idx){
+        const i = Math.max(0, Math.min(arr.length-2, Math.floor(idx)));
+        const f = idx - i;
+        return arr[i]*(1-f) + arr[i+1]*f;
+      }
+      const iProbe = Math.min(xs.length-1, Math.max(0, Math.round(probeM/dx)));
+      const KEp = Es[iProbe];
+      // Back out v from KE (for display)
+      const vProbe = Math.sqrt(Math.max(0, 2*KEp/m));
+
+      // KPIs display
+      ke0.textContent = fmt(KE0, 'J');
+      p0.textContent  = fmt(P0, 'N·s');
+      kep.textContent = fmt(KEp, 'J');
+      vp.textContent  = fmt(vProbe, 'm/s');
+
+      draw(xs, Es);
+    }
+
+    function draw(xs, Es){
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0,0,w,h);
+
+      // Margins
+      const ml=42, mr=12, mt=10, mb=26;
+      const plotW = w-ml-mr, plotH = h-mt-mb;
+
+      // Scales
+      const xMax = xs[xs.length-1];
+      const eMax = Math.max(...Es) * 1.02;
+      const sx = x => ml + (x/xMax) * plotW;
+      const sy = e => h-mb - (e/eMax) * plotH;
+
+      // Axes
+      ctx.strokeStyle = '#273141'; ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(ml, mt); ctx.lineTo(ml, h-mb); ctx.lineTo(w-mr, h-mb);
+      ctx.stroke();
+      ctx.fillStyle = '#9db0c8'; ctx.font = '11px system-ui';
+      ctx.fillText('Distance (m)', w-mr-80, h-8);
+      ctx.save();
+      ctx.translate(10, mt+10); ctx.rotate(-Math.PI/2);
+      ctx.fillText('Energy (J)', 0, 0);
+      ctx.restore();
+
+      // Grid + ticks
+      ctx.strokeStyle = '#1e2836';
+      for(let i=0;i<=10;i++){
+        const gx = ml + (i/10)*plotW;
+        ctx.beginPath(); ctx.moveTo(gx, mt); ctx.lineTo(gx, h-mb); ctx.stroke();
+      }
+      for(let i=0;i<=5;i++){
+        const gy = mt + (i/5)*plotH;
+        ctx.beginPath(); ctx.moveTo(ml, gy); ctx.lineTo(w-mr, gy); ctx.stroke();
+      }
+
+      // Line
+      ctx.strokeStyle = '#4fb3ff'; ctx.lineWidth = 2;
+      ctx.beginPath();
+      for(let i=0;i<xs.length;i++){
+        const X = sx(xs[i]); const Y = sy(Es[i]);
+        if(i===0) ctx.moveTo(X,Y); else ctx.lineTo(X,Y);
+      }
+      ctx.stroke();
+    }
+
+    // Wire up listeners
+    [mass, diam, cd, v0, rho, thrust, burn, probe].forEach(inp=> inp.addEventListener('input', simulate));
+    thrustEnable.addEventListener('change', simulate);
+
+    // Initial draw
+    setLabels();
+    simulate();
+  </script></body>
+</html>
