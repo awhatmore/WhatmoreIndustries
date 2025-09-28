@@ -1,0 +1,191 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Durable vs Standard Damage — Helldivers Calculator</title>
+  <style>
+    :root{--bg:#0b0c10;--card:#0f1720;--muted:#99a0ad;--accent:#7dd3fc;--glass:rgba(255,255,255,0.03)}
+    html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#05060a,#0c1116);color:#e6eef6}
+    header{background:linear-gradient(90deg,rgba(125,211,252,0.08),transparent);padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:12px}
+    .motto{font-weight:700;color:var(--accent);font-size:14px}
+    .container{max-width:1100px;margin:20px auto;padding:18px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
+    input[type=number], input[type=text], select{width:100%;padding:8px 10px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);color:inherit;font-size:14px}
+    .row{display:flex;gap:10px}
+    .row > *{flex:1}
+    h2{margin:0 0 8px 0}
+    .big{font-size:28px;font-weight:700}
+    .muted{color:var(--muted);font-size:13px}
+    .result{margin-top:12px;padding:10px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px dashed rgba(255,255,255,0.02)}
+    .btn{padding:8px 12px;border-radius:8px;border:0;background:var(--accent);color:#021022;font-weight:700;cursor:pointer}
+    .compare{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    pre{white-space:pre-wrap;font-size:13px;color:#cdeefe;background:transparent;margin:0}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.compare{flex-direction:column;align-items:stretch}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="motto">We win by helping others win.</div>
+    <div class="muted">Durable vs Standard Damage calculator — enter your values and compare two weapons.</div>
+  </header>  <div class="container">
+    <div class="grid">
+      <div class="card">
+        <h2>Battle & Enemy</h2>
+        <label>Enemy Health (HP)</label>
+        <input id="hp" type="number" min="1" value="6000" /><label style="margin-top:10px">% Durable (portion of damage that becomes 'durable' damage effect)</label>
+    <input id="durablePct" type="number" min="0" max="100" value="25" />
+
+    <div style="height:8px"></div>
+    <h2>Weapon A</h2>
+    <label>Weapon name</label>
+    <input id="nameA" type="text" value="MG-206" />
+    <div class="row">
+      <div>
+        <label>Standard damage (per hit)</label>
+        <input id="stdA" type="number" min="0" value="150" />
+      </div>
+      <div>
+        <label>Durable damage (when durable applies)</label>
+        <input id="durA" type="number" min="0" value="35" />
+      </div>
+    </div>
+
+    <div style="height:8px"></div>
+    <h2>Weapon B</h2>
+    <label>Weapon name</label>
+    <input id="nameB" type="text" value="Alternate" />
+    <div class="row">
+      <div>
+        <label>Standard damage (per hit)</label>
+        <input id="stdB" type="number" min="0" value="120" />
+      </div>
+      <div>
+        <label>Durable damage (when durable applies)</label>
+        <input id="durB" type="number" min="0" value="20" />
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="calc">Calculate</button>
+      <button class="btn" id="download">Download HTML</button>
+    </div>
+
+    <div class="result" id="summary">
+      <div class="muted">Results will appear here after calculation.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Comparison & Math</h2>
+    <div class="compare">
+      <div style="flex:1">
+        <h3 id="titleA">MG-206</h3>
+        <div class="big" id="shotsA">—</div>
+        <div class="muted">rounds to kill</div>
+      </div>
+
+      <div style="flex:1">
+        <h3 id="titleB">Alternate</h3>
+        <div class="big" id="shotsB">—</div>
+        <div class="muted">rounds to kill</div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+    <h3>Calculation details</h3>
+    <pre id="details">Enter values and press Calculate to see step-by-step math.
+
+Formula used per-hit (effective damage): effective = standard - (durablePct/100) * (standard - durable)
+
+Example (your original): 6000 ÷ (150 − 0.25×(150−35)) </pre>
+
+<div style="height:12px"></div>
+    <h3>Notes</h3>
+    <div class="muted">This calculator assumes the "durable" mechanic reduces damage on a portion of hits by substituting the standard damage with a lower 'durable' damage value on that portion. The durablePct is the fraction (0–100%) of hits that are affected. Change inputs to model other mechanics.</div>
+
+    <footer>
+      Tip: if effective damage ≤ 0 the weapon cannot damage the target under the current model.
+    </footer>
+  </div>
+</div>
+
+  </div>  <script>
+    function fmt(n){return (Number.isFinite(n)? (Math.round(n*100)/100) : n)}
+
+    function computeShots(hp, std, dur, pct){
+      // pct is 0..100
+      const f = pct/100;
+      const effective = std - f*(std - dur);
+      if(effective <= 0) return {effective: effective, shots: Infinity};
+      const shots = Math.ceil(hp / effective);
+      return {effective: effective, shots: shots};
+    }
+
+    function update(){
+      const hp = Number(document.getElementById('hp').value) || 0;
+      const pct = Number(document.getElementById('durablePct').value) || 0;
+
+      const nameA = document.getElementById('nameA').value || 'Weapon A';
+      const stdA = Number(document.getElementById('stdA').value) || 0;
+      const durA = Number(document.getElementById('durA').value) || 0;
+
+      const nameB = document.getElementById('nameB').value || 'Weapon B';
+      const stdB = Number(document.getElementById('stdB').value) || 0;
+      const durB = Number(document.getElementById('durB').value) || 0;
+
+      const resA = computeShots(hp,stdA,durA,pct);
+      const resB = computeShots(hp,stdB,durB,pct);
+
+      document.getElementById('titleA').textContent = nameA;
+      document.getElementById('titleB').textContent = nameB;
+
+      document.getElementById('shotsA').textContent = isFinite(resA.shots)? resA.shots : '∞';
+      document.getElementById('shotsB').textContent = isFinite(resB.shots)? resB.shots : '∞';
+
+      const details = [];
+      details.push(nameA + ' — effective per-hit damage:');
+      details.push('  standard = ' + stdA + ', durable = ' + durA + ', durable% = ' + pct + '%');
+      details.push('  effective = standard - (durablePct/100) * (standard - durable)');
+      details.push('            = ' + stdA + ' - (' + (pct/100) + ') * (' + stdA + ' - ' + durA + ')');
+      details.push('            = ' + fmt(resA.effective));
+      details.push('  shots = ceil(' + hp + ' / ' + fmt(resA.effective) + ') = ' + (isFinite(resA.shots)? resA.shots : '∞'));
+      details.push('');
+      details.push(nameB + ' — effective per-hit damage:');
+      details.push('  standard = ' + stdB + ', durable = ' + durB + ', durable% = ' + pct + '%');
+      details.push('  effective = ' + stdB + ' - (' + (pct/100) + ') * (' + stdB + ' - ' + durB + ')');
+      details.push('            = ' + fmt(resB.effective));
+      details.push('  shots = ceil(' + hp + ' / ' + fmt(resB.effective) + ') = ' + (isFinite(resB.shots)? resB.shots : '∞'));
+
+      document.getElementById('details').textContent = details.join('\n');
+
+      const summary = [];
+      summary.push('<strong>' + nameA + '</strong>: ' + (isFinite(resA.shots)? resA.shots + ' rounds' : 'Cannot damage under this model'));
+      summary.push('<strong>' + nameB + '</strong>: ' + (isFinite(resB.shots)? resB.shots + ' rounds' : 'Cannot damage under this model'));
+      summary.push('<div class="muted">Effective per-hit damage A: ' + fmt(resA.effective) + ', B: ' + fmt(resB.effective) + '</div>');
+
+      document.getElementById('summary').innerHTML = summary.join('<br/>');
+    }
+
+    document.getElementById('calc').addEventListener('click', update);
+
+    // download HTML by serializing the current doc
+    document.getElementById('download').addEventListener('click', function(){
+      const html = '<!doctype html>\\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html],{type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'durable_vs_standard_calculator.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // auto-initialize once
+    update();
+  </script></body>
+</html>
