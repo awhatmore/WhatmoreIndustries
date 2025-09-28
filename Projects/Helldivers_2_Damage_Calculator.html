@@ -31,10 +31,230 @@
 <body>
   <header>
     <div class="motto">We win by helping others win.</div>
-    <div class="muted">Durable vs Standard Damage calculator — enter your values and compare two weapons.</div>
+    <div class="muted">Durable vs Standard Damage calculator — enter your values and compare two weapons including mag/rpm/reload and TTK.</div>
   </header>  <div class="container">
     <div class="grid">
       <div class="card">
+        <h2>Battle & Enemy</h2>
+        <label>Enemy Health (HP)</label>
+        <input id="hp" type="number" min="1" value="6000" /><label style="margin-top:10px">% Durable (portion of damage that becomes 'durable' damage effect)</label>
+    <input id="durablePct" type="number" min="0" max="100" value="25" />
+
+    <div style="height:8px"></div>
+    <h2>Weapon A</h2>
+    <label>Weapon name</label>
+    <input id="nameA" type="text" value="MG-206" />
+    <div class="row">
+      <div>
+        <label>Standard damage (per hit)</label>
+        <input id="stdA" type="number" min="0" value="150" />
+      </div>
+      <div>
+        <label>Durable damage (when durable applies)</label>
+        <input id="durA" type="number" min="0" value="35" />
+      </div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="row">
+      <div>
+        <label>RPM (rounds per minute)</label>
+        <input id="rpmA" type="number" min="1" value="600" />
+      </div>
+      <div>
+        <label>Magazine / Belt size (rounds)</label>
+        <input id="magA" type="number" min="1" value="100" />
+      </div>
+    </div>
+    <label style="margin-top:8px">Reload time (seconds)</label>
+    <input id="reloadA" type="number" min="0" step="0.1" value="4" />
+
+    <div style="height:12px"></div>
+    <h2>Weapon B</h2>
+    <label>Weapon name</label>
+    <input id="nameB" type="text" value="Alternate" />
+    <div class="row">
+      <div>
+        <label>Standard damage (per hit)</label>
+        <input id="stdB" type="number" min="0" value="120" />
+      </div>
+      <div>
+        <label>Durable damage (when durable applies)</label>
+        <input id="durB" type="number" min="0" value="20" />
+      </div>
+    </div>
+    <div style="height:8px"></div>
+    <div class="row">
+      <div>
+        <label>RPM (rounds per minute)</label>
+        <input id="rpmB" type="number" min="1" value="700" />
+      </div>
+      <div>
+        <label>Magazine / Belt size (rounds)</label>
+        <input id="magB" type="number" min="1" value="50" />
+      </div>
+    </div>
+    <label style="margin-top:8px">Reload time (seconds)</label>
+    <input id="reloadB" type="number" min="0" step="0.1" value="2.5" />
+
+    <div style="height:12px"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn" id="calc">Calculate</button>
+      <button class="btn" id="download">Download HTML</button>
+    </div>
+
+    <div class="result" id="summary">
+      <div class="muted">Results will appear here after calculation.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Comparison & Math</h2>
+    <div class="compare">
+      <div style="flex:1">
+        <h3 id="titleA">MG-206</h3>
+        <div class="big" id="shotsA">—</div>
+        <div class="muted">rounds to kill</div>
+        <div class="muted" id="ttkA">TTK: —</div>
+      </div>
+
+      <div style="flex:1">
+        <h3 id="titleB">Alternate</h3>
+        <div class="big" id="shotsB">—</div>
+        <div class="muted">rounds to kill</div>
+        <div class="muted" id="ttkB">TTK: —</div>
+      </div>
+    </div>
+
+    <div style="height:12px"></div>
+    <h3>Calculation details</h3>
+    <pre id="details">Enter values and press Calculate to see step-by-step math.
+
+Formula used per-hit (effective damage): effective = standard - (durablePct/100) * (standard - durable)
+
+Time-to-kill calculation (sustained, includes reloads): fireRate = RPM / 60  (rounds per second) firingTime = shots / fireRate reloads = floor((shots - 1) / mag) totalReloadTime = reloads * reloadTime TTK = firingTime + totalReloadTime </pre>
+
+<div style="height:12px"></div>
+    <h3>Notes</h3>
+    <div class="muted">This calculator assumes continuous fire at the stated RPM with full magazines and instantaneous first shot; it does not model spread, accuracy, headshot multipliers, damage falloff, or interrupted firing. Reloads happen only when magazine is exhausted. If effective damage ≤ 0 the weapon cannot damage the target under this model.</div>
+
+    <footer>
+      Tip: adjust RPM or magazine size to model belt-fed weapons vs small magazines. All times are in seconds.
+    </footer>
+  </div>
+</div>
+
+  </div>  <script>
+    function fmt(n){return (Number.isFinite(n)? (Math.round(n*100)/100) : n)}
+
+    function computeShots(hp, std, dur, pct){
+      const f = pct/100;
+      const effective = std - f*(std - dur);
+      if(effective <= 0) return {effective: effective, shots: Infinity};
+      const shots = Math.ceil(hp / effective);
+      return {effective: effective, shots: shots};
+    }
+
+    function computeTTK(shots, rpm, mag, reloadTime){
+      if(!isFinite(shots)) return Infinity;
+      const fireRate = rpm/60; // rounds per second
+      if(fireRate <= 0) return Infinity;
+      const firingTime = shots / fireRate; // seconds to fire all shots
+      const reloads = Math.floor((shots - 1) / mag); // number of full reloads required
+      const totalReloadTime = reloads * reloadTime;
+      const ttk = firingTime + totalReloadTime;
+      return {fireRate, firingTime, reloads, totalReloadTime, ttk};
+    }
+
+    function update(){
+      const hp = Number(document.getElementById('hp').value) || 0;
+      const pct = Number(document.getElementById('durablePct').value) || 0;
+
+      const nameA = document.getElementById('nameA').value || 'Weapon A';
+      const stdA = Number(document.getElementById('stdA').value) || 0;
+      const durA = Number(document.getElementById('durA').value) || 0;
+      const rpmA = Number(document.getElementById('rpmA').value) || 0;
+      const magA = Number(document.getElementById('magA').value) || 1;
+      const reloadA = Number(document.getElementById('reloadA').value) || 0;
+
+      const nameB = document.getElementById('nameB').value || 'Weapon B';
+      const stdB = Number(document.getElementById('stdB').value) || 0;
+      const durB = Number(document.getElementById('durB').value) || 0;
+      const rpmB = Number(document.getElementById('rpmB').value) || 0;
+      const magB = Number(document.getElementById('magB').value) || 1;
+      const reloadB = Number(document.getElementById('reloadB').value) || 0;
+
+      const resA = computeShots(hp,stdA,durA,pct);
+      const resB = computeShots(hp,stdB,durB,pct);
+
+      const ttkA = computeTTK(resA.shots, rpmA, magA, reloadA);
+      const ttkB = computeTTK(resB.shots, rpmB, magB, reloadB);
+
+      document.getElementById('titleA').textContent = nameA;
+      document.getElementById('titleB').textContent = nameB;
+
+      document.getElementById('shotsA').textContent = isFinite(resA.shots)? resA.shots : '∞';
+      document.getElementById('shotsB').textContent = isFinite(resB.shots)? resB.shots : '∞';
+
+      document.getElementById('ttkA').textContent = 'TTK: ' + (isFinite(ttkA.ttk)? fmt(ttkA.ttk) + ' s' : '∞');
+      document.getElementById('ttkB').textContent = 'TTK: ' + (isFinite(ttkB.ttk)? fmt(ttkB.ttk) + ' s' : '∞');
+
+      const details = [];
+      details.push(nameA + ' — effective per-hit damage:');
+      details.push('  standard = ' + stdA + ', durable = ' + durA + ', durable% = ' + pct + '%');
+      details.push('  effective = standard - (durablePct/100) * (standard - durable)');
+      details.push('            = ' + stdA + ' - (' + (pct/100) + ') * (' + stdA + ' - ' + durA + ')');
+      details.push('            = ' + fmt(resA.effective));
+      details.push('  shots = ceil(' + hp + ' / ' + fmt(resA.effective) + ') = ' + (isFinite(resA.shots)? resA.shots : '∞'));
+      if(isFinite(resA.shots)){
+        details.push('  RPM = ' + rpmA + ', mag = ' + magA + ', reload = ' + reloadA + ' s');
+        details.push('  fireRate = ' + fmt(ttkA.fireRate) + ' r/s');
+        details.push('  firingTime = shots / fireRate = ' + fmt(ttkA.firingTime) + ' s');
+        details.push('  reloads = ' + ttkA.reloads + ', totalReloadTime = ' + fmt(ttkA.totalReloadTime) + ' s');
+        details.push('  TTK = firingTime + totalReloadTime = ' + fmt(ttkA.ttk) + ' s');
+      }
+      details.push('');
+      details.push(nameB + ' — effective per-hit damage:');
+      details.push('  standard = ' + stdB + ', durable = ' + durB + ', durable% = ' + pct + '%');
+      details.push('  effective = ' + stdB + ' - (' + (pct/100) + ') * (' + stdB + ' - ' + durB + ')');
+      details.push('            = ' + fmt(resB.effective));
+      details.push('  shots = ceil(' + hp + ' / ' + fmt(resB.effective) + ') = ' + (isFinite(resB.shots)? resB.shots : '∞'));
+      if(isFinite(resB.shots)){
+        details.push('  RPM = ' + rpmB + ', mag = ' + magB + ', reload = ' + reloadB + ' s');
+        details.push('  fireRate = ' + fmt(ttkB.fireRate) + ' r/s');
+        details.push('  firingTime = shots / fireRate = ' + fmt(ttkB.firingTime) + ' s');
+        details.push('  reloads = ' + ttkB.reloads + ', totalReloadTime = ' + fmt(ttkB.totalReloadTime) + ' s');
+        details.push('  TTK = firingTime + totalReloadTime = ' + fmt(ttkB.ttk) + ' s');
+      }
+
+      document.getElementById('details').textContent = details.join('
+');
+
+      const summary = [];
+      summary.push('<strong>' + nameA + '</strong>: ' + (isFinite(resA.shots)? resA.shots + ' rounds' : 'Cannot damage under this model'));
+      summary.push('<strong>' + nameB + '</strong>: ' + (isFinite(resB.shots)? resB.shots + ' rounds' : 'Cannot damage under this model'));
+      summary.push('<div class="muted">Effective per-hit damage A: ' + fmt(resA.effective) + ', B: ' + fmt(resB.effective) + '</div>');
+      summary.push('<div class="muted">TTK A: ' + (isFinite(ttkA.ttk)? fmt(ttkA.ttk) + ' s' : '∞') + ' — TTK B: ' + (isFinite(ttkB.ttk)? fmt(ttkB.ttk) + ' s' : '∞') + '</div>');
+
+      document.getElementById('summary').innerHTML = summary.join('<br/>');
+    }
+
+    document.getElementById('calc').addEventListener('click', update);
+
+    // download HTML by serializing the current doc
+    document.getElementById('download').addEventListener('click', function(){
+      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html],{type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'durable_vs_standard_calculator.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // auto-initialize once
+    update();
+  </script></body>
+</html>      <div class="card">
         <h2>Battle & Enemy</h2>
         <label>Enemy Health (HP)</label>
         <input id="hp" type="number" min="1" value="6000" /><label style="margin-top:10px">% Durable (portion of damage that becomes 'durable' damage effect)</label>
