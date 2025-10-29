@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English ↔ Portuguese Pronunciation & Word Order Translator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    padding: 30px;
+    color: #222;
+  }
+  h1 { text-align: center; }
+  textarea {
+    width: 100%;
+    height: 60px;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  .section {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  .output p { margin: 6px 0; }
+  .label {
+    font-weight: bold;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<h1>English ↔ Portuguese Pronunciation & Word Order Helper</h1>
+
+<div class="section">
+  <h2>Input Sentences</h2>
+  <label for="english">English Sentence:</label>
+  <textarea id="english" placeholder="Type an English sentence..."></textarea>
+
+  <label for="portuguese">Portuguese Sentence:</label>
+  <textarea id="portuguese" placeholder="Digite uma frase em português..."></textarea>
+
+  <button onclick="translateBoth()">Translate Both Ways</button>
+</div>
+
+<div class="section output">
+  <h2>Results</h2>
+
+  <p class="label">🔤 English Pronunciation → Portuguese:</p>
+  <p id="engToPorPron"></p>
+
+  <p class="label">🔤 Portuguese Pronunciation → English:</p>
+  <p id="porToEngPron"></p>
+
+  <p class="label">🗣 English Word Order → Portuguese Words:</p>
+  <p id="engOrderPor"></p>
+
+  <p class="label">🗣 Portuguese Word Order → English Words:</p>
+  <p id="porOrderEng"></p>
+
+  <p class="label">💬 Full Direct Translation (English → Portuguese):</p>
+  <p id="directEngToPor"></p>
+
+  <p class="label">💬 Full Direct Translation (Portuguese → English):</p>
+  <p id="directPorToEng"></p>
+</div>
+
+<script>
+function fakePronunciation(word, lang) {
+  // Basic fake pronunciation helper for demonstration
+  const rules = {
+    english: { "th": "tʰ", "sh": "ʃ", "ch": "tʃ", "a": "ah", "e": "eh", "i": "ee", "o": "oh", "u": "oo" },
+    portuguese: { "ã": "uhn", "õ": "ohn", "é": "eh", "ê": "ay", "ó": "aw", "ô": "oh", "ç": "s" }
+  };
+  let result = word.toLowerCase();
+  for (let [k, v] of Object.entries(rules[lang])) {
+    result = result.replaceAll(k, v);
+  }
+  return result;
+}
+
+function translateBoth() {
+  const english = document.getElementById('english').value.trim();
+  const portuguese = document.getElementById('portuguese').value.trim();
+
+  if (!english && !portuguese) {
+    alert("Please type something in either English or Portuguese!");
+    return;
+  }
+
+  // Split into words
+  const engWords = english.split(" ");
+  const porWords = portuguese.split(" ");
+
+  // Pronunciations
+  const engPron = engWords.map(w => fakePronunciation(w, 'english')).join(" ");
+  const porPron = porWords.map(w => fakePronunciation(w, 'portuguese')).join(" ");
+
+  // Direct (naive) word order mappings
+  const engOrderPor = engWords.map((w, i) => porWords[i] || "(no match)").join(" ");
+  const porOrderEng = porWords.map((w, i) => engWords[i] || "(no match)").join(" ");
+
+  // Fake full translations (replace with API or dictionary)
+  const directEngToPor = "(Example) " + english + " → " + portuguese;
+  const directPorToEng = "(Example) " + portuguese + " → " + english;
+
+  // Update DOM
+  document.getElementById('engToPorPron').innerText = engPron;
+  document.getElementById('porToEngPron').innerText = porPron;
+  document.getElementById('engOrderPor').innerText = engOrderPor;
+  document.getElementById('porOrderEng').innerText = porOrderEng;
+  document.getElementById('directEngToPor').innerText = directEngToPor;
+  document.getElementById('directPorToEng').innerText = directPorToEng;
+}
+</script>
+</body>
+</html>
