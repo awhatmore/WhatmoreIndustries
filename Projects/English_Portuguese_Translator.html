@@ -1,126 +1,122 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English ↔ Portuguese Pronunciation & Word Order Translator</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    padding: 30px;
-    color: #222;
-  }
-  h1 { text-align: center; }
-  textarea {
-    width: 100%;
-    height: 60px;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 10px 0;
-    cursor: pointer;
-  }
-  .section {
-    background: white;
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  }
-  .output p { margin: 6px 0; }
-  .label {
-    font-weight: bold;
-    color: #333;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Translation Helper – English ↔ Português</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f8f9fa; color:#333; }
+    header, footer { background:#002a4e; color:#fff; padding:20px; text-align:center; }
+    main { padding:20px; max-width:800px; margin:0 auto; }
+    textarea { width:100%; height:60px; margin-bottom:10px; font-size:16px; padding:10px; }
+    button { padding:10px 20px; font-size:16px; cursor:pointer; }
+    .section { background:#fff; padding:15px; margin-bottom:20px; border-radius:5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .label { font-weight:bold; margin-top:10px; display:block; }
+    p { margin:6px 0; }
+  </style>
 </head>
 <body>
-<h1>English ↔ Portuguese Pronunciation & Word Order Helper</h1>
+  <header>
+    <h1>English ↔ Português Translator & Pronunciation Helper</h1>
+  </header>
+  <main>
+    <div class="section">
+      <h2>Input Sentences</h2>
+      <label for="english">English Sentence:</label>
+      <textarea id="english" placeholder="Type an English sentence..."></textarea>
 
-<div class="section">
-  <h2>Input Sentences</h2>
-  <label for="english">English Sentence:</label>
-  <textarea id="english" placeholder="Type an English sentence..."></textarea>
+      <label for="portuguese">Português Sentence:</label>
+      <textarea id="portuguese" placeholder="Digite uma frase em Português..."></textarea>
 
-  <label for="portuguese">Portuguese Sentence:</label>
-  <textarea id="portuguese" placeholder="Digite uma frase em português..."></textarea>
+      <button onclick="translateBoth()">Translate Both Ways</button>
+    </div>
 
-  <button onclick="translateBoth()">Translate Both Ways</button>
-</div>
+    <div class="section">
+      <h2>Results</h2>
 
-<div class="section output">
-  <h2>Results</h2>
+      <span class="label">🔤 English Pronunciation → Português:</span>
+      <p id="engToPorPron">-</p>
 
-  <p class="label">🔤 English Pronunciation → Portuguese:</p>
-  <p id="engToPorPron"></p>
+      <span class="label">🔤 Português Pronunciation → English:</span>
+      <p id="porToEngPron">-</p>
 
-  <p class="label">🔤 Portuguese Pronunciation → English:</p>
-  <p id="porToEngPron"></p>
+      <span class="label">🗣 English Word Order → Português Words:</span>
+      <p id="engOrderPor">-</p>
 
-  <p class="label">🗣 English Word Order → Portuguese Words:</p>
-  <p id="engOrderPor"></p>
+      <span class="label">🗣 Português Word Order → English Words:</span>
+      <p id="porOrderEng">-</p>
 
-  <p class="label">🗣 Portuguese Word Order → English Words:</p>
-  <p id="porOrderEng"></p>
+      <span class="label">💬 Full Direct Translation (English → Português):</span>
+      <p id="directEngToPor">-</p>
 
-  <p class="label">💬 Full Direct Translation (English → Portuguese):</p>
-  <p id="directEngToPor"></p>
+      <span class="label">💬 Full Direct Translation (Português → English):</span>
+      <p id="directPorToEng">-</p>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; Whatmore Industries – Translation Helper</p>
+  </footer>
 
-  <p class="label">💬 Full Direct Translation (Portuguese → English):</p>
-  <p id="directPorToEng"></p>
-</div>
+  <script>
+    async function getTranslation(text, from, to) {
+      const url = \`https://api.mymemory.translated.net/get?q=\${encodeURIComponent(text)}&langpair=\${from}|\${to}\`;
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        if (data && data.responseData && data.responseData.translatedText) {
+          return data.responseData.translatedText;
+        } else {
+          return "(translation error)";
+        }
+      } catch(err) {
+        return "(error connecting to translation service)";
+      }
+    }
 
-<script>
-function fakePronunciation(word, lang) {
-  // Basic fake pronunciation helper for demonstration
-  const rules = {
-    english: { "th": "tʰ", "sh": "ʃ", "ch": "tʃ", "a": "ah", "e": "eh", "i": "ee", "o": "oh", "u": "oo" },
-    portuguese: { "ã": "uhn", "õ": "ohn", "é": "eh", "ê": "ay", "ó": "aw", "ô": "oh", "ç": "s" }
-  };
-  let result = word.toLowerCase();
-  for (let [k, v] of Object.entries(rules[lang])) {
-    result = result.replaceAll(k, v);
-  }
-  return result;
-}
+    function fakePronunciation(word, lang) {
+      const rules = {
+        english: { "th": "tʰ", "sh": "ʃ", "ch": "tʃ", "a": "ah", "e": "eh", "i": "ee", "o": "oh", "u": "oo" },
+        portuguese: { "ã": "uhn", "õ": "ohn", "é": "eh", "ê": "ay", "ó": "aw", "ô": "oh", "ç": "s" }
+      };
+      let result = word.toLowerCase();
+      const ruleSet = rules[lang] || {};
+      for (let k in ruleSet) {
+        result = result.replaceAll(k, ruleSet[k]);
+      }
+      return result;
+    }
 
-function translateBoth() {
-  const english = document.getElementById('english').value.trim();
-  const portuguese = document.getElementById('portuguese').value.trim();
+    async function translateBoth() {
+      const englishText = document.getElementById('english').value.trim();
+      const portugueseText = document.getElementById('portuguese').value.trim();
 
-  if (!english && !portuguese) {
-    alert("Please type something in either English or Portuguese!");
-    return;
-  }
+      if (!englishText && !portugueseText) {
+        alert("Please type something in either English or Português!");
+        return;
+      }
 
-  // Split into words
-  const engWords = english.split(" ");
-  const porWords = portuguese.split(" ");
+      const engWords = englishText.split(" ").filter(w=>w);
+      const porWords = portugueseText.split(" ").filter(w=>w);
 
-  // Pronunciations
-  const engPron = engWords.map(w => fakePronunciation(w, 'english')).join(" ");
-  const porPron = porWords.map(w => fakePronunciation(w, 'portuguese')).join(" ");
+      const engPron = engWords.map(w=>fakePronunciation(w,'english')).join(" ");
+      const porPron = porWords.map(w=>fakePronunciation(w,'portuguese')).join(" ");
 
-  // Direct (naive) word order mappings
-  const engOrderPor = engWords.map((w, i) => porWords[i] || "(no match)").join(" ");
-  const porOrderEng = porWords.map((w, i) => engWords[i] || "(no match)").join(" ");
+      // direct translations via API
+      let directEngToPor = englishText ? await getTranslation(englishText, "EN", "PT") : "";
+      let directPorToEng = portugueseText ? await getTranslation(portugueseText, "PT", "EN") : "";
 
-  // Fake full translations (replace with API or dictionary)
-  const directEngToPor = "(Example) " + english + " → " + portuguese;
-  const directPorToEng = "(Example) " + portuguese + " → " + english;
+      // word-order mapping
+      const engOrderPor = engWords.map((w,i)=> porWords[i] || "(no match)").join(" ");
+      const porOrderEng = porWords.map((w,i)=> engWords[i] || "(no match)").join(" ");
 
-  // Update DOM
-  document.getElementById('engToPorPron').innerText = engPron;
-  document.getElementById('porToEngPron').innerText = porPron;
-  document.getElementById('engOrderPor').innerText = engOrderPor;
-  document.getElementById('porOrderEng').innerText = porOrderEng;
-  document.getElementById('directEngToPor').innerText = directEngToPor;
-  document.getElementById('directPorToEng').innerText = directPorToEng;
-}
-</script>
+      document.getElementById('engToPorPron').innerText = engPron || "-";
+      document.getElementById('porToEngPron').innerText = porPron || "-";
+      document.getElementById('engOrderPor').innerText = engOrderPor || "-";
+      document.getElementById('porOrderEng').innerText = porOrderEng || "-";
+      document.getElementById('directEngToPor').innerText = directEngToPor || "-";
+      document.getElementById('directPorToEng').innerText = directPorToEng || "-";
+    }
+  </script>
 </body>
 </html>
