@@ -10,11 +10,11 @@
       max-width: 900px;
     }
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       margin-bottom: 0.5rem;
     }
     .section {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
     label {
       font-weight: bold;
@@ -23,39 +23,28 @@
     }
     textarea {
       width: 100%;
-      min-height: 120px;
+      min-height: 100px;
       box-sizing: border-box;
       font-family: Consolas, monospace;
-      font-size: 0.95rem;
-      padding: 8px;
+      font-size: 0.9rem;
+      padding: 6px;
       border-radius: 4px;
       border: 1px solid #ccc;
       resize: vertical;
     }
     #output {
-      min-height: 200px;
+      min-height: 180px;
     }
     button {
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 4px;
       border: none;
       cursor: pointer;
       margin-right: 8px;
-      font-size: 0.95rem;
-    }
-    #generateBtn {
-      background-color: #007bff;
-      color: #fff;
-    }
-    #copyBtn {
-      background-color: #28a745;
-      color: #fff;
     }
     #status {
-      display: inline-block;
       margin-left: 10px;
-      font-size: 0.9rem;
-      color: #333;
+      font-size: 0.85rem;
     }
   </style>
 </head>
@@ -97,19 +86,19 @@
 
   <script>
     function convertBodyTextToHTML(text) {
-      // 1. Escape special HTML characters
+      // Escape special HTML characters
       let escaped = text
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 
-      // 2. Normalize line endings
+      // Normalize CRLF to LF
       escaped = escaped.replace(/\r\n/g, '\n');
 
-      // 3. Preserve spaces
+      // Preserve spaces
       escaped = escaped.replace(/ /g, '&nbsp;');
 
-      // 4. Preserve line breaks
+      // Preserve line breaks
       escaped = escaped.replace(/\n/g, '<br>\n');
 
       return escaped;
@@ -150,10 +139,7 @@
 
       parts.push('</html>');
 
-      const finalHTML = parts.join('\n');
-      const output = document.getElementById('output');
-      output.value = finalHTML;
-
+      document.getElementById('output').value = parts.join('\n');
       document.getElementById('status').textContent = 'HTML generated.';
     });
 
@@ -161,197 +147,16 @@
       const output = document.getElementById('output');
       output.focus();
       output.select();
-      output.setSelectionRange(0, output.value.length); // for mobile
 
-      let copied = false;
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(output.value)
-          .then(function () {
-            copied = true;
-            document.getElementById('status').textContent = 'Code copied to clipboard.';
-          })
-          .catch(function () {
-            try {
-              document.execCommand('copy');
-              copied = true;
-              document.getElementById('status').textContent = 'Code copied (fallback).';
-            } catch (e) {
-              document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
-            }
-          });
-      } else {
-        try {
-          document.execCommand('copy');
-          copied = true;
-          document.getElementById('status').textContent = 'Code copied (fallback).';
-        } catch (e) {
-          document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
-        }
-      }
-
-      if (!copied) {
-        document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
-      }
-    });
-  </script>
-</body>
-</html>      resize: vertical;
-    }
-
-    #output {
-      min-height: 200px;
-    }
-
-    button {
-      padding: 8px 14px;
-      border-radius: 4px;
-      border: none;
-      cursor: pointer;
-      margin-right: 8px;
-      font-size: 0.95rem;
-    }
-
-    #generateBtn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    #copyBtn {
-      background-color: #28a745;
-      color: white;
-    }
-
-    #status {
-      display: inline-block;
-      margin-left: 10px;
-      font-size: 0.9rem;
-      color: #333;
-    }
-  </style>
-</head>
-<body>
-  <h1>HTML Code Generator</h1>
-
-  <div class="section">
-    <p>
-      Enter the content for each section. Empty sections (head, body, script) will be omitted.
-      The body text will preserve multiple spaces and line breaks.
-    </p>
-  </div>
-
-  <div class="section">
-    <label for="headInput">&lt;head&gt; content (optional)</label>
-    <textarea id="headInput" placeholder="Example: &lt;title&gt;My Page&lt;/title&gt;"></textarea>
-  </div>
-
-  <div class="section">
-    <label for="bodyInput">&lt;body&gt; content (text to convert)</label>
-    <textarea id="bodyInput" placeholder="Type your body text here.&#10;Multiple     spaces and line breaks will be preserved."></textarea>
-  </div>
-
-  <div class="section">
-    <label for="scriptInput">&lt;script&gt; content (optional)</label>
-    <textarea id="scriptInput" placeholder="Example: console.log('Hello');"></textarea>
-  </div>
-
-  <div class="section">
-    <button id="generateBtn" type="button">Generate HTML</button>
-    <button id="copyBtn" type="button">Copy Code</button>
-    <span id="status"></span>
-  </div>
-
-  <div class="section">
-    <label for="output">Generated HTML (copy from here)</label>
-    <textarea id="output" readonly></textarea>
-  </div>
-
-  <script>
-    function convertBodyTextToHTML(text) {
-      // Escape special HTML characters first
-      let escaped = text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-
-      // Normalize line endings
-      escaped = escaped.replace(/\r\n/g, '\n');
-
-      // Replace spaces with &nbsp; to preserve multiple spaces
-      escaped = escaped.replace(/ /g, '&nbsp;');
-
-      // Replace newlines with <br>
-      escaped = escaped.replace(/\n/g, '<br>\n');
-
-      return escaped;
-    }
-
-    document.getElementById('generateBtn').addEventListener('click', function () {
-      const headInput = document.getElementById('headInput').value;
-      const bodyInput = document.getElementById('bodyInput').value;
-      const scriptInput = document.getElementById('scriptInput').value;
-
-      const hasHead = headInput.trim() !== '';
-      const hasBody = bodyInput.trim() !== '';
-      const hasScript = scriptInput.trim() !== '';
-
-      let parts = [];
-      parts.push('<!DOCTYPE html>');
-      parts.push('<html>');
-
-      if (hasHead) {
-        parts.push('<head>');
-        parts.push(headInput);
-        parts.push('</head>');
-      }
-
-      if (hasBody) {
-        const convertedBody = convertBodyTextToHTML(bodyInput);
-        parts.push('<body>');
-        parts.push(convertedBody);
-        parts.push('</body>');
-      }
-
-      if (hasScript) {
-        parts.push('<script>');
-        parts.push(scriptInput);
-        parts.push('</script>');
-      }
-
-      parts.push('</html>');
-
-      const finalHTML = parts.join('\n');
-      document.getElementById('output').value = finalHTML;
-      document.getElementById('status').textContent = 'HTML generated.';
-    });
-
-    document.getElementById('copyBtn').addEventListener('click', function () {
-      const output = document.getElementById('output');
-      output.select();
-      output.setSelectionRange(0, 999999); // for mobile
-
-      let copied = false;
-
+      let success = false;
       try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(output.value).then(function () {
-            document.getElementById('status').textContent = 'Code copied to clipboard.';
-          }).catch(function () {
-            document.execCommand('copy');
-            document.getElementById('status').textContent = 'Code copied (fallback).';
-          });
-        } else {
-          document.execCommand('copy');
-          document.getElementById('status').textContent = 'Code copied (fallback).';
-        }
-        copied = true;
+        success = document.execCommand('copy');
       } catch (e) {
-        document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
+        success = false;
       }
 
-      if (!copied) {
-        document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
-      }
+      document.getElementById('status').textContent =
+        success ? 'Code copied to clipboard.' : 'Copy failed. Please copy manually.';
     });
   </script>
 </body>
