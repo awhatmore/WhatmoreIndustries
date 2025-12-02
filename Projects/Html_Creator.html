@@ -9,22 +9,18 @@
       margin: 20px;
       max-width: 900px;
     }
-
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       margin-bottom: 0.5rem;
     }
-
     .section {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
-
     label {
       font-weight: bold;
       display: block;
       margin-bottom: 0.25rem;
     }
-
     textarea {
       width: 100%;
       min-height: 120px;
@@ -35,6 +31,172 @@
       border-radius: 4px;
       border: 1px solid #ccc;
       resize: vertical;
+    }
+    #output {
+      min-height: 200px;
+    }
+    button {
+      padding: 8px 14px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      margin-right: 8px;
+      font-size: 0.95rem;
+    }
+    #generateBtn {
+      background-color: #007bff;
+      color: #fff;
+    }
+    #copyBtn {
+      background-color: #28a745;
+      color: #fff;
+    }
+    #status {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 0.9rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>HTML Code Generator</h1>
+
+  <div class="section">
+    <p>
+      Enter content for each section. Empty sections (head, body, script) will be omitted.
+      The body text will preserve multiple spaces and line breaks.
+    </p>
+  </div>
+
+  <div class="section">
+    <label for="headInput">&lt;head&gt; content (optional, raw HTML)</label>
+    <textarea id="headInput" placeholder="Example: &lt;title&gt;My Page&lt;/title&gt;"></textarea>
+  </div>
+
+  <div class="section">
+    <label for="bodyInput">&lt;body&gt; content (plain text to convert)</label>
+    <textarea id="bodyInput" placeholder="Type your body text here.&#10;Multiple     spaces and line breaks will be preserved."></textarea>
+  </div>
+
+  <div class="section">
+    <label for="scriptInput">&lt;script&gt; content (optional, raw JS)</label>
+    <textarea id="scriptInput" placeholder="Example: console.log('Hello');"></textarea>
+  </div>
+
+  <div class="section">
+    <button id="generateBtn" type="button">Generate HTML</button>
+    <button id="copyBtn" type="button">Copy Code</button>
+    <span id="status"></span>
+  </div>
+
+  <div class="section">
+    <label for="output">Generated HTML (copy from here)</label>
+    <textarea id="output" readonly></textarea>
+  </div>
+
+  <script>
+    function convertBodyTextToHTML(text) {
+      // 1. Escape special HTML characters
+      let escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      // 2. Normalize line endings
+      escaped = escaped.replace(/\r\n/g, '\n');
+
+      // 3. Preserve spaces
+      escaped = escaped.replace(/ /g, '&nbsp;');
+
+      // 4. Preserve line breaks
+      escaped = escaped.replace(/\n/g, '<br>\n');
+
+      return escaped;
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', function () {
+      const headInput = document.getElementById('headInput').value;
+      const bodyInput = document.getElementById('bodyInput').value;
+      const scriptInput = document.getElementById('scriptInput').value;
+
+      const hasHead = headInput.trim() !== '';
+      const hasBody = bodyInput.trim() !== '';
+      const hasScript = scriptInput.trim() !== '';
+
+      const parts = [];
+
+      parts.push('<!DOCTYPE html>');
+      parts.push('<html>');
+
+      if (hasHead) {
+        parts.push('<head>');
+        parts.push(headInput);
+        parts.push('</head>');
+      }
+
+      if (hasBody) {
+        const convertedBody = convertBodyTextToHTML(bodyInput);
+        parts.push('<body>');
+        parts.push(convertedBody);
+        parts.push('</body>');
+      }
+
+      if (hasScript) {
+        parts.push('<script>');
+        parts.push(scriptInput);
+        parts.push('</script>');
+      }
+
+      parts.push('</html>');
+
+      const finalHTML = parts.join('\n');
+      const output = document.getElementById('output');
+      output.value = finalHTML;
+
+      document.getElementById('status').textContent = 'HTML generated.';
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', function () {
+      const output = document.getElementById('output');
+      output.focus();
+      output.select();
+      output.setSelectionRange(0, output.value.length); // for mobile
+
+      let copied = false;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(output.value)
+          .then(function () {
+            copied = true;
+            document.getElementById('status').textContent = 'Code copied to clipboard.';
+          })
+          .catch(function () {
+            try {
+              document.execCommand('copy');
+              copied = true;
+              document.getElementById('status').textContent = 'Code copied (fallback).';
+            } catch (e) {
+              document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
+            }
+          });
+      } else {
+        try {
+          document.execCommand('copy');
+          copied = true;
+          document.getElementById('status').textContent = 'Code copied (fallback).';
+        } catch (e) {
+          document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
+        }
+      }
+
+      if (!copied) {
+        document.getElementById('status').textContent = 'Copy failed. Please copy manually.';
+      }
+    });
+  </script>
+</body>
+</html>      resize: vertical;
     }
 
     #output {
