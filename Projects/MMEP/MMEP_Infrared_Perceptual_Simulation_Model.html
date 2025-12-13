@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.6;
+      padding: 2rem;
+    }
+
+    .container1 {
+      max-width: 960px;
+      margin: auto;
+      border: 1px solid #333;
+      padding: 2rem;
+      border-radius: 12px;
+      background: rgba(20, 20, 20, 0.85);
+      box-shadow: 0 0 12px #00f7ff44;
+    }
+
+.container h1 {
+  color: #00f7ff;  
+  font-size: 2.4rem;
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+}
+
+.container h2 { 
+  font-size: 1.55rem;
+  margin-top: 2.2rem;
+  margin-bottom: 0.7rem;
+}
+
+.container h3 {  
+  font-size: 1.2rem;
+  margin-top: 2.2rem;
+  margin-bottom: 0.7rem;
+}
+
+/* Top-level bullets */
+.container ul {
+  list-style-type: disc;      /* ● */
+  margin-left: 1.2rem;
+  padding-left: 1rem;
+}
+
+/* Second-level bullets (open circle) */
+.container ul ul {
+  list-style-type: circle;    /* ○ */
+  margin-left: 1.4rem;
+}
+
+/* Third-level bullets (optional) */
+.container ul ul ul {
+  list-style-type: square;    /* ◼ */
+  margin-left: 1.6rem;
+}
+
+
+    }
+
+    a {
+      color: #00f7ff;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      text-shadow: 0 0 4px #00f7ff33;
+    }
+
+    .accent {
+      border-left: 4px solid #00f7ff;
+      padding-left: 1rem;
+      margin: 2rem 0;
+      background: rgba(0, 247, 255, 0.05);
+    }
+</style>
+<body>
+
+<div class="container1">
+<h1>MMEP Infrared Perceptual Simulation Model</h1>
+<br>
+<h2>Purpose of This Simulation</h2>
+<ul>
+<li>Answer a scientific question rather than prove superiority</li>
+<li>Determine whether structured modulation plus computation yields different or additional perceptual information than conventional IR optics</li>
+<li>Treat success as learning, regardless of outcome</li>
+<li>Validate or falsify assumptions in a controlled, simplified environment</li>
+<li>Inform future design decisions without committing to hardware</li>
+</ul>
+<br>
+<h2>Guiding Principle</h2>
+<ul>
+<li>The goal is not to make a better system</li>
+<li>The goal is to understand the information consequences of structured modulation</li>
+<li>Winning condition is increased understanding, not performance dominance</li>
+<li>Simulation is a tool for insight, not validation bias</li>
+</ul>
+<br>
+<h2>Scope and Abstractions</h2>
+<h3>Dimensionality</h3>
+<ul>
+<li>Simulation is strictly two-dimensional</li>
+<li>X-axis represents lateral spatial dimension</li>
+<li>Z-axis represents propagation direction</li>
+<li>2D model represents a slice of a 3D system</li>
+</ul>
+<br>
+<h3>What Is Modeled</h3>
+<ul>
+<li>Infrared wave propagation in 2D</li>
+<li>A modulated aperture represented as a line</li>
+<li>Time-varying phase or amplitude modulation</li>
+<li>Simple infrared-emitting scenes</li>
+<li>Sensor plane intensity measurements</li>
+<li>Noise and resolution limits</li>
+</ul>
+<br>
+<h3>What Is Explicitly Ignored</h3>
+<ul>
+<li>Full electromagnetic boundary conditions</li>
+<li>Polarization effects</li>
+<li>3D scattering and occlusion</li>
+<li>Mechanical constraints</li>
+<li>Manufacturing tolerances</li>
+<li>Atmospheric absorption details</li>
+</ul>
+<br>
+<h2>Infrared Regime Definition</h2>
+<ul>
+<li>Simulation may operate in:<ul>
+<li>near-infrared (approx. 1–2 microns)</li>
+<li>or thermal infrared (approx. 8–12 microns)</li>
+</ul>
+<li>Wavelength treated as a controllable parameter</li>
+<li>Multiple wavelengths may be tested for comparison</li>
+<li>Scene emission treated as incoherent infrared sources</li>
+</ul>
+<br>
+<h2>Baseline System: Conventional Infrared Optics</h2>
+<h3>Baseline Assumptions</h3>
+<ul>
+<li>Static aperture or lens</li>
+<li>Fixed point-spread function (PSF)</li>
+<li>Single observation produces single image</li>
+<li>Resolution limited by diffraction and aperture size</li>
+<li>No temporal diversity</li>
+</ul>
+<br>
+<h3>Baseline Measurement Model</h3>
+<ul>
+<li>Scene intensity distribution</li>
+<li>Convolution with PSF</li>
+<li>Addition of noise</li>
+<li>Resulting image is the baseline output</li>
+</ul>
+<br>
+<h3>Baseline Metrics</h3>
+<ul>
+<li>Spatial resolution</li>
+<li>Contrast</li>
+<li>Noise sensitivity</li>
+<li>Ambiguity in closely spaced emitters</li>
+</ul>
+<br>
+<h2>Proposed System: Structured Modulated Infrared Sensing</h2>
+<h3>Modulator Representation</h3>
+<ul>
+<li>A single straight line representing the modulator surface</li>
+<li>Line contains multiple dimples or micro-features</li>
+<li>Each dimple modeled as a localized phase or amplitude perturbation</li>
+<li>Dimples staggered along the line</li>
+</ul>
+<br>
+<h3>Emulating 3D Rotation in 2D</h3>
+<ul>
+<li>Time-varying modulation pattern</li>
+<li>Patterns shift, morph, or slide along the line</li>
+<li>Each time step represents a different effective slice of a rotating 3D surface</li>
+<li>Multiple modulation states sampled sequentially</li>
+</ul>
+<br>
+<h3>Modulation Parameters</h3>
+<ul>
+<li>Dimple depth</li>
+<li>Dimple width</li>
+<li>Dimple spacing</li>
+<li>Modulation speed</li>
+<li>Number of modulation states</li>
+<li>Wavelength-dependent phase response</li>
+</ul>
+<br>
+<h2>Measurement Process</h2>
+<ul>
+<li>For each modulation state:<ul>
+<li>apply modulator to incoming or outgoing IR field</li>
+<li>propagate field to sensor plane</li>
+<li>record intensity image</li>
+</ul>
+<li>Result is a time series of coded IR images</li>
+<li>Each individual image may be low quality</li>
+<li>Information is distributed across the set</li>
+</ul>
+<br>
+<h2>Reconstruction and Analysis</h2>
+<h3>Reconstruction Goals</h3>
+<ul>
+<li>Estimate scene intensity distribution</li>
+<li>Reduce ambiguity present in single-shot imaging</li>
+<li>Assess whether multiple coded observations improve inference</li>
+</ul>
+<br>
+<h3>Reconstruction Methods (Conceptual)</h3>
+<ul>
+<li>Correlation-based backprojection</li>
+<li>Simple inverse filtering</li>
+<li>Iterative refinement</li>
+<li>Comparison against known ground truth</li>
+</ul>
+<br>
+<h3>Fusion Across Time</h3>
+<ul>
+<li>Combine multiple modulation states</li>
+<li>Evaluate diminishing returns with increasing samples</li>
+<li>Examine sensitivity to noise and model mismatch</li>
+</ul>
+<br>
+<h2>Comparison Methodology</h2>
+<ul>
+<li>Use identical scenes for baseline and modulated system</li>
+<li>Use identical noise levels and photon budgets</li>
+<li>Compare:<ul>
+<li>single baseline image</li>
+<li>reconstructed image from multiple modulated observations</li>
+</ul>
+</ul>
+<br>
+<h2>Evaluation Metrics</h2>
+<ul>
+<li>Ability to resolve closely spaced IR sources</li>
+<li>Reduction in uncertainty over time</li>
+<li>Robustness to noise</li>
+<li>Stability of reconstruction</li>
+<li>Sensitivity to modulation parameters</li>
+</ul>
+<br>
+<h2>Multi-Wavelength Extension (Optional)</h2>
+<ul>
+<li>Simulate two or more IR wavelengths</li>
+<li>Apply same modulation geometry</li>
+<li>Observe wavelength-dependent differences</li>
+<li>Fuse multi-band results</li>
+<li>Evaluate conditioning and ambiguity reduction</li>
+</ul>
+<br>
+<h2>Expected Outcomes</h2>
+<ul>
+<li>Possible improvement in effective resolution</li>
+<li>Possible no improvement</li>
+<li>Possible tradeoffs between complexity and gain</li>
+<li>Clear understanding of where modulation helps or does not help</li>
+</ul>
+<br>
+<h2>Interpretation Rules</h2>
+<ul>
+<li>A negative result is still a valid and valuable outcome</li>
+<li>Results inform architecture decisions</li>
+<li>Simulation outcomes guide whether physical prototyping is justified</li>
+<li>No conclusion assumed in advance</li>
+</ul>
+<br>
+<h2>Relationship to Broader MMEP Architecture</h2>
+<ul>
+<li>IR simulation is one modality test</li>
+<li>Same framework can extend to RF, acoustic, or optical regimes</li>
+<li>Confirms whether structured modulation is a generalizable principle</li>
+</ul>
+<br>
+<h2>Next Steps After Simulation</h2>
+<ol>
+<li>Analyze results objectively</li>
+<li>Document findings and limitations</li>
+<li>Decide whether to refine simulation or change assumptions</li>
+<li>Determine whether a minimal physical experiment is warranted</li>
+<li>Integrate insights into overall MMEP platform design</li>
+</ol>
+<br>
+
+</div>
+
+</body>
+</html>
