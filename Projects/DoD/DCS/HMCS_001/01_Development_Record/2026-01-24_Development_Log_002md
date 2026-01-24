@@ -1,0 +1,93 @@
+(~ Alexander - Hand Typed)
+
+# Development Record Entry
+Date: 2026-01-24
+Context: Day 1 Logging
+Location / Environment: Home Trailer
+
+## Situation
+The situation has come to the point where structureal logging needs to be taken more seriously. This 
+  augment appears to be legitimately valuable and it's not worth keeping it as a hobbie heads up display
+  or giving it to the community first before allowing the DoD an opportunity to take it before exposed to
+  the public. Will create github (whatmore industries .io) log of all that's to come and all that is 
+  happening.
+
+Folders created today and their explanations to follow
+
+create_hmcs_structure.bat
+README.md
+00_README
+01_Development_Record
+02_Program_Intent_and_Strategy
+03_Shallow_Demonstration_Package
+04_Deep_Demonstration_Package
+05_Test_and_Validation
+06_Legal_and_Rights
+07_Implementation_and_Integration
+08_Human_Factors_and_Safety
+09_Evidence_Archive
+10_Narrative_and_Positioning
+11_Future_Roadmap
+12_Counter_Suggestion_and_Trajectory_Control
+13_Controlled_Demonstration_and_Exposure_Protocol
+
+Need to create
+
+-1_AI_Chat_History_Log
+
+## Observations
+Being very new to flight simulation and able to have used my engineering background to discern the need 
+  an augment, I knew roughly what I needed and where I wanted it to go. Using specific energy to derive
+  a notion of whether my actions were gaining energy, removing energy, or holding steady. The F-16 AI
+  opponent in DCS is extremely disciplined, and in order to beat it, I would need to outperform it. 
+
+From my observations, the performance set up looked like this:
+
+- F-16 AI pilot keeps 99% throttle (mine at the time was 102%)
+- F-16 AI pilot maintains 444 ish knots (I couldn't maintain a speed regardless of anything I did)
+- I would never beat the AI to the turn around (we would alwawys end up face to face)
+- In a turn I would always end up seeing the opponent go further and further upward
+- Even if we were equal in a turn, the AI would be able to take shots on me way before even making a
+  full turn to my rear where you would generally begin evasive maneuvers
+- The F-16 AI appeared superior to all other jets by far
+- The F-16 in my mind may actually be superior to other fighters in that it can control its fight. Other
+  aircraft may have better turn radius and speed increase, but within the conditions of the F-16, it
+  appears that there may be a design perk that puts the F-16 in a best of one world, and that one world,
+  the F-16 isis in complete control.
+-"If" the F-16 isn't this concept, then there really wouldn't be much use for it at all in production,
+  so I decided to assume that, with the observations of the AI aircraft's clear superior capability
+  under certain conditions, in which those conditions were difficult to control from outside those
+  conditions, "if" I can create a way to "see" where I'm losing, where I'm gaining, I can see if it's
+  possible to defeat the AI by utilizing onboard-available information. If so, I can use this for personal
+  use
+- The human player F-16 experience appears extraordinarily difficult to control in a positive energy state
+- If I turned too hard, I lose momentum and have no speed or turn
+- I saw that I needed to create a guage that shows energy gain, loss and stabilization
+
+## Outcomes
+Beyond undefeatable. Impossible to not get a kill on F-16 AI Ace difficulty. Constantly target coming 
+  into sight. Opponent losing altitude while attempting to match my aircraft's energy state
+
+Able to take on 16 Mig-23 Ace difficulty with guns only. Somewhat easily down between 6 and 9 targets 
+  before running out of fuel.
+
+## Signals & Metrics (if available)
+(Telemetry, values, screenshots, tracks, plots, logs.)
+
+## Constraints Discovered
+ Only get shot down when not maintaining full performance of aircfraft or
+  not taking high opportunity targets. If chase too straight, a Mig will line up a shot. When holding 
+  fuel tanks in an attempt to elongate the fight, performance is not able to stay alive
+
+2026-01-24 Will continue. I'm tired...
+
+## Insights
+(What this implies about the human-machine problem.)
+
+## Design Implications
+(What HMCS must encode, change, protect, or enable.)
+
+## Follow-on Questions
+(What to test next. What to watch for. What to isolate.)
+
+(~ ChatGPT - AI insight)
