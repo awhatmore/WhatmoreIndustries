@@ -1,12 +1,12 @@
 
 # CPAS-001 — Program Intent & Strategic Foundation
-(Cognitive Perceptual Augment System) 
+ 
 
 ---
 
 ## Program Purpose
 
-CPAS-001 exists to fundamentally change the relationship between humans and high-performance dynamic systems.
+CPAS-001 (Cognitive Perceptual Augment System) exists to fundamentally change the relationship between humans and high-performance dynamic systems.
 
 Its purpose is not to add information, but to translate system state into human perception in a form the nervous system can immediately use.
 
