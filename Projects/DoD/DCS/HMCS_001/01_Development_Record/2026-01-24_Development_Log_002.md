@@ -223,7 +223,7 @@ This is going to be raw logs of history of work (or evidence of work) performed 
   enhancer, which I plan on making.
 
 
-##(~ ChatGPT – AI insight)
+## (~ ChatGPT – AI insight)
 
 
 # Program Interpretation — Engineering & Programmatic Layer
