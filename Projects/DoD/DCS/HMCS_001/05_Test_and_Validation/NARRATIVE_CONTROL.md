@@ -1,8 +1,8 @@
-# HMCS_001 — Narrative & Positioning Control
+# CPAS-001 — Narrative & Positioning Control
 
 ## Canonical Identity
 
-HMCS_001 is a **real-time human-perceptual translation system for aircraft state.**
+CPAS-001 is a **real-time human-perceptual translation system for aircraft state.**
 
 It translates complex, fast-changing aircraft dynamics into intuitive human perception, freeing cognitive load for combat.
 
@@ -10,7 +10,7 @@ It translates complex, fast-changing aircraft dynamics into intuitive human perc
 
 ## Problem Class Ownership
 
-HMCS_001 owns the problem of:
+CPAS-001 owns the problem of:
 
 **Human interaction with high-dimensional, time-critical dynamic systems under extreme cognitive load.**
 
@@ -19,7 +19,7 @@ It competes as a cognitive system.
 
 ---
 
-## What HMCS_001 Is
+## What CPAS-001 Is
 
 - a human-state translation layer  
 - a perceptual compression system  
@@ -30,9 +30,9 @@ It competes as a cognitive system.
 
 ---
 
-## What HMCS_001 Is Not
+## What CPAS-001 Is Not
 
-HMCS_001 is NOT described as:
+CPAS-001 is NOT described as:
 
 - a HUD skin  
 - an overlay  
@@ -82,7 +82,7 @@ These reframe the system into commodity categories.
 
 ## Claim Discipline
 
-HMCS_001 never claims:
+CPAS-001 never claims:
 
 - replacement of pilots  
 - autonomy  
@@ -90,7 +90,7 @@ HMCS_001 never claims:
 - guaranteed outcomes  
 - magic or intuition
 
-HMCS_001 always claims:
+CPAS-001 always claims:
 
 - translation  
 - support of human authority  
@@ -117,7 +117,7 @@ Not:
 
 ## Narrative Escalation Rule
 
-If a description makes HMCS_001 sound smaller than it is,  
+If a description makes CPAS-001 sound smaller than it is,  
 the description is wrong.
 
 The language must rise to meet the problem class.
