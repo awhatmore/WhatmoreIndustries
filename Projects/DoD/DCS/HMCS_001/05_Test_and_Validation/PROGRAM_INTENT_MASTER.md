@@ -1,15 +1,15 @@
 
-# HMCS_001 — Program Intent & Strategic Foundation
+# CPAS-001 — (Cognitive Perceptual Augment System) Program Intent & Strategic Foundation
 
 ---
 
 ## Program Purpose
 
-HMCS_001 exists to fundamentally change the relationship between humans and high-performance dynamic systems.
+CPAS-001 exists to fundamentally change the relationship between humans and high-performance dynamic systems.
 
 Its purpose is not to add information, but to translate system state into human perception in a form the nervous system can immediately use.
 
-By doing so, HMCS_001 seeks to:
+By doing so, CPAS-001 seeks to:
 
 - collapse training timelines
 - stabilize human performance under extreme load
@@ -29,7 +29,7 @@ Modern combat aircraft operate in regimes where:
 
 Today, pilots are trained over years to approximate internal models of these invisible states.
 
-HMCS_001 addresses this bottleneck directly.
+CPAS-001 addresses this bottleneck directly.
 
 It owns the problem of:
 
@@ -39,7 +39,7 @@ It owns the problem of:
 
 ## Strategic Objective
 
-If HMCS_001 succeeds, expertise is no longer bottlenecked by years of experiential accumulation.
+If CPAS-001 succeeds, expertise is no longer bottlenecked by years of experiential accumulation.
 
 Instead:
 
@@ -49,7 +49,7 @@ Instead:
 - survivability becomes structurally supportable  
 - and air dominance becomes less dependent on rare human outliers.
 
-This positions HMCS_001 not as an interface, but as a human performance infrastructure.
+This positions CPAS-001 not as an interface, but as a human performance infrastructure.
 
 ---
 
@@ -57,7 +57,7 @@ This positions HMCS_001 not as an interface, but as a human performance infrastr
 
 Air dominance remains one of the most decisive strategic asymmetries.
 
-HMCS_001 directly addresses:
+CPAS-001 directly addresses:
 
 - pilot survivability  
 - training cost and throughput  
@@ -71,7 +71,7 @@ The program is explicitly structured to give the United States Department of Def
 
 ## Long-Range Vision
 
-HMCS_001 is the first embodiment of a broader intent:
+CPAS-001 is the first embodiment of a broader intent:
 
 To build systems that translate complex reality into forms the human nervous system can operate within naturally.
 
@@ -81,13 +81,13 @@ This trajectory extends beyond aviation into any domain where:
 - error margins are fatal
 - and performance depends on invisible state relationships.
 
-HMCS_001 is the proving ground.
+CPAS-001 is the proving ground.
 
 ---
 
 ## Program Commitments
 
-The HMCS_001 program commits to:
+The CPAS-001 program commits to:
 
 - human authority preservation  
 - safety-bounded operation  
@@ -102,7 +102,7 @@ The program will not pursue exposure paths that compromise strategic value, safe
 
 ## Program Identity
 
-HMCS_001 is:
+CPAS-001 is:
 
 A real-time human-perceptual translation system for aircraft state.
 
@@ -112,7 +112,7 @@ It transforms dynamic system behavior into intuitive perception, freeing cogniti
 
 ## What Success Changes
 
-If HMCS_001 succeeds:
+If CPAS-001 succeeds:
 
 - pilots reach high-performance regimes in days instead of years  
 - training pipelines compress  
@@ -127,7 +127,7 @@ This enables Whatmore Industries to become a long-term builder of systems the wo
 
 ## Non-Negotiables
 
-HMCS_001 will not become:
+CPAS-001 will not become:
 
 - a display product  
 - a game technology  
