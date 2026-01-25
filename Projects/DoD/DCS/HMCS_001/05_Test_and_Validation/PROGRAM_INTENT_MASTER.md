@@ -1,5 +1,6 @@
 
-# CPAS-001 — (Cognitive Perceptual Augment System) Program Intent & Strategic Foundation
+# CPAS-001 — (Cognitive Perceptual Augment System) 
+           Program Intent & Strategic Foundation
 
 ---
 
