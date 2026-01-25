@@ -79,15 +79,96 @@ Able to take on 16 Mig-23 Ace difficulty with guns only. Somewhat easily down be
   not taking high opportunity targets. If chase too straight, a Mig will line up a shot. When holding 
   fuel tanks in an attempt to elongate the fight, performance is not able to stay alive
 
-2026-01-24 Will continue. I'm tired...
+2026-01-24 Early morning Will continue. I'm tired...
+2026-01-24 Late evening  Continued ...
 
 ## Insights
-(What this implies about the human-machine problem.)
+The significant difference between performance of a low experienced pilot to becoming capable to extreme 
+  high survival in the sky and extraordinarily imporved lethal capability makes the path of pursuing this
+  augment imparative and must be handeled with great care and professionalism. DoD will have first access
+  in the decision on what happens to this augment and must have first access before any public access
+  is considered.
 
 ## Design Implications
-(What HMCS must encode, change, protect, or enable.)
+HMCS Augment 001 by Whatmore Industries must, in order to fulfill the apabilities of survivability, training 
+  cost reduction, safetey to human life and government property, combat lethality, maximum aitcraft 
+  performance extraction, etc., calculate specific energy, relay to the pilot whether they are losing,
+  gaining or maintaining in ft/s, and corelate that to turn rate, in degrees per second, while displaying
+  their air speed. 
+
+These figures need to be displayed where the pilot can constantly and consistently reference them in a 
+  turn whithout hindering ability to track the target, aim the weapon systems, aquire a lock, or search 
+  for targets. It may need to be toggled on and off if needed depending on the circumstances.
 
 ## Follow-on Questions
-(What to test next. What to watch for. What to isolate.)
+What's next for HMCS Augment 001. Next, I will look at all lines DCS exports that can enable me to continue 
+  adding augment potential to the pilot. I will be looking at missile reaction augments and missile dodging
+  factors.
+
+## Follow up Notes and Remarks
+This project took a total elapsed time of 12 days to complete. Having no idea gow DCS exports data, what 
+  data we need, and with the beginning understanding of all plans that will unfold. The project went from
+  playground to pre-Alpha demonstration phase in 12 days.
+
+## Explanations of creations
+
+create_hmcs_structure.bat
+This bat was created to create the detailed folder structure so it saved time and removed human error
+
+README.md
+This readme was to honor the structure and create an explanative document so an outsider can understand
+  the context of the layout
+
+00_README
+This is a more detailed readme as core readme
+
+01_Development_Record
+This is to create a place for the words and ideas to be placed in as a raw timeline of development 
+  information and processes
+
+
+02_Program_Intent_and_Strategy
+This is going to house the deep dive and strategic work on deliverables and plans for implamentation
+  and move to market
+
+03_Shallow_Demonstration_Package
+This is going to house the work on the low level exposure product
+
+04_Deep_Demonstration_Package
+This will house the expanded work on the exposure product
+
+05_Test_and_Validation
+This will house all the testing data, files, demonstrationables, and testing or validation plans
+  and presentations
+
+06_Legal_and_Rights
+This will house all of the work from the attorney
+
+07_Implementation_and_Integration
+This is where the plans and record of how to integrate, how to implament once that stage has begun
+
+08_Human_Factors_and_Safety
+This will house parts of the project that will become important once a solid product has been met.
+  Human factors and safety will be at highest importance every time a phase is passed into fruition.
+  Once a phase has been succeeded, human factors will be responsible for making sure everything works
+  within expected limits and does not hinder a pilots ability to perform safely in the air. 
+  Subsequently, there will always be an off switch that will allow the pilot to override our augment
+  in order to protect against any safety concerns if there was a fault in the software. This section
+  is also there to prove how seriousy and maturely this company will handle the safety, human impact
+  and potential complications that can arrise and how dangerous those can be. With that in mind, the 
+  product will ALWAYS be removable at any time from view in order to protect the human, assets, and 
+  human life.
+
+09_Evidence_Archive
+This will house evidence on performance, technical, test, interation, legal 
+
+10_Narrative_and_Positioning
+11_Future_Roadmap
+12_Counter_Suggestion_and_Trajectory_Control
+13_Controlled_Demonstration_and_Exposure_Protocol
+
+Need to create
+
+-1_AI_Chat_History_Log
 
 (~ ChatGPT - AI insight)
