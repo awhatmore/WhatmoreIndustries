@@ -1008,4 +1008,46 @@ Roadmaps extend it.
 This structure exists to ensure HMCS_001 is never just “a project,”  
 but a traceable, defensible, evolvable program.
 
+# HMCS_001 — Core Identity Framing
+
+## Canonical Identity Line
+
+**HMCS_001 translates complex aircraft state into intuitive human perception, freeing cognitive load for combat.**
+
+---
+
+## Short-Form Identity (Ultra-Compact)
+
+**Real-time human-perceptual translation of aircraft state.**
+
+---
+
+## Nervous-System Framing
+
+**HMCS_001 compresses complex dynamic aircraft state into signals the human nervous system can immediately act on.**
+
+---
+
+## Problem-Class Ownership
+
+HMCS_001 does not primarily provide new data.
+
+It performs **human state translation** — converting multi-variable, fast-changing aircraft dynamics into a perceptual 
+  stream the human nervous system can directly interpret, enabling pilots to stabilize performance regimes, preserve 
+  survivability margins, and act without analytical delay.
+
+---
+
+## What This Means
+
+HMCS_001 operates in the layer between:
+
+- aircraft physics  
+- and human intuition  
+
+Its value is not access to telemetry, but the transformation of invisible system dynamics into immediately actionable 
+  perception.
+
+This positions HMCS_001 as a **cognitive flight instrumentation system**, not a display system.
+
 2026-01-25 End Early morning...
