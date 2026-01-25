@@ -44,9 +44,13 @@ real time but does not expose the product
 
 ## Situation
 
-Evaluation of how HMCS_001 can be demonstrated publicly or in semi-restricted environments (e.g., conventions, defense-adjacent events) without prematurely exposing system internals, methods, or unique technical advantages before formal protection, access controls, or partnerships are in place.
+Evaluation of how CPAS-001 (Cognitive Perceptual Augmentation System) can be demonstrated publicly or 
+  in semi-restricted environments (e.g., conventions, defense-adjacent events) without prematurely 
+    exposing system internals, methods, or unique technical advantages before formal protection, 
+      access controls, or partnerships are in place.
 
-Concern identified: conventional demonstration formats risk either revealing too much or preventing demonstration entirely.
+Concern identified: conventional demonstration formats risk either revealing too much or preventing 
+  demonstration entirely.
 
 ---
 
@@ -55,9 +59,12 @@ Concern identified: conventional demonstration formats risk either revealing too
 A layered demonstration architecture is possible:
 
 - An **open experiential layer** that allows any attendee to participate and observe outcomes.
-- A **restricted technical layer** that exposes internals only to vetted and formally engaged personnel.
+- A **restricted technical layer** that exposes internals only to vetted and formally engaged
+-   personnel.
 
-A simulator-based platform combined with a helmet-mounted, collimated projection system allows real-time demonstration of performance and effects while keeping system mechanisms, processing, and construction concealed.
+A simulator-based platform combined with a helmet-mounted, collimated projection system allows 
+  real-time demonstration of performance and effects while keeping system mechanisms, processing, 
+    and construction concealed.
 
 This creates traffic, interest, and experiential proof without technical disclosure.
 
@@ -82,13 +89,15 @@ Demonstration does not need to be synonymous with disclosure.
 - The product must remain operationally visible while remaining technically opaque.
 - Public demonstrations cannot depend on revealing system internals.
 - Exposure must be layered and governed.
-- Any path that allows demonstration must also allow escalation under legal and procedural control.
+- Any path that allows demonstration must also allow escalation under legal and procedural
+  control.
 
 ---
 
 ## Insights
 
-If HMCS_001 is designed from the outset with **demonstration opacity** in mind, exposure becomes a strength rather than a risk.
+If CPAS-001 is designed from the outset with **demonstration opacity** in mind, exposure 
+  becomes a strength rather than a risk.
 
 Demonstration should precede explanation.
 
@@ -100,7 +109,7 @@ The ability to show effects without revealing mechanisms is itself a strategic c
 
 ## Design Implications
 
-HMCS_001 demonstration platforms must include:
+CPAS-001 demonstration platforms must include:
 
 - a wearable HUD/helmet-based display path
 - collimated or optically isolated projection
