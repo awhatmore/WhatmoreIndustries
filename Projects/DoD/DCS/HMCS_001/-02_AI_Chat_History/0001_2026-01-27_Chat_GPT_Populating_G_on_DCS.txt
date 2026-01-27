@@ -1,3 +1,11 @@
+ChatGPT Technical Log
+Project: CPAS_001
+Session: 0001
+Date Started: 2026-01-11 Approximatley 
+Date Logged:  2026-01-27
+Primary topic: Extracting data from DCS (Digital Combat Simulator) and creating hud
+---------------------------------------------
+
 Skip to content
 Chat history
 
