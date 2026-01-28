@@ -270,40 +270,39 @@ Not an afterthought.
 
 Create:
 
-• a first-call interview framework
-
-• a legal cognition scoring sheet
-• a defense-readiness checklist
-• or a Phase-1 legal architecture map
+- a first-call interview framework
+- a legal cognition scoring sheet
+- a defense-readiness checklist
+- or a Phase-1 legal architecture map
 
 A. Internal clarity artifacts
-• One-page CPAS mission + scope
-• Your current and intended markets
-• What you will not do
-• Your non-negotiables
+- One-page CPAS mission + scope
+- Your current and intended markets
+- What you will not do
+- Your non-negotiables
 
 B. Disclosure boundaries
-• What can be said cold
-• What requires NDA
-• What is never shared early
-• Your language for redirecting probing questions
+- What can be said cold
+- What requires NDA
+- What is never shared early
+- Your language for redirecting probing questions
 
 C. Interview framework
-• What you will ask
-• What you will not answer yet
-• What a “green-flag mind” sounds like
-• What a “no further contact” signal is
+- What you will ask
+- What you will not answer yet
+- What a “green-flag mind” sounds like
+- What a “no further contact” signal is
 
 D. Role definition draft
-• What you think this attorney might become
-• What they definitely are not yet
-• How scope would grow
-• How power would be limited
+- What you think this attorney might become
+- What they definitely are not yet
+- How scope would grow
+- How power would be limited
 
 E. Your decision mechanism
-• Who you consult (if anyone)
-• What criteria must be met
-• What disqualifies instantly
-• How you avoid being talked into speed
+- Who you consult (if anyone)
+- What criteria must be met
+- What disqualifies instantly
+- How you avoid being talked into speed
 
 **End of Session 0001**
