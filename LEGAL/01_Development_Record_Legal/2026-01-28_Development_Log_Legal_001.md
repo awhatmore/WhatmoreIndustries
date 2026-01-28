@@ -266,4 +266,13 @@ Not an afterthought.
 
 ---
 
+(Next steps in process before interacting with attorney)
+
+Create:
+
+• a first-call interview framework
+• a legal cognition scoring sheet
+• a defense-readiness checklist
+• or a Phase-1 legal architecture map
+
 **End of Session 0001**
