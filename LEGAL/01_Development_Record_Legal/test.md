@@ -1,6 +1,9 @@
 """
-chat_log_md.py
-Append AI chat logs to Markdown with an integrity ledger (hash chaining).
+
+    session_slug = safe_slug(args.session)
+
+    chat_log_md.py
+    Append AI chat logs to Markdown with an integrity ledger (hash chaining).
 
 Usage (examples):
   python chat_log_md.py --session "HUD_Dev" --infile chat.txt
