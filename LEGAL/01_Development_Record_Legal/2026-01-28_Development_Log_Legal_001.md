@@ -307,9 +307,9 @@ E. Your decision mechanism
 
 A. Internal clarity artifacts
 
-  • One-page CPAS mission + scope
-  • Your current and intended markets
-  • What you will not do
-  • Your non-negotiables
+  • One-page CPAS mission + scope.
+  • Your current and intended markets.
+  • What you will not do.
+  • Your non-negotiables.
 
 **End of Session 0001**
