@@ -306,6 +306,7 @@ E. Your decision mechanism
 - How you avoid being talked into speed
 
 A. Internal clarity artifacts
+
   • One-page CPAS mission + scope
   • Your current and intended markets
   • What you will not do
