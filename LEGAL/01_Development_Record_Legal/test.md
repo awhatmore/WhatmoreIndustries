@@ -1,4 +1,4 @@
-"""
+
 
     session_slug = safe_slug(args.session)
 
