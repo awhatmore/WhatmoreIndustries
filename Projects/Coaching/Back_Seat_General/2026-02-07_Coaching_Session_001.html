@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Coaching Notes (Live Markdown)</title>
 
-  <!-- Motto banner (standing instruction) -->
   <style>
     :root{
       --bg:#0b0f14;
@@ -18,9 +17,10 @@
       --good:#2bd576;
       --warn:#ffcc66;
       --bad:#ff6b6b;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial;
     }
+
     html,body{height:100%;}
     body{
       margin:0;
@@ -28,6 +28,7 @@
       color:var(--text);
       font-family:var(--sans);
     }
+
     .banner{
       background:rgba(15,22,32,.92);
       border-bottom:1px solid var(--line);
@@ -37,102 +38,72 @@
       position:sticky;
       top:0;
       z-index:5;
-      backdrop-filter: blur(8px);
     }
     .banner strong{color:var(--text);}
+
     .wrap{
       max-width:1200px;
       margin:0 auto;
       padding:14px;
     }
+
     .topbar{
       display:flex;
-      flex-wrap:wrap;
-      align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin:10px 0 12px;
+      margin-bottom:12px;
+      flex-wrap:wrap;
     }
-    .title{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
+
     .title h1{
       margin:0;
       font-size:18px;
-      letter-spacing:.2px;
-      font-weight:700;
     }
+
     .meta{
       font-family:var(--mono);
       font-size:12px;
       color:var(--muted);
     }
+
     .status{
       display:flex;
-      align-items:center;
       gap:10px;
       font-family:var(--mono);
       font-size:12px;
-      color:var(--muted);
     }
+
     .pill{
       padding:5px 8px;
       border:1px solid var(--line);
       border-radius:999px;
       background:rgba(15,22,32,.7);
     }
+
     .grid{
       display:grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns:1fr 1fr;
       gap:12px;
     }
-    @media (max-width: 900px){
+    @media (max-width:900px){
       .grid{grid-template-columns:1fr;}
     }
+
     .panel{
       border:1px solid var(--line);
       border-radius:14px;
       overflow:hidden;
       background:rgba(15,22,32,.55);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
+
     .panel header{
       padding:10px 12px;
       border-bottom:1px solid var(--line);
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:10px;
       background:rgba(12,18,26,.7);
     }
-    .panel header .label{
-      font-family:var(--mono);
-      font-size:12px;
-      color:var(--muted);
-      letter-spacing:.2px;
-    }
-    .panel header .btns{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    button{
-      appearance:none;
-      border:1px solid var(--line);
-      background:rgba(15,22,32,.7);
-      color:var(--text);
-      font-family:var(--mono);
-      font-size:12px;
-      padding:8px 10px;
-      border-radius:10px;
-      cursor:pointer;
-    }
-    button:hover{border-color:rgba(106,166,255,.55);}
-    button:active{transform:translateY(1px);}
-    .danger{border-color:rgba(255,107,107,.35);}
-    .danger:hover{border-color:rgba(255,107,107,.7);}
+
     textarea{
       width:100%;
       height:70vh;
@@ -146,9 +117,8 @@
       font-size:14px;
       line-height:1.45;
       padding:12px;
-      box-sizing:border-box;
-      tab-size:2;
     }
+
     .preview{
       padding:14px;
       height:70vh;
@@ -157,287 +127,145 @@
       background:rgba(12,18,26,.35);
     }
 
-    /* Markdown-ish preview styling */
-    .preview :is(h1,h2,h3){margin: 14px 0 8px;}
-    .preview h1{font-size:22px;border-bottom:1px solid var(--line);padding-bottom:8px;}
+    /* Markdown preview styling */
+    .preview h1{font-size:22px;border-bottom:1px solid var(--line);}
     .preview h2{font-size:18px;}
-    .preview h3{font-size:15px;color:var(--text);}
-    .preview p{margin:10px 0;color:var(--text);}
-    .preview a{color:var(--accent);}
+    .preview h3{font-size:15px;}
+    .preview p{margin:10px 0;}
     .preview code{
       font-family:var(--mono);
-      background:rgba(106,166,255,.10);
-      border:1px solid rgba(106,166,255,.20);
+      background:rgba(106,166,255,.1);
       padding:2px 6px;
-      border-radius:8px;
+      border-radius:6px;
     }
     .preview pre{
       background:rgba(15,22,32,.75);
-      border:1px solid var(--line);
       padding:12px;
-      border-radius:12px;
+      border-radius:10px;
       overflow:auto;
     }
-    .preview pre code{background:transparent;border:0;padding:0;}
     .preview blockquote{
-      margin:10px 0;
-      padding:10px 12px;
-      border-left:3px solid rgba(106,166,255,.55);
-      background:rgba(106,166,255,.08);
-      border-radius:10px;
+      border-left:3px solid var(--accent);
+      padding-left:10px;
       color:var(--muted);
     }
-    .preview hr{border:0;border-top:1px solid var(--line);margin:14px 0;}
-    .preview ul,.preview ol{margin:10px 0 10px 22px;}
-    .preview li{margin:6px 0;}
+    .preview ul{margin-left:20px;}
 
-    .hint{
-      margin-top:10px;
-      color:var(--muted);
-      font-size:12px;
+    button{
+      border:1px solid var(--line);
+      background:rgba(15,22,32,.7);
+      color:var(--text);
       font-family:var(--mono);
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:10px;
+      cursor:pointer;
     }
+    button:hover{border-color:var(--accent);}
   </style>
 
-  <!-- Markdown renderer + sanitizer (CDN) -->
+  <!-- Markdown + sanitizer -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 
-  <!-- Firebase (Firestore) 
-  <script type="module">
-    // ==========================
-    // 1) CONFIG: paste your Firebase config here
-    // ==========================
-    const firebaseConfig = {
-      // apiKey: "...",
-      // authDomain: "...",
-      // projectId: "...",
-      // storageBucket: "...",
-      // messagingSenderId: "...",
-      // appId: "..."
-    }; -->
-
-    // ==========================
-    // 2) Imports
-    // ==========================
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import {
-      getFirestore, doc, getDoc, setDoc, updateDoc, serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-    // ==========================
-    // 3) Helpers
-    // ==========================
+  <script>
     const $ = (id) => document.getElementById(id);
 
     function qs(name){
-      const u = new URL(location.href);
-      return u.searchParams.get(name);
-    }
-
-    async function sha256Hex(str){
-      const data = new TextEncoder().encode(str);
-      const hash = await crypto.subtle.digest("SHA-256", data);
-      return [...new Uint8Array(hash)].map(b => b.toString(16).padStart(2,"0")).join("");
+      return new URL(location.href).searchParams.get(name);
     }
 
     function debounce(fn, ms){
-      let t = null;
-      return (...args) => {
+      let t;
+      return (...args)=>{
         clearTimeout(t);
-        t = setTimeout(() => fn(...args), ms);
+        t = setTimeout(()=>fn(...args), ms);
       };
     }
 
-    function setStatus(text, tone="muted"){
-      const el = $("statusText");
-      el.textContent = text;
-      el.style.color =
-        tone === "good" ? "var(--good)" :
-        tone === "warn" ? "var(--warn)" :
-        tone === "bad"  ? "var(--bad)"  :
-        "var(--muted)";
+    function setStatus(text){
+      $("statusText").textContent = text;
     }
 
     function render(md){
-      // marked -> HTML -> sanitize
-      const raw = marked.parse(md || "");
-      const clean = DOMPurify.sanitize(raw, { USE_PROFILES: { html: true }});
-      $("preview").innerHTML = clean;
+      const html = DOMPurify.sanitize(marked.parse(md || ""));
+      $("preview").innerHTML = html;
     }
 
-    // ==========================
-    // 4) App init
-    // ==========================
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
-
-    // Doc identity
     const docId = (qs("doc") || "default").trim();
-    const key   = (qs("key") || "").trim(); // optional
-    $("docId").textContent = docId;
+    const storageKey = `coach_notes_${docId}`;
 
-    const localKey = `coach_md_local__${docId}`;
-    const noteRef  = doc(db, "coachingNotes", docId);
-
-    // ==========================
-    // 5) Load
-    // ==========================
-    async function load(){
-      // First: local fallback (instant)
-      const local = localStorage.getItem(localKey);
-      if(local != null){
-        $("editor").value = local;
-        render(local);
-      }
-
-      // Then: Firestore (authoritative)
-      try{
-        setStatus("Loading…");
-        const snap = await getDoc(noteRef);
-
-        if(!snap.exists()){
-          // create doc if not exists
-          const keyHash = key ? await sha256Hex(key) : "";
-          await setDoc(noteRef, {
-            content: local ?? "",
-            keyHash,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-          });
-          setStatus("Created new note doc.", "good");
-          return;
-        }
-
-        const data = snap.data() || {};
-        const remoteKeyHash = data.keyHash || "";
-
-        // If a keyHash exists, require key
-        if(remoteKeyHash){
-          if(!key){
-            setStatus("LOCKED: add ?key=YOURKEY to the URL", "bad");
-            $("editor").disabled = true;
-            return;
-          }
-          const k = await sha256Hex(key);
-          if(k !== remoteKeyHash){
-            setStatus("LOCKED: wrong key", "bad");
-            $("editor").disabled = true;
-            return;
-          }
-        }
-
-        const remote = (data.content ?? "");
-        $("editor").value = remote;
-        localStorage.setItem(localKey, remote);
-        render(remote);
-        setStatus("Loaded.", "good");
-      }catch(e){
-        console.error(e);
-        setStatus("Firestore load failed (using local only).", "warn");
-      }
-    }
-
-    // ==========================
-    // 6) Save (debounced)
-    // ==========================
-    const saveRemote = debounce(async () => {
+    const save = debounce(()=>{
       const md = $("editor").value;
-
-      // local save always
-      localStorage.setItem(localKey, md);
-
-      // render always
+      localStorage.setItem(storageKey, md);
       render(md);
+      $("dirty").textContent = "saved";
+      setStatus("Saved (local)");
+    }, 200);
 
-      // remote save
-      try{
-        $("dirty").textContent = "saving…";
-        await updateDoc(noteRef, {
-          content: md,
-          updatedAt: serverTimestamp(),
-        });
-        $("dirty").textContent = "saved";
-        setStatus("Saved.", "good");
-      }catch(e){
-        console.error(e);
-        $("dirty").textContent = "local-only";
-        setStatus("Firestore save failed (local-only).", "warn");
+    window.addEventListener("DOMContentLoaded", ()=>{
+      $("docId").textContent = docId;
+
+      const saved = localStorage.getItem(storageKey);
+      if(saved){
+        $("editor").value = saved;
+        render(saved);
       }
-    }, 350);
 
-    // ==========================
-    // 7) Events
-    // ==========================
-    $("editor").addEventListener("input", () => {
-      $("dirty").textContent = "typing…";
-      saveRemote();
-    });
+      $("editor").addEventListener("input", ()=>{
+        $("dirty").textContent = "typing…";
+        save();
+      });
 
-    $("btnCopyLink").addEventListener("click", async () => {
-      const u = new URL(location.href);
-      if(!u.searchParams.get("doc")) u.searchParams.set("doc", docId);
-      // keep key in link if present
-      await navigator.clipboard.writeText(u.toString());
-      setStatus("Link copied to clipboard.", "good");
-    });
+      $("btnCopyLink").onclick = async ()=>{
+        const u = new URL(location.href);
+        if(!u.searchParams.get("doc")) u.searchParams.set("doc", docId);
+        await navigator.clipboard.writeText(u.toString());
+        setStatus("Link copied");
+      };
 
-    $("btnClear").addEventListener("click", async () => {
-      const ok = confirm("Clear the note? (This will overwrite Firestore + local)");
-      if(!ok) return;
-      $("editor").value = "";
-      render("");
-      localStorage.setItem(localKey, "");
-      try{
-        await updateDoc(noteRef, { content:"", updatedAt: serverTimestamp() });
-        setStatus("Cleared.", "good");
+      $("btnClear").onclick = ()=>{
+        if(!confirm("Clear this note?")) return;
+        $("editor").value = "";
+        render("");
+        localStorage.setItem(storageKey, "");
         $("dirty").textContent = "saved";
-      }catch{
-        setStatus("Cleared locally (remote failed).", "warn");
-        $("dirty").textContent = "local-only";
-      }
+        setStatus("Cleared");
+      };
     });
-
-    // If you want to *set a key* on first creation: just open with ?doc=NAME&key=SECRET
-    // If the doc already exists without a key and you want to add one later, do it manually in Firestore.
-
-    // Start
-    load();
   </script>
 </head>
 
 <body>
   <div class="banner">
     <strong>We win by helping others win.</strong>
-    <span style="margin-left:10px;">Live Markdown coaching notes (autosave + shareable).</span>
+    <span style="margin-left:10px;">Live Markdown coaching notes</span>
   </div>
 
   <div class="wrap">
     <div class="topbar">
       <div class="title">
         <h1>Coaching Notes — <span class="meta">doc:</span> <span id="docId" class="meta"></span></h1>
-        <div class="meta">
-          Open a specific client with: <span style="color:var(--text)">?doc=clientName</span>
-          &nbsp;|&nbsp; Optional lock: <span style="color:var(--text)">?doc=clientName&amp;key=secret</span>
-        </div>
+        <div class="meta">Use <code>?doc=clientName</code> to separate clients</div>
       </div>
 
       <div class="status">
         <span class="pill">state: <span id="dirty">idle</span></span>
-        <span class="pill" id="statusText">Ready.</span>
+        <span class="pill" id="statusText">Ready</span>
       </div>
     </div>
 
     <div class="grid">
       <section class="panel">
         <header>
-          <div class="label">EDITOR (.md)</div>
-          <div class="btns">
-            <button id="btnCopyLink" title="Copy current URL">Copy Link</button>
-            <button id="btnClear" class="danger" title="Clear note">Clear</button>
+          <span class="meta">EDITOR (.md)</span>
+          <div>
+            <button id="btnCopyLink">Copy Link</button>
+            <button id="btnClear">Clear</button>
           </div>
         </header>
-        <textarea id="editor" spellcheck="false" placeholder="# Session Notes
+        <textarea id="editor" spellcheck="false"
+placeholder="# Session Notes
 
 ## Goals
 - ...
@@ -447,24 +275,15 @@
 
 ## Plan
 - ...
-
----
-
-(Autosaves as you type.)"></textarea>
+"></textarea>
       </section>
 
       <section class="panel">
         <header>
-          <div class="label">LIVE PREVIEW</div>
-          <div class="label">rendered</div>
+          <span class="meta">LIVE PREVIEW</span>
         </header>
         <div id="preview" class="preview"></div>
       </section>
-    </div>
-
-    <div class="hint">
-      Tip: first time setup (locked doc) → open: <span style="color:var(--text)">notes.html?doc=alex&amp;key=someKey</span>
-      then share that same URL with him.
     </div>
   </div>
 </body>
