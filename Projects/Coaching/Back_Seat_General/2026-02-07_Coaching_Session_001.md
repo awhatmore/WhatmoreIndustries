@@ -1,6 +1,6 @@
 # Session 1 — Foundation & Direction
 
----
+--- 
 
 ## 1. Capabilities (Reality Check)
 
