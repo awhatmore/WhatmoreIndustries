@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <!-- Force desktop layout, disables mobile scaling -->
   <meta name="viewport" content="width=1024">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="referrer" content="no-referrer">
   <title>Whatmore Industries – Project Archive</title>
   <style>
     html, body {
@@ -58,7 +61,6 @@
     nav a:hover, .dropdown:hover .dropbtn {
       background: #222;
     }
-    /* Dropdown Menu */
     .dropdown {
       position: relative;
       display: inline-block;
@@ -134,7 +136,6 @@
       color: #fff;
       text-shadow: 0 0 4px #0ff7;
     }
-    /* Email link color fix */
     a[href^="mailto:"] {
       color: #0ef !important;
       text-decoration: underline;
@@ -143,7 +144,6 @@
       color: #fff !important;
       text-shadow: 0 0 4px #0ff7;
     }
-    /* Smaller font for About/Contact, both desktop and mobile */
     #about, #about p, #contact, #contact p {
       font-size: 0.98rem !important;
       line-height: 1.45;
@@ -260,15 +260,12 @@
         z-index: 9999;
       }
     }
-
   </style>
 </head>
 <body>
-  <!-- EVE Online–Style Floating Sidebar -->
 <div class="eve-sidebar">
-  <a href="/" class="eve-sidebar-btn" title="Home">
+  <a href="#" onclick="return false;" class="eve-sidebar-btn" title="Home">
     <span class="eve-icon">
-      <!-- Home icon SVG -->
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
         <path d="M5 12L14 5L23 12V23C23 23.5523 22.5523 24 22 24H6C5.44772 24 5 23.5523 5 23V12Z" stroke="#0ef" stroke-width="2" fill="none" />
         <rect x="10" y="17" width="8" height="7" rx="1.5" stroke="#0ef" stroke-width="2" fill="none"/>
@@ -278,7 +275,6 @@
   </a>
   <a href="#projects-list" class="eve-sidebar-btn" title="Projects">
     <span class="eve-icon">
-      <!-- Projects icon SVG (grid) -->
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
         <rect x="4" y="4" width="8" height="8" rx="2" stroke="#0ef" stroke-width="2" fill="none"/>
         <rect x="16" y="4" width="8" height="8" rx="2" stroke="#0ef" stroke-width="2" fill="none"/>
@@ -290,7 +286,6 @@
   </a>
   <a href="#contact" class="eve-sidebar-btn" title="Contact">
     <span class="eve-icon">
-      <!-- Contact icon SVG (envelope) -->
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
         <rect x="4" y="7" width="20" height="14" rx="3" stroke="#0ef" stroke-width="2" fill="none"/>
         <path d="M4 8l10 8l10-8" stroke="#0ef" stroke-width="2" fill="none"/>
@@ -304,22 +299,19 @@
     <h1>WHATMORE INDUSTRIES</h1>
     <p>"A Living Archive: A Mind in Motion."</p>
   </header>
+
   <nav>
-    <a href="/">Home</a>
+    <a href="#" onclick="return false;">Home</a>
     <div class="dropdown">
       <button class="dropbtn">Projects ▾</button>
       <div class="dropdown-content">
-        <a href="#projects-list">View All Projects</a>
-        <a href="AI-Fluency">AI Fluency</a>
-        <a href="Universal_Calculator.html">Universal Calculator</a>
-        <a href="Fire_Fighting_Drone_Swarm_System.html">Fire Fighting Drone Swarm System</a>
-        <a href="Quantum-Time-Consciousness-Framework.html">Quantum-Time-Consciousness Framework</a>
-        <!-- Add any other quick links here -->
+        <a href="#projects-list">View Archive</a>
       </div>
     </div>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </nav>
+
   <main>
     <section id="projects-list">
       <h2>Project Archive</h2>
@@ -361,29 +353,27 @@
         <div class="project-card"><a href="#" onclick="return false;" style="color:#888;cursor:not-allowed;pointer-events:none;">Wildfire Plasma Threshold Detection System Proposal</a></div>
       </div>
 
-      <!-- QR code for the main site -->
       <div style="text-align:center; margin-top:2rem;">
-        <span style="font-size:1rem; color:#0ef;">Scan for Whatmore Industries</span><br>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fwhatmoreindustries.io&size=90x90&color=0-238-255&bgcolor=17-17-17"
-             alt="QR WhatmoreIndustries.io">
+        <span style="font-size:1rem; color:#0ef;">WhatmoreIndustries.io</span>
       </div>
     </section>
+
     <section id="about">
       <h2>About</h2>
       <p>I am the founder of Whatmore Industries. I build, test, observe, and connect — from off-grid systems and theoretical models to hands-on fabrication and prototyping. Every line I draw and every circuit I etch aims to serve a greater curiosity: what more is possible?</p>
     </section>
+
     <section id="contact">
       <h2>Contact</h2>
       <p>
         To collaborate, ask questions, or propose a mission — reach out at
         <span style="vertical-align:middle;">
           <a href="mailto:awhatmore@whatmoreindustries.io" style="color:#0ef;">awhatmore@whatmoreindustries.io</a>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?data=mailto%3Aawhatmore%40whatmoreindustries.io&size=90x90&color=0-238-255&bgcolor=17-17-17"
-               alt="QR Email">
         </span>
       </p>
     </section>
   </main>
+
   <footer>
     &copy; 2025 Whatmore Industries. All rights reserved.
   </footer>
