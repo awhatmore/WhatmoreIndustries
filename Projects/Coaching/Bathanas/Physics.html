@@ -1,0 +1,265 @@
+<!--
+[WORKFLOW_RULES]
+FILE: friction_force_sim.html
+EDIT METHOD: Replace entire file with this file.
+PURPOSE: Interactive UI for the box/friction/force physics problem.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Box Friction Force Simulator</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+  }
+
+  .banner {
+    text-align: center;
+    padding: 14px;
+    background: #161b22;
+    color: #58a6ff;
+    font-weight: bold;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .wrap {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+
+  h1, h2 {
+    color: #58a6ff;
+  }
+
+  label {
+    display: block;
+    margin-top: 14px;
+    font-weight: bold;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: #0d1117;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .result {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .track {
+    position: relative;
+    height: 90px;
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .ground {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #8b949e;
+  }
+
+  .box {
+    position: absolute;
+    bottom: 22px;
+    width: 50px;
+    height: 35px;
+    background: #f0883e;
+    border-radius: 6px;
+    transition: left 0.2s linear;
+  }
+
+  .marker {
+    position: absolute;
+    bottom: 10px;
+    width: 2px;
+    height: 65px;
+    background: #58a6ff;
+  }
+
+  .marker span {
+    position: absolute;
+    top: -18px;
+    left: -20px;
+    font-size: 12px;
+    color: #58a6ff;
+    white-space: nowrap;
+  }
+
+  button {
+    padding: 10px 16px;
+    background: #238636;
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+
+  button:hover {
+    background: #2ea043;
+  }
+
+  .small {
+    color: #8b949e;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="banner">We win by helping others win.</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <h1>Box Friction + Force Simulator</h1>
+    <p>
+      This models a box already moving with initial velocity, then a forward force begins acting on it while kinetic friction acts backward.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Variables</h2>
+
+    <label>Mass m, kg</label>
+    <input id="mass" type="number" value="20" step="0.1">
+
+    <label>Initial velocity v₀, m/s</label>
+    <input id="v0" type="number" value="10" step="0.1">
+
+    <label>Applied force F, N</label>
+    <input id="force" type="number" value="50" step="0.1">
+
+    <label>Coefficient of kinetic friction μ</label>
+    <input id="mu" type="number" value="0.3" step="0.01">
+
+    <label>Gravity g, m/s²</label>
+    <input id="gravity" type="number" value="10" step="0.1">
+
+    <label>Distance before final position, m</label>
+    <input id="beforeFinal" type="number" value="16" step="0.1">
+
+    <button onclick="calculate()">Calculate</button>
+  </div>
+
+  <div class="card">
+    <h2>Visual</h2>
+
+    <div class="track">
+      <div class="ground"></div>
+      <div id="box" class="box"></div>
+      <div id="stopMarker" class="marker"><span>Stop</span></div>
+    </div>
+
+    <p class="small">
+      The blue line represents the stopping point. The orange box position updates after calculation.
+    </p>
+  </div>
+
+  <div class="card result" id="output">
+    Results will appear here.
+  </div>
+
+</div>
+
+<script>
+/*
+[PHYSICS_MODEL]
+friction = μmg
+net force = F - friction
+acceleration = net force / m
+stopping distance from v² = v₀² + 2as
+*/
+
+function calculate() {
+  const m = parseFloat(document.getElementById("mass").value);
+  const v0 = parseFloat(document.getElementById("v0").value);
+  const F = parseFloat(document.getElementById("force").value);
+  const mu = parseFloat(document.getElementById("mu").value);
+  const g = parseFloat(document.getElementById("gravity").value);
+  const beforeFinal = parseFloat(document.getElementById("beforeFinal").value);
+
+  const friction = mu * m * g;
+  const netForce = F - friction;
+  const acceleration = netForce / m;
+
+  let html = "";
+
+  html += `<strong>Friction force:</strong> ${friction.toFixed(3)} N<br>`;
+  html += `<strong>Net force:</strong> ${netForce.toFixed(3)} N<br>`;
+  html += `<strong>Acceleration:</strong> ${acceleration.toFixed(3)} m/s²<br><br>`;
+
+  if (acceleration >= 0) {
+    html += `The box will not stop, because the applied force is equal to or greater than friction.`;
+    updateVisual(0);
+    document.getElementById("output").innerHTML = html;
+    return;
+  }
+
+  const stoppingDistance = -(v0 * v0) / (2 * acceleration);
+
+  html += `<strong>(a) Stopping distance:</strong> ${stoppingDistance.toFixed(3)} m<br>`;
+
+  const distanceFromStart = stoppingDistance - beforeFinal;
+
+  if (distanceFromStart < 0) {
+    html += `<strong>(b)</strong> The chosen distance is before the force starts acting.`;
+  } else {
+    const velocitySquared = v0 * v0 + 2 * acceleration * distanceFromStart;
+    const velocity = Math.sqrt(Math.max(velocitySquared, 0));
+
+    html += `<strong>(b) Velocity ${beforeFinal} m before final position:</strong> ${velocity.toFixed(3)} m/s<br>`;
+  }
+
+  document.getElementById("output").innerHTML = html;
+  updateVisual(stoppingDistance);
+}
+
+function updateVisual(stoppingDistance) {
+  const box = document.getElementById("box");
+  const marker = document.getElementById("stopMarker");
+
+  const maxVisualDistance = Math.max(stoppingDistance, 1);
+  const stopPercent = 85;
+
+  marker.style.left = stopPercent + "%";
+  box.style.left = "8%";
+}
+
+calculate();
+</script>
+
+</body>
+</html>
